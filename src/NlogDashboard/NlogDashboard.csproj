@@ -5,16 +5,27 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="css\styles.css" />
+    <None Remove="js\carbon.js" />
+    <None Remove="js\dashboard.js" />
     <None Remove="Views\Dashboard\Home.cshtml" />
+    <None Remove="Views\foot.cshtml" />
+    <None Remove="Views\sidebar.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="css\styles.css" />
+    <EmbeddedResource Include="js\carbon.js" />
+    <EmbeddedResource Include="js\dashboard.js" />
     <EmbeddedResource Include="Views\Dashboard\Home.cshtml">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\foot.cshtml" />
+    <EmbeddedResource Include="Views\sidebar.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Dapper" Version="1.50.4" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor" Version="2.0.4" />

@@ -55,8 +55,9 @@ namespace NlogDashboard
         {
             if (string.IsNullOrWhiteSpace(url))
             {
-                return _routes.FirstOrDefault(x => x.Key == "Dashboard/Home");
+                return _routes.FirstOrDefault(x => x.Key.ToLower() == "Dashboard/Home".ToLower());
             }
+  
             return _routes.FirstOrDefault(x => x.Key == url.ToLower());
         }
 
