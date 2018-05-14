@@ -3,3 +3,8 @@
 ################################################################################
 
 /NlogDashboard/obj
+/NlogDashboard/bin/Debug/netstandard2.0
+/NetCoreEmptyTest/obj
+/NetCoreEmptyTest/bin/Debug/netcoreapp2.0
+/.vs/NlogDashboard/v15
+/.vs/NlogDashboard/DesignTimeBuild
