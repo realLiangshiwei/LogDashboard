@@ -9,8 +9,7 @@
     <None Remove="js\carbon.js" />
     <None Remove="js\dashboard.js" />
     <None Remove="Views\Dashboard\Home.cshtml" />
-    <None Remove="Views\foot.cshtml" />
-    <None Remove="Views\sidebar.cshtml" />
+    <None Remove="Views\layout.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,8 +19,7 @@
     <EmbeddedResource Include="Views\Dashboard\Home.cshtml">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\foot.cshtml" />
-    <EmbeddedResource Include="Views\sidebar.cshtml" />
+    <EmbeddedResource Include="Views\layout.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,6 +28,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor" Version="2.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="RazorLight" Version="2.0.0-beta1" />
   </ItemGroup>
 

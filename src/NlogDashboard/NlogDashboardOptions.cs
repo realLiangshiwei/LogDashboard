@@ -17,6 +17,8 @@ namespace NlogDashboard
 
         internal bool UseAuthorzation { get; set; }
 
+        public string PathMatch { get; set; }
+
         public void UseAuthorization(string name, string password)
         {
             Name = name;
@@ -27,6 +29,7 @@ namespace NlogDashboard
 
         public NlogDashboardOptions()
         {
+            PathMatch = "/NlogDashboard";
             SyncTime = TimeSpan.FromSeconds(5);
         }
 

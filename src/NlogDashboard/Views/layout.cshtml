@@ -1,4 +1,6 @@
-﻿<!doctype html>
+﻿@using RazorLight
+@inherits TemplatePage<object>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -10,30 +12,27 @@
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/nlogdashboard/css.styles.css">
 </head>
-
 <body class="sidebar-fixed header-fixed">
     <div class="page-wrapper">
         <nav class="navbar page-header">
             <a href="#" class="btn btn-link sidebar-mobile-toggle d-md-none mr-auto">
                 <i class="fa fa-bars"></i>
             </a>
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="https://github.com/ShiWei-L/NlogDashboard" target="_blank">
                 <h2>Log Dashboard</h2>
             </a>
             <a href="#" class="btn btn-link sidebar-toggle d-md-down-none">
                 <i class="fa fa-bars"></i>
             </a>
-            <ul class="navbar-nav ml-auto">
-                
-            </ul>
+            <ul class="navbar-nav ml-auto"></ul>
         </nav>
         <div class="main-container">
             <div class="sidebar">
                 <nav class="sidebar-nav">
                     <ul class="nav">
-                        <li class="nav-title">Navigation</li>
+                        <li class="nav-title">菜单</li>
                         <li class="nav-item">
-                            <a href="/" class="nav-link active">
+                            <a id="mapPath" href="@ViewBag.DashboardMapPath" class="nav-link active">
                                 <i class="icon icon-speedometer"></i> Dashboard
                             </a>
                         </li>
@@ -54,8 +53,20 @@
                                 </li>
                             </ul>
                         </li>
-                       
+
                     </ul>
                 </nav>
             </div>
-           
+            
+                @{ await IncludeAsync(ViewBag.View, Model);}
+            
+        </div>
+    </div>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/popper.js/1.14.3/esm/popper.min.js"></script>
+    <script src="https://cdn.bootcss.com/Chart.js/2.7.2/Chart.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <script src="/nlogdashboard/js.carbon.js"></script>
+    <script src="/nlogdashboard/js.dashboard.js"></script>
+</body>
+</html>

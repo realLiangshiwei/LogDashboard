@@ -17,7 +17,6 @@ namespace NlogDashboard
                 throw new ArgumentNullException(nameof(options));
             }
 
-
             return builder.Map(pathMatch, app => { app.UseMiddleware<NlogDashboardMiddleware>(); });
         }
     }

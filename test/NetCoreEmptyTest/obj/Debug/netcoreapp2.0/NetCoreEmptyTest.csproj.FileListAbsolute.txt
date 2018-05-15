@@ -1,7 +1,3 @@
-F:\Code\my\NlogDashboard\test\NetCoreEmptyTest\obj\Debug\netcoreapp2.0\NetCoreEmptyTest.csprojAssemblyReference.cache
-F:\Code\my\NlogDashboard\test\NetCoreEmptyTest\obj\Debug\netcoreapp2.0\NetCoreEmptyTest.csproj.CoreCompileInputs.cache
-F:\Code\my\NlogDashboard\test\NetCoreEmptyTest\obj\Debug\netcoreapp2.0\NetCoreEmptyTest.AssemblyInfoInputs.cache
-F:\Code\my\NlogDashboard\test\NetCoreEmptyTest\obj\Debug\netcoreapp2.0\NetCoreEmptyTest.AssemblyInfo.cs
 F:\Code\my\NlogDashboard\test\NetCoreEmptyTest\bin\Debug\netcoreapp2.0\NetCoreEmptyTest.deps.json
 F:\Code\my\NlogDashboard\test\NetCoreEmptyTest\bin\Debug\netcoreapp2.0\NetCoreEmptyTest.runtimeconfig.json
 F:\Code\my\NlogDashboard\test\NetCoreEmptyTest\bin\Debug\netcoreapp2.0\NetCoreEmptyTest.runtimeconfig.dev.json
@@ -9,6 +5,10 @@ F:\Code\my\NlogDashboard\test\NetCoreEmptyTest\bin\Debug\netcoreapp2.0\NetCoreEm
 F:\Code\my\NlogDashboard\test\NetCoreEmptyTest\bin\Debug\netcoreapp2.0\NetCoreEmptyTest.pdb
 F:\Code\my\NlogDashboard\test\NetCoreEmptyTest\bin\Debug\netcoreapp2.0\NlogDashboard.dll
 F:\Code\my\NlogDashboard\test\NetCoreEmptyTest\bin\Debug\netcoreapp2.0\NlogDashboard.pdb
+F:\Code\my\NlogDashboard\test\NetCoreEmptyTest\obj\Debug\netcoreapp2.0\NetCoreEmptyTest.csprojAssemblyReference.cache
+F:\Code\my\NlogDashboard\test\NetCoreEmptyTest\obj\Debug\netcoreapp2.0\NetCoreEmptyTest.csproj.CoreCompileInputs.cache
+F:\Code\my\NlogDashboard\test\NetCoreEmptyTest\obj\Debug\netcoreapp2.0\NetCoreEmptyTest.AssemblyInfoInputs.cache
+F:\Code\my\NlogDashboard\test\NetCoreEmptyTest\obj\Debug\netcoreapp2.0\NetCoreEmptyTest.AssemblyInfo.cs
 F:\Code\my\NlogDashboard\test\NetCoreEmptyTest\obj\Debug\netcoreapp2.0\NetCoreEmptyTest.csproj.CopyComplete
 F:\Code\my\NlogDashboard\test\NetCoreEmptyTest\obj\Debug\netcoreapp2.0\NetCoreEmptyTest.dll
 F:\Code\my\NlogDashboard\test\NetCoreEmptyTest\obj\Debug\netcoreapp2.0\NetCoreEmptyTest.pdb

@@ -1,0 +1,34 @@
+﻿  <div class="card">
+    <div class="card-header bg-light">
+        日志列表
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Logger</th>
+                    <th>Level</th>
+                    <th>UserIdentity</th>
+                    <th>Message</th>
+                    <th>Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.Logger</td>
+                        <td>@item.Level</td>
+                        <td>@item.UserIdentity</td>
+                        <td>@item.Message</td>
+                        <td>@item.LongDate</td>
+                    </tr>
+                }
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div>

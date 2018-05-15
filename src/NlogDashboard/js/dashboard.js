@@ -1,4 +1,6 @@
+var mapPath;
 $(document).ready(function () {
+    mapPath = $($("#mapPath")[0]).attr("href");
     /**
      * Line Chart
      */
@@ -187,4 +189,5 @@ $(document).ready(function () {
             }
         });
     });
+
 });

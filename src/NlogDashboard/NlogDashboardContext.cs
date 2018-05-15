@@ -12,11 +12,14 @@ namespace NlogDashboard
 
         public IRazorLightEngine Engine { get; }
 
-        public NlogDashboardContext(HttpContext httpContext, NlogDashboardRoute route, IRazorLightEngine engine)
+        public NlogDashboardOptions Options { get; }
+
+        public NlogDashboardContext(HttpContext httpContext, NlogDashboardRoute route, IRazorLightEngine engine, NlogDashboardOptions options)
         {
             Route = route ?? throw new ArgumentNullException(nameof(route));
             HttpContext = httpContext ?? throw new ArgumentNullException(nameof(httpContext));
             Engine = engine ?? throw new ArgumentNullException(nameof(engine));
+            Options = options;
         }
     }
 }

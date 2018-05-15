@@ -31,6 +31,7 @@ namespace NetCoreEmptyTest
             }
 
             app.UseNlogDashboard();
+
             app.Run(async (context) =>
             {
                 await context.Response.WriteAsync("Hello World!");
