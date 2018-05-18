@@ -23,11 +23,11 @@ namespace NlogDashboard.Handle
 
 
 
-        public virtual async Task<string> View(object model = null, bool routeView = false)
+        public virtual async Task<string> View(object model = null, string viewName = null)
         {
             ViewBag.DashboardMapPath = Context.Options.PathMatch;
             ViewBag.View = Context.Route.View;
-            return await Context.Engine.CompileRenderAsync(routeView ? Context.Route.View : "Views.layout.cshtml", model, ViewBag);
+            return await Context.Engine.CompileRenderAsync(viewName ?? Context.Route.View, model, ViewBag);
         }
 
 

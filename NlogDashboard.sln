@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{19B4218B-E88
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{A21F8469-49B1-4FCD-9085-87BF282B31C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreEmptyTest", "test\NetCoreEmptyTest\NetCoreEmptyTest.csproj", "{8F92E7EE-9679-49A7-9AB1-65F5B7C905A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCoreEmptyTest", "test\NetCoreEmptyTest\NetCoreEmptyTest.csproj", "{8F92E7EE-9679-49A7-9AB1-65F5B7C905A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

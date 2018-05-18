@@ -1,34 +1,42 @@
-﻿  <div class="card">
-    <div class="card-header bg-light">
-        日志列表
-    </div>
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-hover">
-                <thead>
+﻿@model IEnumerable<dynamic>
+@{
+    Layout = null;
+}
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Logger</th>
+                <th>Level</th>
+                <th>UserIdentity</th>
+                <th>Message</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
                 <tr>
-                    <th>ID</th>
-                    <th>Logger</th>
-                    <th>Level</th>
-                    <th>UserIdentity</th>
-                    <th>Message</th>
-                    <th>Date</th>
+                    <td>@item.Id</td>
+                    <td>@item.Logger</td>
+                    <td><button class="btn btn-outline-@item.Level">@item.Level</button></td>
+                    <td>@item.UserIdentity</td>
+
+                    <td style="width: 30%;" onclick="$(this).next().show(); $(this).css('display','none');">
+                        @{
+                            var message = item.Message as string;
+                            if (message.Length > 120)
+                            {
+                                message = message.Substring(0, 119) + "........";
+                            }
+                        }
+                        @message
+                    </td>
+                    <td style="display: none; width: 30%;" onclick="$(this).prev().show(); $(this).css('display','none');">@item.Message</td>
+                    <td>@item.LongDate</td>
                 </tr>
-                </thead>
-                <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>@item.Id</td>
-                        <td>@item.Logger</td>
-                        <td>@item.Level</td>
-                        <td>@item.UserIdentity</td>
-                        <td>@item.Message</td>
-                        <td>@item.LongDate</td>
-                    </tr>
-                }
-                  </tbody>
-              </table>
-          </div>
-      </div>
-  </div>
+            }
+        </tbody>
+    </table>
+</div>

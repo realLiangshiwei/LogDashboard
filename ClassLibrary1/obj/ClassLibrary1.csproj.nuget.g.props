@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <RestoreSuccess Condition=" '$(RestoreSuccess)' == '' ">True</RestoreSuccess>
+    <RestoreTool Condition=" '$(RestoreTool)' == '' ">NuGet</RestoreTool>
+    <ProjectAssetsFile Condition=" '$(ProjectAssetsFile)' == '' ">F:\Code\my\NlogDashboard\ClassLibrary1\obj\project.assets.json</ProjectAssetsFile>
+    <NuGetPackageRoot Condition=" '$(NuGetPackageRoot)' == '' ">$(UserProfile)\.nuget\packages\</NuGetPackageRoot>
+    <NuGetPackageFolders Condition=" '$(NuGetPackageFolders)' == '' ">C:\Users\admin\.nuget\packages\;C:\Program Files\dotnet\sdk\NuGetFallbackFolder</NuGetPackageFolders>
+    <NuGetProjectStyle Condition=" '$(NuGetProjectStyle)' == '' ">PackageReference</NuGetProjectStyle>
+    <NuGetToolVersion Condition=" '$(NuGetToolVersion)' == '' ">4.7.0</NuGetToolVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+  </PropertyGroup>
+  <ItemGroup Condition=" '$(Language)' == 'C#' AND '$(ExcludeRestorePackageImports)' != 'true' ">
+    <Compile Include="$(NuGetPackageRoot)microsoft.extensions.razorviews.sources\2.2.0-preview1-34228\contentFiles\cs\netstandard1.0\Microsoft.Extensions.RazorViews.Sources\AttributeValue.cs" Condition="Exists('$(NuGetPackageRoot)microsoft.extensions.razorviews.sources\2.2.0-preview1-34228\contentFiles\cs\netstandard1.0\Microsoft.Extensions.RazorViews.Sources\AttributeValue.cs')">
+      <NuGetPackageId>Microsoft.Extensions.RazorViews.Sources</NuGetPackageId>
+      <NuGetPackageVersion>2.2.0-preview1-34228</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Private>False</Private>
+      <Link>Microsoft.Extensions.RazorViews.Sources\AttributeValue.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)microsoft.extensions.razorviews.sources\2.2.0-preview1-34228\contentFiles\cs\netstandard1.0\Microsoft.Extensions.RazorViews.Sources\BaseView.cs" Condition="Exists('$(NuGetPackageRoot)microsoft.extensions.razorviews.sources\2.2.0-preview1-34228\contentFiles\cs\netstandard1.0\Microsoft.Extensions.RazorViews.Sources\BaseView.cs')">
+      <NuGetPackageId>Microsoft.Extensions.RazorViews.Sources</NuGetPackageId>
+      <NuGetPackageVersion>2.2.0-preview1-34228</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Private>False</Private>
+      <Link>Microsoft.Extensions.RazorViews.Sources\BaseView.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)microsoft.extensions.razorviews.sources\2.2.0-preview1-34228\contentFiles\cs\netstandard1.0\Microsoft.Extensions.RazorViews.Sources\HelperResult.cs" Condition="Exists('$(NuGetPackageRoot)microsoft.extensions.razorviews.sources\2.2.0-preview1-34228\contentFiles\cs\netstandard1.0\Microsoft.Extensions.RazorViews.Sources\HelperResult.cs')">
+      <NuGetPackageId>Microsoft.Extensions.RazorViews.Sources</NuGetPackageId>
+      <NuGetPackageVersion>2.2.0-preview1-34228</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Private>False</Private>
+      <Link>Microsoft.Extensions.RazorViews.Sources\HelperResult.cs</Link>
+    </Compile>
+  </ItemGroup>
+</Project>

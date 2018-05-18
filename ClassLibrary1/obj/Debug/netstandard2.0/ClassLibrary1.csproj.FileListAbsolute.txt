@@ -1,0 +1,9 @@
+F:\Code\my\NlogDashboard\ClassLibrary1\bin\Debug\netstandard2.0\ClassLibrary1.deps.json
+F:\Code\my\NlogDashboard\ClassLibrary1\bin\Debug\netstandard2.0\ClassLibrary1.dll
+F:\Code\my\NlogDashboard\ClassLibrary1\obj\Debug\netstandard2.0\ClassLibrary1.csprojAssemblyReference.cache
+F:\Code\my\NlogDashboard\ClassLibrary1\obj\Debug\netstandard2.0\ClassLibrary1.csproj.CoreCompileInputs.cache
+F:\Code\my\NlogDashboard\ClassLibrary1\obj\Debug\netstandard2.0\ClassLibrary1.AssemblyInfoInputs.cache
+F:\Code\my\NlogDashboard\ClassLibrary1\obj\Debug\netstandard2.0\ClassLibrary1.AssemblyInfo.cs
+F:\Code\my\NlogDashboard\ClassLibrary1\bin\Debug\netstandard2.0\ClassLibrary1.pdb
+F:\Code\my\NlogDashboard\ClassLibrary1\obj\Debug\netstandard2.0\ClassLibrary1.dll
+F:\Code\my\NlogDashboard\ClassLibrary1\obj\Debug\netstandard2.0\ClassLibrary1.pdb

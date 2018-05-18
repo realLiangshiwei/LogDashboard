@@ -1,6 +1,4 @@
-﻿@using RazorLight
-@inherits TemplatePage<object>
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -10,6 +8,7 @@
     <link href="https://cdn.bootcss.com/simple-line-icons/2.4.1/css/simple-line-icons.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
     <link rel="stylesheet" href="/nlogdashboard/css.styles.css">
 </head>
 <body class="sidebar-fixed header-fixed">
@@ -57,9 +56,9 @@
                     </ul>
                 </nav>
             </div>
-            
-                @{ await IncludeAsync(ViewBag.View, Model);}
-            
+            <div class="content">
+                @RenderBody()
+            </div>
         </div>
     </div>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
@@ -68,5 +67,6 @@
     <script src="https://cdn.bootcss.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
     <script src="/nlogdashboard/js.carbon.js"></script>
     <script src="/nlogdashboard/js.dashboard.js"></script>
+    <script src="/nlogdashboard/js.log.js"></script>
 </body>
 </html>

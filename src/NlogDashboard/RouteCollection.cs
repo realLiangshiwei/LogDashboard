@@ -6,7 +6,7 @@ namespace NlogDashboard
 {
     public class RouteCollection
     {
-        private static readonly List<NlogDashboardRoute> _routes = new List<NlogDashboardRoute>();
+        private static readonly List<NlogDashboardRoute> Routes = new List<NlogDashboardRoute>();
 
         public void AddRoute(NlogDashboardRoute route)
         {
@@ -40,13 +40,13 @@ namespace NlogDashboard
 
             }
 
-            if (_routes.Exists(x => x.Key == route.Key))
+            if (Routes.Exists(x => x.Key == route.Key))
             {
-                _routes[_routes.IndexOf(_routes.FirstOrDefault(x => x.Key == route.Key))] = route;
+                Routes[Routes.IndexOf(Routes.FirstOrDefault(x => x.Key == route.Key))] = route;
             }
             else
             {
-                _routes.Add(route);
+                Routes.Add(route);
             }
 
         }
@@ -55,10 +55,10 @@ namespace NlogDashboard
         {
             if (string.IsNullOrWhiteSpace(url))
             {
-                return _routes.FirstOrDefault(x => x.Key.ToLower() == "Dashboard/Home".ToLower());
+                return Routes.FirstOrDefault(x => x.Key.ToLower() == "Dashboard/Home".ToLower());
             }
   
-            return _routes.FirstOrDefault(x => x.Key == url.ToLower());
+            return Routes.FirstOrDefault(x => x.Key == url.ToLower());
         }
 
     }

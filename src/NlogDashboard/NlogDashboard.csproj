@@ -8,18 +8,22 @@
     <None Remove="css\styles.css" />
     <None Remove="js\carbon.js" />
     <None Remove="js\dashboard.js" />
+    <None Remove="js\log.js" />
     <None Remove="Views\Dashboard\Home.cshtml" />
-    <None Remove="Views\layout.cshtml" />
+    <None Remove="Views\Dashboard\LogList.cshtml" />
+    <None Remove="Views\_layout.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="css\styles.css" />
     <EmbeddedResource Include="js\carbon.js" />
     <EmbeddedResource Include="js\dashboard.js" />
+    <EmbeddedResource Include="js\log.js" />
     <EmbeddedResource Include="Views\Dashboard\Home.cshtml">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\layout.cshtml" />
+    <EmbeddedResource Include="Views\Dashboard\LogList.cshtml" />
+    <EmbeddedResource Include="Views\_layout.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
