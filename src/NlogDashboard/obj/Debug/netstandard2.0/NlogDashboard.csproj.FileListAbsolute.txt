@@ -1,9 +1,0 @@
-F:\Code\my\NlogDashboard\src\NlogDashboard\bin\Debug\netstandard2.0\NlogDashboard.deps.json
-F:\Code\my\NlogDashboard\src\NlogDashboard\bin\Debug\netstandard2.0\NlogDashboard.dll
-F:\Code\my\NlogDashboard\src\NlogDashboard\bin\Debug\netstandard2.0\NlogDashboard.pdb
-F:\Code\my\NlogDashboard\src\NlogDashboard\obj\Debug\netstandard2.0\NlogDashboard.csproj.CoreCompileInputs.cache
-F:\Code\my\NlogDashboard\src\NlogDashboard\obj\Debug\netstandard2.0\NlogDashboard.AssemblyInfoInputs.cache
-F:\Code\my\NlogDashboard\src\NlogDashboard\obj\Debug\netstandard2.0\NlogDashboard.AssemblyInfo.cs
-F:\Code\my\NlogDashboard\src\NlogDashboard\obj\Debug\netstandard2.0\NlogDashboard.dll
-F:\Code\my\NlogDashboard\src\NlogDashboard\obj\Debug\netstandard2.0\NlogDashboard.pdb
-F:\Code\my\NlogDashboard\src\NlogDashboard\obj\Debug\netstandard2.0\NlogDashboard.csprojAssemblyReference.cache
