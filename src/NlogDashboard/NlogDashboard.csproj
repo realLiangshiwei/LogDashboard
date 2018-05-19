@@ -9,6 +9,7 @@
     <None Remove="js\carbon.js" />
     <None Remove="js\dashboard.js" />
     <None Remove="js\log.js" />
+    <None Remove="js\spin.min.js" />
     <None Remove="Views\Dashboard\Home.cshtml" />
     <None Remove="Views\Dashboard\LogList.cshtml" />
     <None Remove="Views\_layout.cshtml" />
@@ -19,6 +20,7 @@
     <EmbeddedResource Include="js\carbon.js" />
     <EmbeddedResource Include="js\dashboard.js" />
     <EmbeddedResource Include="js\log.js" />
+    <EmbeddedResource Include="js\spin.min.js" />
     <EmbeddedResource Include="Views\Dashboard\Home.cshtml">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>

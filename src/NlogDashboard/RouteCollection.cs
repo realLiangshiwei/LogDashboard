@@ -19,22 +19,31 @@ namespace NlogDashboard
             {
                 throw new ArgumentNullException("route key can bu null");
             }
-            if (string.IsNullOrWhiteSpace(route.View))
-            {
-                throw new ArgumentNullException("route view can bu null");
-            }
 
-            if (string.IsNullOrWhiteSpace(route.Action) || string.IsNullOrWhiteSpace(route.Action))
+            if (route.HtmlView)
+            {
+                if (string.IsNullOrWhiteSpace(route.View))
+                {
+                    throw new ArgumentNullException("route view can bu null");
+                }
+            }
+           
+
+            if (string.IsNullOrWhiteSpace(route.Handle) || string.IsNullOrWhiteSpace(route.Action))
             {
                 try
                 {
                     var routeArray = route.Key.Split('/');
-                    route.Handle = routeArray[0];
-                    route.Action = routeArray[1];
+                    route.Handle = routeArray[1];
+                    route.Action = routeArray[2];
                 }
                 catch (Exception ex)
                 {
-                    throw new ArgumentException("route key fotmat handle/action", ex);
+                    if (route.HtmlView)
+                    {
+                        throw new ArgumentException("route key fotmat handle/action", ex);
+                    }
+                   
                 }
 
 
@@ -55,10 +64,10 @@ namespace NlogDashboard
         {
             if (string.IsNullOrWhiteSpace(url))
             {
-                return Routes.FirstOrDefault(x => x.Key.ToLower() == "Dashboard/Home".ToLower());
+                return Routes.FirstOrDefault(x => x.Key.ToLower() == "/Dashboard/Home".ToLower());
             }
   
-            return Routes.FirstOrDefault(x => x.Key == url.ToLower());
+            return Routes.FirstOrDefault(x => x.Key.ToLower() == url.ToLower());
         }
 
     }

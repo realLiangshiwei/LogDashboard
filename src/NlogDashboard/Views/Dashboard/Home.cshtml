@@ -75,9 +75,46 @@
 <div class="card">
     <div class="card-header bg-light">
         最近十条
-        <i class="fa fa-refresh" onclick="loadList(1)" style="float: right"></i>
+        <i class="fa fa-refresh" onclick="loadList(1,10)" style="float: right"></i>
     </div>
     <div class="card-body" id="tbody">
-        @{ await IncludeAsync("Views.Dashboard.LogList.cshtml", Model); }
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Logger</th>
+                        <th>Level</th>
+                        <th>UserIdentity</th>
+                        <th>Message</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td>@item.Logger</td>
+                            <td><button style="width:65px" class="btn btn-outline-@item.Level">@item.Level</button></td>
+                            <td>@item.UserIdentity</td>
+
+                            <td style="width: 35%;" onclick="$(this).next().show(); $(this).css('display','none');">
+                                @{
+                                    var message = item.Message as string;
+                                    if (message.Length > 110)
+                                    {
+                                        message = message.Substring(0, 110) + "........";
+                                    }
+                                }
+                                @message
+                            </td>
+                            <td style="display: none; width: 35%;" onclick="$(this).prev().show(); $(this).css('display','none');">@item.Message</td>
+                            <td>@item.LongDate</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

@@ -98,7 +98,7 @@ namespace NlogDashboard
                     }
                     else
                     {
-                       
+
                         var bytes = new byte[(int)httpContext.Request.ContentLength];
                         await httpContext.Request.Body.ReadAsync(bytes, 0, (int)httpContext.Request.ContentLength);
                         string requestJson = Encoding.Default.GetString(bytes);
@@ -106,6 +106,7 @@ namespace NlogDashboard
                         var args = JsonConvert.DeserializeObject(requestJson, method.GetParameters().First().ParameterType);
 
                         html = await (Task<string>)method.Invoke(handle, new[] { args });
+
                     }
                 }
 
