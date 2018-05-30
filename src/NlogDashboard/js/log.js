@@ -24,7 +24,7 @@ function showException(id) {
         url: mapPath + "/Dashboard/GetException",
         data: JSON.stringify({ id: id })
     }).done(function (data) {
-        $("#tbody").append('<div class="modal fade" id="' + id + '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none; padding-right: 17%" aria-hidden="true"> ' +
+        $("#tbody").append('<div class="modal fade" id="' + id + '"> ' +
             '<div class= "modal-dialog" role = "document">' +
             '<div class="modal-content" style="width:1068px;">' +
             '<div class="modal-header bg-danger border-0">' +
@@ -39,6 +39,8 @@ function showException(id) {
             '</div >' +
             '</div >');
 
-        $('#' + id).modal({});
+        $('#' + id).modal().css({
+            "padding-right": "19%"
+        });
     });
 }

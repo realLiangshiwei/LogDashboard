@@ -22,7 +22,6 @@ namespace NlogDashboard.Handle
         public dynamic ViewBag { get; set; }
 
 
-
         public virtual async Task<string> View(object model = null, string viewName = null)
         {
             ViewBag.DashboardMapPath = Context.Options.PathMatch;
