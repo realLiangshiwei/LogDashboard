@@ -43,6 +43,11 @@ namespace NlogDashboard.Handle
             return await View(result, "Views.Dashboard.LogList.cshtml");
         }
 
+        public async Task<string> LogInfo(EnttiyDto input)
+        {
+            return await View();
+        }
+
         public async Task<string> GetException(EnttiyDto input)
         {
             var result = await Conn.QueryFirstAsync<string>($"select exception from log where id = {input.Id}");

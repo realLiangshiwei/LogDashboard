@@ -91,29 +91,39 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>@item.Id</td>
-                            <td>@item.Logger</td>
-                            <td><button style="width:65px" class="btn btn-outline-@item.Level">@item.Level</button></td>
-                            <td>@item.UserIdentity</td>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.Logger</td>
+                        @{
+                            var level = item.Level as string;
+                            if (level.ToLower() == "error")
+                            {
+                                <td><button style="width:65px" onclick="showException('@item.Id')" class="btn btn-outline-@item.Level">@item.Level</button></td>
+                            }
+                            else
+                            {
+                                <td><button style="width:65px" class="btn btn-outline-@item.Level">@item.Level</button></td>
+                            }
+                        }
 
-                            <td style="width: 35%;" onclick="$(this).next().show(); $(this).css('display','none');">
-                                @{
-                                    var message = item.Message as string;
-                                    if (message.Length > 110)
-                                    {
-                                        message = message.Substring(0, 110) + "........";
-                                    }
+                        <td>@item.UserIdentity</td>
+
+                        <td style="width: 35%;" onclick="$(this).next().show(); $(this).css('display','none');">
+                            @{
+                                var message = item.Message as string;
+                                if (message.Length > 110)
+                                {
+                                    message = message.Substring(0, 110) + "........";
                                 }
-                                @message
-                            </td>
-                            <td style="display: none; width: 35%;" onclick="$(this).prev().show(); $(this).css('display','none');">@item.Message</td>
-                            <td>@item.LongDate</td>
-                        </tr>
-                    }
-                </tbody>
+                            }
+                            @message
+                        </td>
+                        <td style="display: none; width: 35%;" onclick="$(this).prev().show(); $(this).css('display','none');">@item.Message</td>
+                        <td>@item.LongDate</td>
+                    </tr>
+                }
             </table>
         </div>
     </div>

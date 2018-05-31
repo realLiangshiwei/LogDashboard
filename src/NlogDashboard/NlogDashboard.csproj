@@ -11,6 +11,7 @@
     <None Remove="js\log.js" />
     <None Remove="js\spin.min.js" />
     <None Remove="Views\Dashboard\Home.cshtml" />
+    <None Remove="Views\Dashboard\LogInfo.cshtml" />
     <None Remove="Views\Dashboard\LogList.cshtml" />
     <None Remove="Views\_layout.cshtml" />
   </ItemGroup>
@@ -24,6 +25,7 @@
     <EmbeddedResource Include="Views\Dashboard\Home.cshtml">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\Dashboard\LogInfo.cshtml" />
     <EmbeddedResource Include="Views\Dashboard\LogList.cshtml" />
     <EmbeddedResource Include="Views\_layout.cshtml" />
   </ItemGroup>

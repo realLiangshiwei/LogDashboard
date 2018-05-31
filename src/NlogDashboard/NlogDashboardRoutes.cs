@@ -16,6 +16,8 @@ namespace NlogDashboard
 
             Routes.AddRoute(new NlogDashboardRoute("/Dashboard/Searchlog", "Views.Dashboard.LogList.cshtml"));
 
+            Routes.AddRoute(new NlogDashboardRoute("/Dashboard/LogInfo", "Views.Dashboard.LogInfo.cshtml"));
+
             Routes.AddRoute(new NlogDashboardRoute()
             {
                 Key = "/Dashboard/GetException",

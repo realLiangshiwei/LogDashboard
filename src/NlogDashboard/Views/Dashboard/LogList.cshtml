@@ -18,7 +18,7 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>@item.Id</td>
+                    <td><a onclick="logInfo('@item.Id')">@item.Id</a></td>
                     <td>@item.Logger</td>
                     @{
                         var level = item.Level as string;

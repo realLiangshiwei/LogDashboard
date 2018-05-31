@@ -44,3 +44,14 @@ function showException(id) {
         });
     });
 }
+
+function logInfo(id) {
+    $.ajax({
+        method:"post",
+        url: mapPath + "/Dashboard/LogInfo",
+        data: { id: id },
+        dataType:"text/html"
+    }).done(function(data) {
+        $("#content").html(data);
+    });
+}
