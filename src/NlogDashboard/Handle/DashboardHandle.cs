@@ -16,7 +16,7 @@ namespace NlogDashboard.Handle
         public async Task<string> Home()
         {
             var result = await Conn.QueryAsync("select * from log order by id desc offset 0 rows fetch next 10 rows only");
-
+     
             ViewBag.unique = await Conn.QueryFirstAsync<long>(
                 "select count(b.Message) from(select Message from log a group by a.Message having count(a.Message) = 1) b");
 

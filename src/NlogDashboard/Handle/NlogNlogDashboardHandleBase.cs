@@ -24,6 +24,7 @@ namespace NlogDashboard.Handle
 
         public virtual async Task<string> View(object model = null, string viewName = null)
         {
+            Context.HttpContext.Response.ContentType = "text/html";
             ViewBag.DashboardMapPath = Context.Options.PathMatch;
             ViewBag.View = Context.Route.View;
             return await Context.Engine.CompileRenderAsync(viewName ?? Context.Route.View, model, ViewBag);
@@ -32,6 +33,7 @@ namespace NlogDashboard.Handle
 
         public virtual string Json(object model)
         {
+            Context.HttpContext.Response.ContentType = "text/json";
             return JsonConvert.SerializeObject(model);
         }
     }

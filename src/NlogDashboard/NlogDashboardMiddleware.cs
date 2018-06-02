@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
@@ -92,18 +93,30 @@ namespace NlogDashboard
                 }
                 else
                 {
-                    if (httpContext.Request.ContentLength == null)
+                    if (httpContext.Request.ContentLength == null && httpContext.Request.Query.Count <= 0)
                     {
                         html = await (Task<string>)method.Invoke(handle, new Object[] { null });
                     }
                     else
                     {
+                        object args;
+                        if (httpContext.Request.Query.Count > 0)
+                        {
+                            var dict = new Dictionary<string, string>();
+                            httpContext.Request.Query.ToList().ForEach(x => dict.Add(x.Key, x.Value));
+                            args = JsonConvert.DeserializeObject(JsonConvert.SerializeObject(dict), method.GetParameters().First().ParameterType);
+                        }
+                        else
+                        {
+                            // ReSharper disable once PossibleInvalidOperationException
+                            var bytes = new byte[(int)httpContext.Request.ContentLength];
+                            await httpContext.Request.Body.ReadAsync(bytes, 0, (int)httpContext.Request.ContentLength);
+                            string requestJson = Encoding.Default.GetString(bytes);
 
-                        var bytes = new byte[(int)httpContext.Request.ContentLength];
-                        await httpContext.Request.Body.ReadAsync(bytes, 0, (int)httpContext.Request.ContentLength);
-                        string requestJson = Encoding.Default.GetString(bytes);
+                            args = JsonConvert.DeserializeObject(requestJson, method.GetParameters().First().ParameterType);
 
-                        var args = JsonConvert.DeserializeObject(requestJson, method.GetParameters().First().ParameterType);
+                        }
+
 
                         html = await (Task<string>)method.Invoke(handle, new[] { args });
 

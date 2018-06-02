@@ -17,7 +17,7 @@ namespace NlogDashboard
 
         internal bool UseAuthorzation { get; set; }
 
-        public string PathMatch { get; set; }
+        public string PathMatch { get; set; }       
 
         public void UseAuthorization(string name, string password)
         {

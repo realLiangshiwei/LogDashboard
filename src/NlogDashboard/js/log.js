@@ -49,8 +49,7 @@ function logInfo(id) {
     $.ajax({
         method:"post",
         url: mapPath + "/Dashboard/LogInfo",
-        data: { id: id },
-        dataType:"text/html"
+        data: JSON.stringify({ id: id })
     }).done(function(data) {
         $("#content").html(data);
     });
