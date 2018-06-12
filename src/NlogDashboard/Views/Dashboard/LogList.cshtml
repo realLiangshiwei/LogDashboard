@@ -18,7 +18,7 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td><a onclick="logInfo('@item.Id')">@item.Id</a></td>
+                    <td><a href="@(ViewBag.DashboardMapPath)/Dashboard/LogInfo?id=@item.Id">@item.Id</a></td>
                     <td>@item.Logger</td>
                     @{
                         var level = item.Level as string;
