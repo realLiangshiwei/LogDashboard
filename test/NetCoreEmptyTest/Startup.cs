@@ -17,6 +17,7 @@ namespace NetCoreEmptyTest
                 opt.UseAuthorization("123", "123");
                 opt.UseDataBaseSource("Server=localhost; Database=log.test.edu.jingshonline.net;Integrated Security=True;");
             });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

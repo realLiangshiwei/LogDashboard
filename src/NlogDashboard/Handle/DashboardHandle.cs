@@ -18,7 +18,7 @@ namespace NlogDashboard.Handle
             var result = await Conn.QueryAsync("select * from log order by id desc offset 0 rows fetch next 10 rows only");
      
             ViewBag.unique = await Conn.QueryFirstAsync<long>(
-                "select count(b.Message) from(select Message from log a group by a.Message having count(a.Message) = 1) b");
+                "select count(b.count) from (select  count(distinct Exception) count from log where Exception!='' group by Exception) b");
 
             ViewBag.allCount = await Conn.QueryFirstAsync<long>("select count(id) from log");
 
