@@ -1,4 +1,4 @@
-﻿@inherits RazorLight.TemplatePage<IEnumerable<dynamic>>
+﻿@model dynamic
 @{
     Layout = "Views._layout.cshtml";
 }
@@ -6,57 +6,79 @@
     <div class="mb-4 open">
         <ul class="nav nav-tabs" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">概览</a>
+                <a class="nav-link active" data-toggle="tab" href="#overview" role="tab" aria-controls="overview" aria-selected="true">概览</a>
             </li>
-
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#messages" role="tab" aria-controls="messages" aria-selected="false">Messages</a>
+                <a class="nav-link" data-toggle="tab" href="#environment" role="tab" aria-controls="environment" aria-selected="false">环境</a>
             </li>
         </ul>
 
         <div class="tab-content">
-            <div class="tab-pane active" id="home" role="tabpanel">
+            <div class="tab-pane active" id="overview" role="tabpanel">
                 <div class="table-responsive">
                     <table class="table table-bordered">
-
                         <tbody>
                             <tr>
-                                <td>时间</td>
-                                <td class="text-nowrap">Samsung Galaxy S8</td>
+                                <td>项目</td>
+                                <td class="text-nowrap">@Model.Application</td>
                             </tr>
                             <tr>
-                                <td>项目</td>
-                                <td class="text-nowrap">Google Pixel XL</td>
+                                <td>时间</td>
+                                <td class="text-nowrap">@Model.LongDate</td>
                             </tr>
                             <tr>
                                 <td>日志类型</td>
-                                <td class="text-nowrap">iPhone X</td>
+                                <td class="text-nowrap"><button class="btn btn-outline-INFO">@Model.Level.ToUpper()</button></td>
                             </tr>
                             <tr>
                                 <td>Logger</td>
-                                <td class="text-nowrap">OnePlus 5T</td>
+                                <td class="text-nowrap">@Model.Logger</td>
                             </tr>
                             <tr>
                                 <td>消息</td>
-                                <td class="text-nowrap">Google Nexus 6</td>
+                                <td class="text-nowrap">@Model.Message</td>
                             </tr>
+
                         </tbody>
                     </table>
+                    <div class="card">
+                        <div class="card-header bg-light">
+                            堆栈信息
+                        </div>
+
+                        <div class="card-body">
+                            @Model.Exception
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="tab-pane" id="profile" role="tabpanel">
-                2. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-                dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </div>
+            <div class="tab-pane" id="environment" role="tabpanel">
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <td>请求方式</td>
+                            <td class="text-nowrap">@Model.RequestMethod</td>
+                        </tr>
+                        <tr>
+                            <td>请求地址</td>
+                            <td class="text-nowrap">@Model.RequestUrl</td>
+                        </tr>
+                        <tr>
+                            <td>客户端IP</td>
+                            <td class="text-nowrap">@Model.RequestIp</td>
+                        </tr>
+                        <tr>
+                            <td>UA</td>
+                            <td class="text-nowrap">@Model.RequestUserAgent</td>
+                        </tr>
+                        <tr>
+                            <td>用户身份</td>
+                            <td class="text-nowrap">@Model.UserIdentity</td>
+                        </tr>
 
-            <div class="tab-pane" id="messages" role="tabpanel">
-                3. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-                dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

@@ -16,7 +16,7 @@ namespace NlogDashboard.Handle
         public async Task<string> Home()
         {
             var result = await Conn.QueryAsync("select * from log order by id desc offset 0 rows fetch next 10 rows only");
-     
+
             ViewBag.unique = await Conn.QueryFirstAsync<long>(
                 "select count(b.count) from (select  count(distinct Exception) count from log where Exception!='' group by Exception) b");
 
@@ -45,7 +45,8 @@ namespace NlogDashboard.Handle
 
         public async Task<string> LogInfo(EnttiyDto input)
         {
-            return await View();
+            var log = await Conn.QueryFirstOrDefaultAsync($"select * from log where id = {input.Id}");
+            return await View(log);
         }
 
         public async Task<string> GetException(EnttiyDto input)
