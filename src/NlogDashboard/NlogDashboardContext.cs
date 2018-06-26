@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.AspNetCore.Http;
+using NlogDashboard.Route;
 using RazorLight;
 
 namespace NlogDashboard

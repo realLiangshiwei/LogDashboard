@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Data.SqlClient;
-using System.IO;
 using System.Threading.Tasks;
 using Dapper;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.StackTrace.Sources;
 using NlogDashboard.Model;

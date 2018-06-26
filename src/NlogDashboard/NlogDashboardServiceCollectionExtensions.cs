@@ -10,7 +10,7 @@ namespace NlogDashboard
         public static IServiceCollection AddNlogDashboard(this IServiceCollection services, Action<NlogDashboardOptions> func)
         {
             services.AddSingleton<IRazorLightEngine>(new RazorLightEngineBuilder()
-                .UseEmbeddedResourcesProject(typeof(NlogDashboardRoute))
+                .UseEmbeddedResourcesProject(typeof(NlogDashboardMiddleware))
                 .UseMemoryCachingProvider()
                 .Build());
 

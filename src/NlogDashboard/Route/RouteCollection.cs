@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using NlogDashboard.Route;
 
-namespace NlogDashboard
+namespace NlogDashboard.Route
 {
     public class RouteCollection
     {

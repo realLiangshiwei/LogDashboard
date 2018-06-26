@@ -1,4 +1,4 @@
-﻿namespace NlogDashboard
+﻿namespace NlogDashboard.Route
 {
     public class NlogDashboardRoute
     {
