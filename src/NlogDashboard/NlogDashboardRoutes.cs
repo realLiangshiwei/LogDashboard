@@ -18,11 +18,14 @@ namespace NlogDashboard
 
             Routes.AddRoute(new NlogDashboardRoute("/Dashboard/LogInfo", "Views.Dashboard.LogInfo.cshtml"));
 
-            Routes.AddRoute(new NlogDashboardRoute()
+            Routes.AddRoute(new NlogDashboardRoute
             {
                 Key = "/Dashboard/GetException",
                 HtmlView = false
             });
+
+            Routes.AddRoute(new NlogDashboardRoute("/Dashboard/Ha", "Views.Dashboard.Exception.cshtml"));
+           
         }
     }
 }

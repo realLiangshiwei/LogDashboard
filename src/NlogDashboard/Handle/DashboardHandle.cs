@@ -1,24 +1,36 @@
 ﻿using System;
 using System.Data.SqlClient;
+using System.IO;
 using System.Threading.Tasks;
 using Dapper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.StackTrace.Sources;
 using NlogDashboard.Model;
 
 namespace NlogDashboard.Handle
 {
     public class DashboardHandle : NlogNlogDashboardHandleBase
     {
+        private readonly ExceptionDetailsProvider _exceptionDetailsProvider;
 
-        public DashboardHandle(NlogDashboardContext context, SqlConnection conn) : base(context, conn)
+        public DashboardHandle(
+            NlogDashboardContext context,
+            SqlConnection conn,
+            IServiceProvider serviceProvider) : base(context, conn, serviceProvider)
         {
+            _exceptionDetailsProvider = new ExceptionDetailsProvider(new PhysicalFileProvider(AppContext.BaseDirectory), 6);
         }
 
         public async Task<string> Home()
         {
+
             var result = await Conn.QueryAsync("select * from log order by id desc offset 0 rows fetch next 10 rows only");
 
-            ViewBag.unique = await Conn.QueryFirstAsync<long>(
-                "select count(b.count) from (select  count(distinct Exception) count from log where Exception!='' group by Exception) b");
+            ViewBag.unique = 50;
+            //await Conn.QueryFirstAsync<long>(
+            //"select count(b.count) from (select  count(distinct Exception) count from log where Exception!='' group by Exception) b");
 
             ViewBag.allCount = await Conn.QueryFirstAsync<long>("select count(id) from log");
 
@@ -53,6 +65,20 @@ namespace NlogDashboard.Handle
         {
             var result = await Conn.QueryFirstAsync<string>($"select exception from log where id = {input.Id}");
             return result;
+        }
+
+        public async Task<string> Ha()
+        {
+            try
+            {
+                throw new ArgumentException("测试一场");
+            }
+            catch (Exception e)
+            {
+                var ex = _exceptionDetailsProvider.GetDetails(e);
+                return await View(ex);
+            }
+
         }
 
         public string BuildSql(SearchlogInput input)

@@ -9,15 +9,18 @@ namespace NlogDashboard.Handle
     public abstract class NlogNlogDashboardHandleBase : INlogDashboardHandle
     {
 
-        protected NlogNlogDashboardHandleBase(NlogDashboardContext context, SqlConnection conn)
+        protected NlogNlogDashboardHandleBase(NlogDashboardContext context, SqlConnection conn, IServiceProvider serviceProvider)
         {
             Context = context ?? throw new ArgumentNullException(nameof(context));
             Conn = conn ?? throw new ArgumentNullException(nameof(conn));
+            ServiceProvider = serviceProvider;
             ViewBag = new ExpandoObject();
         }
 
         public NlogDashboardContext Context { get; }
         public SqlConnection Conn { get; }
+
+        public IServiceProvider ServiceProvider { get; }
 
         public dynamic ViewBag { get; set; }
 

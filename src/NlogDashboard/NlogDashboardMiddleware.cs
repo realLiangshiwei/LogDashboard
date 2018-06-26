@@ -16,6 +16,7 @@ namespace NlogDashboard
     {
         private readonly RequestDelegate _next;
 
+
         public NlogDashboardMiddleware(RequestDelegate next)
         {
             _next = next;
@@ -41,7 +42,7 @@ namespace NlogDashboard
                 }
                 httpContext.Response.Headers.Add("WWW-Authenticate", "Basic realm=\"NlogDashBoard Auth\"");
                 httpContext.Response.StatusCode = 401;
-                await httpContext.Response.WriteAsync("unAuthorization");
+                await httpContext.Response.WriteAsync("UnAuthorization");
                 return;
             }
             AuthSuccess:
@@ -71,7 +72,8 @@ namespace NlogDashboard
                         new NlogDashboardContext(httpContext, router,
                             httpContext.RequestServices.GetService<IRazorLightEngine>(),
                             opts),
-                        conn
+                        conn,
+                        httpContext.RequestServices
 
                     }, null, null);
 
@@ -85,6 +87,7 @@ namespace NlogDashboard
                 string html;
 
                 var method = handle.GetType().GetMethod(router.Action);
+                // ReSharper disable once PossibleNullReferenceException
                 var parameterslength = method.GetParameters().Length;
 
                 if (parameterslength == 0)

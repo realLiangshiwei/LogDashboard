@@ -17,14 +17,14 @@ namespace NlogDashboard
 
             if (string.IsNullOrWhiteSpace(route.Key))
             {
-                throw new ArgumentNullException("route key can bu null");
+                throw new ArgumentNullException("route key can not be null");
             }
 
             if (route.HtmlView)
             {
                 if (string.IsNullOrWhiteSpace(route.View))
                 {
-                    throw new ArgumentNullException("route view can bu null");
+                    throw new ArgumentNullException("route view can not be null");
                 }
             }
            

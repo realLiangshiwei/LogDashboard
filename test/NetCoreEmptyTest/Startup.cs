@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using NlogDashboard;
 
 namespace NetCoreEmptyTest
@@ -23,6 +24,7 @@ namespace NetCoreEmptyTest
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+
             // 静态文件中间件
             app.UseStaticFiles();
 

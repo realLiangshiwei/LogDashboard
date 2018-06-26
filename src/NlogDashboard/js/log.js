@@ -24,6 +24,7 @@ function showException(id) {
         url: mapPath + "/Dashboard/GetException",
         data: JSON.stringify({ id: id })
     }).done(function (data) {
+
         $("#tbody").append('<div class="modal fade" id="' + id + '"> ' +
             '<div class= "modal-dialog" role = "document">' +
             '<div class="modal-content" style="width:1068px;">' +
