@@ -25,22 +25,17 @@ namespace NlogDashboard.Handle
 
             var result = await Conn.QueryAsync("select * from log order by id desc offset 0 rows fetch next 10 rows only");
 
-            ViewBag.unique = 50;
-            //await Conn.QueryFirstAsync<long>(
-            //"select count(b.count) from (select  count(distinct Exception) count from log where Exception!='' group by Exception) b");
+            ViewBag.unique = await Conn.QueryFirstAsync<long>("select count(b.count) from (select  count(distinct Exception) count from log where Exception!='' group by Exception) b");
 
             ViewBag.allCount = await Conn.QueryFirstAsync<long>("select count(id) from log");
 
             var now = DateTime.Now;
 
             var today = now.ToShortDateString();
-            ViewBag.todayCount =
-                await Conn.QueryFirstAsync<long>($"select count(id) from log where longdate>='{today}' and longdate<='{today + " 23:59"}'");
+            ViewBag.todayCount = await Conn.QueryFirstAsync<long>($"select count(id) from log where longdate>='{today}' and longdate<='{today + " 23:59"}'");
 
             var hour = now.AddHours(-1);
-            ViewBag.hourCount =
-                await Conn.QueryFirstAsync<long>(
-                    $"select count(id) from log where longdate>='{hour}' and longdate<'{now}'");
+            ViewBag.hourCount = await Conn.QueryFirstAsync<long>($"select count(id) from log where longdate>='{hour}' and longdate<'{now}'");
 
             return await View(result);
         }
@@ -68,7 +63,7 @@ namespace NlogDashboard.Handle
         {
             try
             {
-                throw new ArgumentException("测试一场");
+                throw new ArgumentException("测试一场",new Exception("关联异常"));
             }
             catch (Exception e)
             {

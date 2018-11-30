@@ -16,7 +16,7 @@ namespace NetCoreEmptyTest
             services.AddNlogDashboard(opt =>
             {
                 opt.UseAuthorization("123", "123");
-                opt.UseDataBaseSource("Server=localhost; Database=log.test.edu.jingshonline.net;Integrated Security=True;");
+                opt.UseDataBase("Server=localhost; Database=log.test.edu.jingshonline.net;Integrated Security=True;");
             });
 
         }

@@ -20,30 +20,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="css\errorPage.css" />
-    <EmbeddedResource Include="css\styles.css" />
-    <EmbeddedResource Include="js\carbon.js" />
-    <EmbeddedResource Include="js\dashboard.js" />
-    <EmbeddedResource Include="js\errorPage.js" />
-    <EmbeddedResource Include="js\log.js" />
-    <EmbeddedResource Include="js\spin.min.js" />
-    <EmbeddedResource Include="Views\Dashboard\Exception.cshtml" />
-    <EmbeddedResource Include="Views\Dashboard\Home.cshtml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\Dashboard\LogInfo.cshtml" />
-    <EmbeddedResource Include="Views\Dashboard\LogList.cshtml" />
-    <EmbeddedResource Include="Views\_layout.cshtml" />
+    <EmbeddedResource Include="css\\**\*" />
+    <EmbeddedResource Include="js\\**\*" />
+    <EmbeddedResource Include="Views\\**\*" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Dapper" Version="1.50.5" />
-    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.1.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.1.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor" Version="2.1.0" />
-    <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor" Version="2.1.3" />
+    <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.1.1" />
     <PackageReference Include="Microsoft.Extensions.StackTrace.Sources" Version="2.0.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
     <PackageReference Include="RazorLight" Version="2.0.0-beta1" />
   </ItemGroup>
 

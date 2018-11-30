@@ -33,10 +33,11 @@ namespace NlogDashboard
             SyncTime = TimeSpan.FromSeconds(5);
         }
 
-        public void UseDataBaseSource(string connectionString)
+        public void UseDataBase(string connectionString)
         {
             ConnetionString = connectionString;
         }
 
     }
 }
+
