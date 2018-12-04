@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace NlogDashboard
 {
@@ -11,19 +13,18 @@ namespace NlogDashboard
         /// </summary>
         public TimeSpan SyncTime { get; set; }
 
-        internal string Name { get; set; }
 
-        internal string Password { get; set; }
+        internal bool Authorzation { get; set; }
 
-        internal bool UseAuthorzation { get; set; }
+        public string PathMatch { get; set; }
 
-        public string PathMatch { get; set; }       
+        internal List<IAuthorizeData> AuthorizeDatas { get; set; }
 
-        public void UseAuthorization(string name, string password)
+        public void UseAuthorization(List<AuthorizeAttribute> authorizeAttributes)
         {
-            Name = name;
-            Password = password;
-            UseAuthorzation = true;
+            Authorzation = true;
+            AuthorizeDatas = new List<IAuthorizeData>();
+            AuthorizeDatas.AddRange(authorizeAttributes);
         }
 
 

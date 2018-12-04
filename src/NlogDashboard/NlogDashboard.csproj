@@ -5,18 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="css\errorPage.css" />
-    <None Remove="css\styles.css" />
-    <None Remove="js\carbon.js" />
-    <None Remove="js\dashboard.js" />
-    <None Remove="js\errorPage.js" />
-    <None Remove="js\log.js" />
-    <None Remove="js\spin.min.js" />
-    <None Remove="Views\Dashboard\Exception.cshtml" />
-    <None Remove="Views\Dashboard\Home.cshtml" />
-    <None Remove="Views\Dashboard\LogInfo.cshtml" />
-    <None Remove="Views\Dashboard\LogList.cshtml" />
-    <None Remove="Views\_layout.cshtml" />
+    <None Remove="css\*.css" />
+    <None Remove="css\**\*.css" />
+    <None Remove="js\*.js" />
+    <None Remove="js\**\*.js" />
+    <None Remove="Views\*.cshtml" />
+    <None Remove="Views\**\*.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

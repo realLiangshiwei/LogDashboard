@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using NlogDashboard.Authorization;
 using NlogDashboard.Route;
 using RazorLight;
 
@@ -28,34 +29,23 @@ namespace NlogDashboard
         {
             var opts = httpContext.RequestServices.GetService<NlogDashboardOptions>();
 
-            #region auth
-            if (opts.UseAuthorzation)
+            if (opts.Authorzation)
             {
-                string auth = httpContext.Request.Headers["Authorization"];
-                if (!string.IsNullOrWhiteSpace(auth))
+                if (!await AuthorizeHelper.AuthorizeAsync(httpContext, opts.AuthorizeDatas))
                 {
-                    var cred = Encoding.ASCII.GetString(Convert.FromBase64String(auth.Substring(6))).Split(':');
-                    var user = new { Name = cred[0], Pass = cred[1] };
-                    if (user.Name == opts.Name && user.Pass == opts.Password)
-                    {
-                        goto AuthSuccess;
-                    }
-                }
-                httpContext.Response.Headers.Add("WWW-Authenticate", "Basic realm=\"NlogDashBoard Auth\"");
-                httpContext.Response.StatusCode = 401;
-                await httpContext.Response.WriteAsync("UnAuthorization");
-                return;
+                    return;
+                }      
             }
-            AuthSuccess:
-            #endregion
 
-
+ 
             var requestUrl = httpContext.Request.Path.Value;
             if (requestUrl.Contains("css") || requestUrl.Contains("js"))
             {
                 await httpContext.Response.WriteAsync(NlogDashboardEmbeddedFiles.IncludeEmbeddedFile(requestUrl));
                 return;
             }
+
+
             var router = NlogDashboardRoutes.Routes.FindRoute(requestUrl);
 
             if (router == null)

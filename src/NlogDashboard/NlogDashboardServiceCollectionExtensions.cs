@@ -16,7 +16,6 @@ namespace NlogDashboard
 
             var options = new NlogDashboardOptions();
             func(options);
-
             services.AddSingleton(options);
 
             services.AddTransient(provider => new SqlConnection(options.ConnetionString));
