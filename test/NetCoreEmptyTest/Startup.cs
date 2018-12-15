@@ -1,24 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
-using NlogDashboard;
+using NLogDashboard;
 
 namespace NetCoreEmptyTest
 {
+
+ 
     public class Startup
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddNlogDashboard(opt =>
+          
+            services.AddNLogDashboard(opt =>
             {
-                opt.UseAuthorization(new List<AuthorizeAttribute>
-                {
-                    new AuthorizeAttribute()
-                });
+
                 opt.UseDataBase("Server=localhost; Database=log.test.edu.jingshonline.net;Integrated Security=True;");
             });
 
@@ -26,7 +28,7 @@ namespace NetCoreEmptyTest
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-
+          
             // 静态文件中间件
             app.UseStaticFiles();
 
@@ -35,7 +37,7 @@ namespace NetCoreEmptyTest
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseNlogDashboard();
+            app.UseNLogDashboard();
 
             app.Run(async (context) =>
             {

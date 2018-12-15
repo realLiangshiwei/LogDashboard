@@ -4,26 +4,30 @@ using System.Threading.Tasks;
 using Dapper;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.StackTrace.Sources;
-using NlogDashboard.Model;
+using NLogDashboard.Model;
+using NLogDashboard.Repository;
 
-namespace NlogDashboard.Handle
+namespace NLogDashboard.Handle
 {
-    public class DashboardHandle : NlogNlogDashboardHandleBase
+    public class DashboardHandle : NlogNLogDashboardHandleBase
     {
         private readonly ExceptionDetailsProvider _exceptionDetailsProvider;
 
+        private readonly IRepository<ILogModel> _logrepository;
+
         public DashboardHandle(
-            NlogDashboardContext context,
+            NLogDashboardContext context,
             SqlConnection conn,
-            IServiceProvider serviceProvider) : base(context, conn, serviceProvider)
+            IServiceProvider serviceProvider,
+            IRepository<ILogModel> logrepository) : base(context, conn, serviceProvider)
         {
             _exceptionDetailsProvider = new ExceptionDetailsProvider(new PhysicalFileProvider(AppContext.BaseDirectory), 6);
         }
 
         public async Task<string> Home()
         {
-
-            var result = await Conn.QueryAsync("select * from log order by id desc offset 0 rows fetch next 10 rows only");
+          
+               var result = await Conn.QueryAsync("select * from log order by id desc offset 0 rows fetch next 10 rows only");
 
             ViewBag.unique = await Conn.QueryFirstAsync<long>("select count(b.count) from (select  count(distinct Exception) count from log where Exception!='' group by Exception) b");
 
@@ -63,7 +67,7 @@ namespace NlogDashboard.Handle
         {
             try
             {
-                throw new ArgumentException("测试一场",new Exception("关联异常"));
+                throw new ArgumentException("测试一场", new Exception("关联异常"));
             }
             catch (Exception e)
             {

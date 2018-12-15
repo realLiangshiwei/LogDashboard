@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using NlogDashboard.Route;
+using NLogDashboard.Route;
 
-namespace NlogDashboard.Route
+namespace NLogDashboard.Route
 {
     public class RouteCollection
     {
-        private static readonly List<NlogDashboardRoute> Routes = new List<NlogDashboardRoute>();
+        private static readonly List<NLogDashboardRoute> Routes = new List<NLogDashboardRoute>();
 
-        public void AddRoute(NlogDashboardRoute route)
+        public void AddRoute(NLogDashboardRoute route)
         {
             if (route == null)
             {
@@ -61,13 +61,13 @@ namespace NlogDashboard.Route
 
         }
 
-        public NlogDashboardRoute FindRoute(string url)
+        public NLogDashboardRoute FindRoute(string url)
         {
             if (string.IsNullOrWhiteSpace(url))
             {
                 return Routes.FirstOrDefault(x => x.Key.ToLower() == "/Dashboard/Home".ToLower());
             }
-  
+            
             return Routes.FirstOrDefault(x => x.Key.ToLower() == url.ToLower());
         }
 

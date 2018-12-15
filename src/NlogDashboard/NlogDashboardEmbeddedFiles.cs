@@ -1,14 +1,14 @@
 ﻿using System.IO;
 using System.Reflection;
-using NlogDashboard.Route;
+using NLogDashboard.Route;
 
-namespace NlogDashboard
+namespace NLogDashboard
 {
-    public class NlogDashboardEmbeddedFiles
+    public class NLogDashboardEmbeddedFiles
     {
         public static string IncludeEmbeddedFile(string path)
         {
-            var stream = Assembly.GetAssembly(typeof(NlogDashboardRoute)).GetManifestResourceStream("NlogDashboard." + path.Substring(1));
+            var stream = Assembly.GetAssembly(typeof(NLogDashboardRoute)).GetManifestResourceStream("NLogDashboard." + path.Substring(1));
             var reader = new StreamReader(stream);
             return reader.ReadToEnd();
         }

@@ -2,41 +2,43 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 
-namespace NlogDashboard
+namespace NLogDashboard
 {
-    public class NlogDashboardOptions
+    public class NLogDashboardOptions
     {
-        internal string ConnetionString { get; set; }
+        public string NogConfig { get; set; }
 
-        /// <summary>
-        /// 同步时间
-        /// </summary>
-        public TimeSpan SyncTime { get; set; }
-
-
-        internal bool Authorzation { get; set; }
+        public bool Authorization { get; set; }
 
         public string PathMatch { get; set; }
 
-        internal List<IAuthorizeData> AuthorizeDatas { get; set; }
+        public bool FileSource { get; set; }
+
+        public bool DatabaseSource { get; set; }
+
+        public string ConnectionString { get; set; }
+
+        internal List<IAuthorizeData> AuthorizeData { get; set; }
 
         public void UseAuthorization(List<AuthorizeAttribute> authorizeAttributes)
         {
-            Authorzation = true;
-            AuthorizeDatas = new List<IAuthorizeData>();
-            AuthorizeDatas.AddRange(authorizeAttributes);
+            Authorization = true;
+            AuthorizeData = new List<IAuthorizeData>();
+            AuthorizeData.AddRange(authorizeAttributes);
         }
 
 
-        public NlogDashboardOptions()
+        public NLogDashboardOptions()
         {
-            PathMatch = "/NlogDashboard";
-            SyncTime = TimeSpan.FromSeconds(5);
+            FileSource = true;
+            NogConfig = "NLog.config";
+            PathMatch = "/NLogDashboard";
         }
 
         public void UseDataBase(string connectionString)
         {
-            ConnetionString = connectionString;
+            DatabaseSource = true;
+            ConnectionString = connectionString;
         }
 
     }

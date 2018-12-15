@@ -1,21 +1,21 @@
 ﻿using System;
 using Microsoft.AspNetCore.Http;
-using NlogDashboard.Route;
+using NLogDashboard.Route;
 using RazorLight;
 
-namespace NlogDashboard
+namespace NLogDashboard
 {
-    public class NlogDashboardContext
+    public class NLogDashboardContext
     {
         public HttpContext HttpContext { get; }
 
-        public NlogDashboardRoute Route { get; }
+        public NLogDashboardRoute Route { get; }
 
         public IRazorLightEngine Engine { get; }
 
-        public NlogDashboardOptions Options { get; }
+        public NLogDashboardOptions Options { get; }
 
-        public NlogDashboardContext(HttpContext httpContext, NlogDashboardRoute route, IRazorLightEngine engine, NlogDashboardOptions options)
+        public NLogDashboardContext(HttpContext httpContext, NLogDashboardRoute route, IRazorLightEngine engine, NLogDashboardOptions options)
         {
             Route = route ?? throw new ArgumentNullException(nameof(route));
             HttpContext = httpContext ?? throw new ArgumentNullException(nameof(httpContext));

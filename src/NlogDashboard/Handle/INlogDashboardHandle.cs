@@ -1,10 +1,10 @@
 ﻿using System.Data.SqlClient;
 
-namespace NlogDashboard.Handle
+namespace NLogDashboard.Handle
 {
-    public interface INlogDashboardHandle
+    public interface INLogDashboardHandle
     {
-        NlogDashboardContext Context { get; }
+        NLogDashboardContext Context { get; }
 
         SqlConnection Conn { get; }
     }

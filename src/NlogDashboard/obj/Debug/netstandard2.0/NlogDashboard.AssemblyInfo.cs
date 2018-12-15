@@ -11,12 +11,12 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("NlogDashboard")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("NLogDashboard")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
-[assembly: System.Reflection.AssemblyProductAttribute("NlogDashboard")]
-[assembly: System.Reflection.AssemblyTitleAttribute("NlogDashboard")]
+[assembly: System.Reflection.AssemblyProductAttribute("NLogDashboard")]
+[assembly: System.Reflection.AssemblyTitleAttribute("NLogDashboard")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 
 // 由 MSBuild WriteCodeFragment 类生成。

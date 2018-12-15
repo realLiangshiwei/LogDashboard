@@ -4,12 +4,12 @@ using System.Dynamic;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace NlogDashboard.Handle
+namespace NLogDashboard.Handle
 {
-    public abstract class NlogNlogDashboardHandleBase : INlogDashboardHandle
+    public abstract class NlogNLogDashboardHandleBase : INLogDashboardHandle
     {
 
-        protected NlogNlogDashboardHandleBase(NlogDashboardContext context, SqlConnection conn, IServiceProvider serviceProvider)
+        protected NlogNLogDashboardHandleBase(NLogDashboardContext context, SqlConnection conn, IServiceProvider serviceProvider)
         {
             Context = context ?? throw new ArgumentNullException(nameof(context));
             Conn = conn ?? throw new ArgumentNullException(nameof(conn));
@@ -17,7 +17,7 @@ namespace NlogDashboard.Handle
             ViewBag = new ExpandoObject();
         }
 
-        public NlogDashboardContext Context { get; }
+        public NLogDashboardContext Context { get; }
         public SqlConnection Conn { get; }
 
         public IServiceProvider ServiceProvider { get; }

@@ -8,18 +8,18 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
-using NlogDashboard.Authorization;
-using NlogDashboard.Route;
+using NLogDashboard.Authorization;
+using NLogDashboard.Route;
 using RazorLight;
 
-namespace NlogDashboard
+namespace NLogDashboard
 {
-    public class NlogDashboardMiddleware
+    public class NLogDashboardMiddleware
     {
         private readonly RequestDelegate _next;
 
 
-        public NlogDashboardMiddleware(RequestDelegate next)
+        public NLogDashboardMiddleware(RequestDelegate next)
         {
             _next = next;
         }
@@ -27,11 +27,11 @@ namespace NlogDashboard
 
         public async Task InvokeAsync(HttpContext httpContext)
         {
-            var opts = httpContext.RequestServices.GetService<NlogDashboardOptions>();
+            var opts = httpContext.RequestServices.GetService<NLogDashboardOptions>();
 
-            if (opts.Authorzation)
+            if (opts.Authorization)
             {
-                if (!await AuthorizeHelper.AuthorizeAsync(httpContext, opts.AuthorizeDatas))
+                if (!await AuthorizeHelper.AuthorizeAsync(httpContext, opts.AuthorizeData))
                 {
                     return;
                 }      
@@ -39,14 +39,15 @@ namespace NlogDashboard
 
  
             var requestUrl = httpContext.Request.Path.Value;
+
             if (requestUrl.Contains("css") || requestUrl.Contains("js"))
             {
-                await httpContext.Response.WriteAsync(NlogDashboardEmbeddedFiles.IncludeEmbeddedFile(requestUrl));
+                await httpContext.Response.WriteAsync(NLogDashboardEmbeddedFiles.IncludeEmbeddedFile(requestUrl));
                 return;
             }
 
 
-            var router = NlogDashboardRoutes.Routes.FindRoute(requestUrl);
+            var router = NLogDashboardRoutes.Routes.FindRoute(requestUrl);
 
             if (router == null)
             {
@@ -57,10 +58,10 @@ namespace NlogDashboard
             using (var conn = httpContext.RequestServices.GetService<SqlConnection>())
             {
                 await conn.OpenAsync();
-                var handle = Assembly.GetAssembly(typeof(NlogDashboardRoute))
-                    .CreateInstance("NlogDashboard.Handle." + router.Handle + "Handle", true, BindingFlags.Default, null, new object[]
+                var handle = Assembly.GetAssembly(typeof(NLogDashboardRoute))
+                    .CreateInstance("NLogDashboard.Handle." + router.Handle + "Handle", true, BindingFlags.Default, null, new object[]
                     {
-                        new NlogDashboardContext(httpContext, router,
+                        new NLogDashboardContext(httpContext, router,
                             httpContext.RequestServices.GetService<IRazorLightEngine>(),
                             opts),
                         conn,
@@ -110,7 +111,6 @@ namespace NlogDashboard
                             args = JsonConvert.DeserializeObject(requestJson, method.GetParameters().First().ParameterType);
 
                         }
-
 
                         html = await (Task<string>)method.Invoke(handle, new[] { args });
 

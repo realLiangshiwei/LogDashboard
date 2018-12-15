@@ -1,6 +1,6 @@
 ﻿using RazorLight;
 
-namespace NlogDashboard.Model
+namespace NLogDashboard.Model
 {
     public class DashboardModel
     {
