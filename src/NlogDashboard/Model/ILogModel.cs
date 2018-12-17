@@ -8,9 +8,9 @@ namespace NLogDashboard.Model
 
         string Level { get; set; }
 
-        string Message { get; set; }
-
         string Logger { get; set; }
+
+        string Message { get; set; }
 
         string Exception { get; set; }
     }

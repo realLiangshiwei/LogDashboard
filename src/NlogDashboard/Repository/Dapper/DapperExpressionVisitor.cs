@@ -15,13 +15,13 @@ namespace NLogDashboard.Repository.Dapper
     /// </summary>
     /// <typeparam name="T">The type of the entity.</typeparam>
     /// <seealso cref="System.Linq.Expressions.ExpressionVisitor" />
-    internal class DapperExpressionVisitor<T> : ExpressionVisitor where T : LogModel
+    internal class DapperExpressionVisitor<T> : ExpressionVisitor where T : class, ILogModel
     {
         private PredicateGroup _pg;
         private Expression _processedProperty;
         private bool _unarySpecified;
-        private Stack<PredicateGroup> _predicateGroupStack;
-        public PredicateGroup _currentGroup { get; set; }
+        private readonly Stack<PredicateGroup> _predicateGroupStack;
+        public PredicateGroup CurrentGroup { get; set; }
         public DapperExpressionVisitor()
         {
             Expressions = new HashSet<Expression>();
@@ -36,7 +36,7 @@ namespace NLogDashboard.Repository.Dapper
         public IPredicate Process(Expression exp)
         {
             _pg = new PredicateGroup { Predicates = new List<IPredicate>() };
-            _currentGroup = _pg;
+            CurrentGroup = _pg;
             Visit(Evaluator.PartialEval(exp));
 
             // the 1st expression determines root group operator
@@ -69,7 +69,7 @@ namespace NLogDashboard.Repository.Dapper
 
         private IFieldPredicate GetCurrentField()
         {
-            return GetCurrentField(_currentGroup);
+            return GetCurrentField(CurrentGroup);
         }
 
         private IFieldPredicate GetCurrentField(IPredicateGroup group)
@@ -84,7 +84,7 @@ namespace NLogDashboard.Repository.Dapper
 
         private void AddField(MemberExpression exp, Operator op = Operator.Eq, object value = null, bool not = false)
         {
-            PredicateGroup pg = _currentGroup;
+            PredicateGroup pg = CurrentGroup;
 
             // need convert from Expression<Func<T, bool>> to Expression<Func<T, object>> as this is what Predicates.Field() requires
             Expression<Func<T, object>> fieldExp = Expression.Lambda<Func<T, object>>(Expression.Convert(exp, typeof(object)), exp.Expression as ParameterExpression);
@@ -108,9 +108,9 @@ namespace NLogDashboard.Repository.Dapper
                     Predicates = new List<IPredicate>(),
                     Operator = nt == ExpressionType.OrElse ? GroupOperator.Or : GroupOperator.And
                 };
-                _currentGroup.Predicates.Add(pg);
-                _predicateGroupStack.Push(_currentGroup);
-                _currentGroup = pg;
+                CurrentGroup.Predicates.Add(pg);
+                _predicateGroupStack.Push(CurrentGroup);
+                CurrentGroup = pg;
 
             }
 
@@ -130,7 +130,7 @@ namespace NLogDashboard.Repository.Dapper
             Visit(node.Right);
             if (nt == ExpressionType.OrElse || nt == ExpressionType.AndAlso)
             {
-                _currentGroup = _predicateGroupStack.Pop();
+                CurrentGroup = _predicateGroupStack.Pop();
             }
             return node;
         }

@@ -34,10 +34,10 @@ namespace NLogDashboard
                 if (!await AuthorizeHelper.AuthorizeAsync(httpContext, opts.AuthorizeData))
                 {
                     return;
-                }      
+                }
             }
 
- 
+
             var requestUrl = httpContext.Request.Path.Value;
 
             if (requestUrl.Contains("css") || requestUrl.Contains("js"))
@@ -55,71 +55,70 @@ namespace NLogDashboard
                 return;
             }
 
-            using (var conn = httpContext.RequestServices.GetService<SqlConnection>())
-            {
-                await conn.OpenAsync();
-                var handle = Assembly.GetAssembly(typeof(NLogDashboardRoute))
-                    .CreateInstance("NLogDashboard.Handle." + router.Handle + "Handle", true, BindingFlags.Default, null, new object[]
-                    {
+            var list = Assembly.GetAssembly(typeof(NLogDashboardRoute)).GetType(router.Handle + "Handle");
+
+            var handle = Assembly.GetAssembly(typeof(NLogDashboardRoute))
+                .CreateInstance("NLogDashboard.Handle." + router.Handle + "Handle", true, BindingFlags.Default, null, new object[]
+                {
                         new NLogDashboardContext(httpContext, router,
                             httpContext.RequestServices.GetService<IRazorLightEngine>(),
                             opts),
-                        conn,
+
                         httpContext.RequestServices
 
-                    }, null, null);
+                }, null, null);
 
 
-                if (handle == null)
+            if (handle == null)
+            {
+                httpContext.Response.StatusCode = 404;
+                return;
+            }
+
+            string html;
+
+            var method = handle.GetType().GetMethod(router.Action);
+            // ReSharper disable once PossibleNullReferenceException
+            var parameterslength = method.GetParameters().Length;
+
+            if (parameterslength == 0)
+            {
+                html = await (Task<string>)method.Invoke(handle, null);
+            }
+            else
+            {
+                if (httpContext.Request.ContentLength == null && httpContext.Request.Query.Count <= 0)
                 {
-                    httpContext.Response.StatusCode = 404;
-                    return;
-                }
-
-                string html;
-
-                var method = handle.GetType().GetMethod(router.Action);
-                // ReSharper disable once PossibleNullReferenceException
-                var parameterslength = method.GetParameters().Length;
-
-                if (parameterslength == 0)
-                {
-                    html = await (Task<string>)method.Invoke(handle, null);
+                    html = await (Task<string>)method.Invoke(handle, new Object[] { null });
                 }
                 else
                 {
-                    if (httpContext.Request.ContentLength == null && httpContext.Request.Query.Count <= 0)
+                    object args;
+                    if (httpContext.Request.Query.Count > 0)
                     {
-                        html = await (Task<string>)method.Invoke(handle, new Object[] { null });
+                        var dict = new Dictionary<string, string>();
+                        httpContext.Request.Query.ToList().ForEach(x => dict.Add(x.Key, x.Value));
+                        args = JsonConvert.DeserializeObject(JsonConvert.SerializeObject(dict), method.GetParameters().First().ParameterType);
                     }
                     else
                     {
-                        object args;
-                        if (httpContext.Request.Query.Count > 0)
-                        {
-                            var dict = new Dictionary<string, string>();
-                            httpContext.Request.Query.ToList().ForEach(x => dict.Add(x.Key, x.Value));
-                            args = JsonConvert.DeserializeObject(JsonConvert.SerializeObject(dict), method.GetParameters().First().ParameterType);
-                        }
-                        else
-                        {
-                            // ReSharper disable once PossibleInvalidOperationException
-                            var bytes = new byte[(int)httpContext.Request.ContentLength];
-                            await httpContext.Request.Body.ReadAsync(bytes, 0, (int)httpContext.Request.ContentLength);
-                            string requestJson = Encoding.Default.GetString(bytes);
+                        // ReSharper disable once PossibleInvalidOperationException
+                        var bytes = new byte[(int)httpContext.Request.ContentLength];
+                        await httpContext.Request.Body.ReadAsync(bytes, 0, (int)httpContext.Request.ContentLength);
+                        string requestJson = Encoding.Default.GetString(bytes);
 
-                            args = JsonConvert.DeserializeObject(requestJson, method.GetParameters().First().ParameterType);
-
-                        }
-
-                        html = await (Task<string>)method.Invoke(handle, new[] { args });
+                        args = JsonConvert.DeserializeObject(requestJson, method.GetParameters().First().ParameterType);
 
                     }
+
+                    html = await (Task<string>)method.Invoke(handle, new[] { args });
+
                 }
-
-
-                await httpContext.Response.WriteAsync(html);
             }
+
+
+            await httpContext.Response.WriteAsync(html);
+
 
         }
     }

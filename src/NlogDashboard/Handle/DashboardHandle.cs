@@ -13,21 +13,22 @@ namespace NLogDashboard.Handle
     {
         private readonly ExceptionDetailsProvider _exceptionDetailsProvider;
 
-        private readonly IRepository<ILogModel> _logrepository;
+        private readonly IRepository<ILogModel> _logRepository;
 
         public DashboardHandle(
             NLogDashboardContext context,
             SqlConnection conn,
             IServiceProvider serviceProvider,
-            IRepository<ILogModel> logrepository) : base(context, conn, serviceProvider)
+            IRepository<ILogModel> logRepository) : base(context, conn, serviceProvider)
         {
+            _logRepository = logRepository;
             _exceptionDetailsProvider = new ExceptionDetailsProvider(new PhysicalFileProvider(AppContext.BaseDirectory), 6);
         }
 
         public async Task<string> Home()
         {
-          
-               var result = await Conn.QueryAsync("select * from log order by id desc offset 0 rows fetch next 10 rows only");
+
+            var result = await Conn.QueryAsync("select * from log order by id desc offset 0 rows fetch next 10 rows only");
 
             ViewBag.unique = await Conn.QueryFirstAsync<long>("select count(b.count) from (select  count(distinct Exception) count from log where Exception!='' group by Exception) b");
 
@@ -45,7 +46,7 @@ namespace NLogDashboard.Handle
         }
 
 
-        public async Task<string> Searchlog(SearchlogInput input)
+        public async Task<string> SearchLog(SearchlogInput input)
         {
             var result = await Conn.QueryAsync(BuildSql(input));
             return await View(result, "Views.Dashboard.LogList.cshtml");

@@ -1,0 +1,21 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace NLogDashboard.Extensions
+{
+    public static class StringArrayExtensions
+    {
+        public static string TryGetValue(this string[] array, int index)
+        {
+            try
+            {
+                return array[index];
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+    }
+}

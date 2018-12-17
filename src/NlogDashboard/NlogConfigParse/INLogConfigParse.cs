@@ -6,6 +6,6 @@ namespace NLogDashboard.NlogConfigParse
 {
     public interface INLogConfigParse
     {
-        NlogConfigParseModel Parse(string nLogConfig);
+        ILogConfigOptions Parse(string nLogConfig);
     }
 }

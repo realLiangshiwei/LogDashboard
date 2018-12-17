@@ -10,10 +10,17 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.6" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="4.7.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\NlogDashboard\NLogDashboard.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>
