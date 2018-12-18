@@ -1,4 +1,4 @@
-﻿@inherits RazorLight.TemplatePage<IEnumerable<dynamic>>
+﻿@inherits RazorLight.TemplatePage<IEnumerable<NLogDashboard.Model.ILogModel>>
 @{
     Layout = "Views._layout.cshtml";
 }
@@ -85,7 +85,6 @@
                         <th>ID</th>
                         <th>Logger</th>
                         <th>Level</th>
-                        <th>UserIdentity</th>
                         <th>Message</th>
                         <th>Date</th>
                     </tr>
@@ -107,8 +106,6 @@
                                     <td><button style="width:65px" class="btn btn-outline-@item.Level">@item.Level</button></td>
                                 }
                             }
-
-                            <td>@item.UserIdentity</td>
 
                             <td style="width: 35%;" onclick="$(this).next().show(); $(this).css('display','none');">
                                 @{

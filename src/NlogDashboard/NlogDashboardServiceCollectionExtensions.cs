@@ -2,6 +2,7 @@
 using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
+using DapperExtensions.Mapper;
 using Microsoft.Extensions.DependencyInjection;
 using NLogDashboard.NLogDashboardBuilder;
 using NLogDashboard.Route;
@@ -22,14 +23,14 @@ namespace NLogDashboard
 
             var options = new NLogDashboardOptions();
             func?.Invoke(options);
-
+           
             services.AddSingleton(options);
 
             if (options.DatabaseSource)
             {
                 if (string.IsNullOrWhiteSpace(options.ConnectionString))
                 {
-                    throw new ArgumentNullException("ConnectionString cannot be empty");
+                    throw new ArgumentNullException("ConnectionString cannot be null");
                 }
                 services.AddTransient(provider => new SqlConnection(options.ConnectionString));
                 builder.AddDatabaseSource();

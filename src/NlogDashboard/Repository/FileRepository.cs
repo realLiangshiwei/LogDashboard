@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using DapperExtensions;
 using NLogDashboard.Extensions;
-
+using System.Linq.Dynamic.Core;
 namespace NLogDashboard.Repository
 {
     public class FileRepository<T> : IRepository<T> where T : class, ILogModel, new()
     {
-       
+
         private readonly List<T> _data;
 
         public FileRepository()
@@ -21,32 +22,38 @@ namespace NLogDashboard.Repository
 
         private void ReadLogs()
         {
-            var paths = Directory.GetFiles("Directory.GetCurrentDirectory()", "*.log", SearchOption.AllDirectories);
-
+            var paths = Directory.GetFiles(Directory.GetCurrentDirectory(), "*.log", SearchOption.AllDirectories);
+            int id = 0;
             foreach (var path in paths)
             {
                 var text = File.ReadAllText(path, Encoding.UTF8);
-                var logLines = text.Split(new[] { "|end" }, StringSplitOptions.None);
+                var logLines = text.Trim().Split(new[] { "|end" }, StringSplitOptions.None);
 
                 foreach (var logLine in logLines)
                 {
-                    var properties = logLine.Split('|');
-                    T item = new T
+                    var line = logLine.Split('|');
+                    if (line.Length > 1)
                     {
-                        LongDate = DateTime.Parse(properties[0]),
-                        Level = properties.TryGetValue(1),
-                        Logger = properties.TryGetValue(2),
-                        Message = properties.TryGetValue(3),
-                        Exception = properties.TryGetValue(4)
-                    };
+                        T item = new T
+                        {
+                            Id = id,
+                            LongDate = DateTime.Parse(line[0]),
+                            Level = line.TryGetValue(1),
+                            Logger = line.TryGetValue(2),
+                            Message = line.TryGetValue(3),
+                            Exception = line.TryGetValue(4)
+                        };
 
-                    var typeProperties = item.GetType().GetProperties();
+                        var typeProperties = item.GetType().GetProperties();
 
-                    for (var i = 4; i < properties.Length; i++)
-                    {
-                        typeProperties[i].SetValue(item, properties.TryGetValue(i));
+                        for (var i = 5; i < line.Length; i++)
+                        {
+                            typeProperties[i].SetValue(item, line.TryGetValue(i));
+                        }
+                        _data.Add(item);
+                        id++;
                     }
-                    _data.Add(item);
+
                 }
             }
 
@@ -61,6 +68,23 @@ namespace NLogDashboard.Repository
         {
             return _data.Where(predicate).ToList();
 
+        }
+
+        public int Count(Func<T, bool> predicate)
+        {
+            return _data.Count(predicate);
+        }
+
+        public IEnumerable<T> GetPageList(Func<T, bool> predicate, int page, int size, params ISort[] sorts)
+        {
+            var query = _data.Where(predicate).AsQueryable();
+            foreach (var sort in sorts.Select((value, i) => new { i, value }))
+            {
+                var order = sort.value.Ascending ? "asc" : "desc";
+
+                query = sort.i == 0 ? query.OrderBy($"{sort.value.PropertyName} {order}") : ((IOrderedQueryable<T>)query).ThenBy($"{sort.value.PropertyName} {order}");
+            }
+            return query.Skip(page - 1 * size).Take(size).ToList();
         }
     }
 }

@@ -6,6 +6,8 @@ namespace NLogDashboard
 {
     public class NlogDashboardConsts
     {
-        public const string Root = "NlogDashboard";
+        public const string Root = "NLogDashboard";
+
+        public const string HandleNameSpace = "NLogDashboard.Handle.";
     }
 }

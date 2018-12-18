@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
+using DapperExtensions;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.StackTrace.Sources;
 using NLogDashboard.Model;
@@ -16,10 +19,8 @@ namespace NLogDashboard.Handle
         private readonly IRepository<ILogModel> _logRepository;
 
         public DashboardHandle(
-            NLogDashboardContext context,
-            SqlConnection conn,
             IServiceProvider serviceProvider,
-            IRepository<ILogModel> logRepository) : base(context, conn, serviceProvider)
+            IRepository<ILogModel> logRepository) : base(serviceProvider)
         {
             _logRepository = logRepository;
             _exceptionDetailsProvider = new ExceptionDetailsProvider(new PhysicalFileProvider(AppContext.BaseDirectory), 6);
@@ -27,42 +28,40 @@ namespace NLogDashboard.Handle
 
         public async Task<string> Home()
         {
+            var result = _logRepository.GetPageList(x => true, 1, 10, new Sort { Ascending = false, PropertyName = "longDate" });
 
-            var result = await Conn.QueryAsync("select * from log order by id desc offset 0 rows fetch next 10 rows only");
-
-            ViewBag.unique = await Conn.QueryFirstAsync<long>("select count(b.count) from (select  count(distinct Exception) count from log where Exception!='' group by Exception) b");
-
-            ViewBag.allCount = await Conn.QueryFirstAsync<long>("select count(id) from log");
+            ViewBag.unique = _logRepository.GetList(x => true).GroupBy(x => x.Message).Count(x => x.Count() == 1);
+            ViewBag.allCount = _logRepository.Count(x => true);
 
             var now = DateTime.Now;
 
-            var today = now.ToShortDateString();
-            ViewBag.todayCount = await Conn.QueryFirstAsync<long>($"select count(id) from log where longdate>='{today}' and longdate<='{today + " 23:59"}'");
+            ViewBag.todayCount = _logRepository.Count(x =>
+                   x.LongDate.Date >= now.Date && x.LongDate <= now.Date.AddHours(23).AddMinutes(59));
 
             var hour = now.AddHours(-1);
-            ViewBag.hourCount = await Conn.QueryFirstAsync<long>($"select count(id) from log where longdate>='{hour}' and longdate<'{now}'");
+            ViewBag.hourCount = _logRepository.Count(x => x.LongDate >= hour && x.LongDate <= now);
 
             return await View(result);
         }
 
 
-        public async Task<string> SearchLog(SearchlogInput input)
-        {
-            var result = await Conn.QueryAsync(BuildSql(input));
-            return await View(result, "Views.Dashboard.LogList.cshtml");
-        }
+        //public async Task<string> SearchLog(SearchlogInput input)
+        //{
+        //    var result = await Conn.QueryAsync(BuildSql(input));
+        //    return await View(result, "Views.Dashboard.LogList.cshtml");
+        //}
 
-        public async Task<string> LogInfo(EnttiyDto input)
-        {
-            var log = await Conn.QueryFirstOrDefaultAsync($"select * from log where id = {input.Id}");
-            return await View(log);
-        }
+        //public async Task<string> LogInfo(EnttiyDto input)
+        //{
+        //    var log = await Conn.QueryFirstOrDefaultAsync($"select * from log where id = {input.Id}");
+        //    return await View(log);
+        //}
 
-        public async Task<string> GetException(EnttiyDto input)
-        {
-            var result = await Conn.QueryFirstAsync<string>($"select exception from log where id = {input.Id}");
-            return result;
-        }
+        //public async Task<string> GetException(EnttiyDto input)
+        //{
+        //    var result = await Conn.QueryFirstAsync<string>($"select exception from log where id = {input.Id}");
+        //    return result;
+        //}
 
         public async Task<string> Ha()
         {

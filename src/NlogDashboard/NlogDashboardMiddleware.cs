@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -9,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using NLogDashboard.Authorization;
+using NLogDashboard.Handle;
 using NLogDashboard.Route;
 using RazorLight;
 
@@ -37,7 +37,6 @@ namespace NLogDashboard
                 }
             }
 
-
             var requestUrl = httpContext.Request.Path.Value;
 
             if (requestUrl.Contains("css") || requestUrl.Contains("js"))
@@ -45,7 +44,6 @@ namespace NLogDashboard
                 await httpContext.Response.WriteAsync(NLogDashboardEmbeddedFiles.IncludeEmbeddedFile(requestUrl));
                 return;
             }
-
 
             var router = NLogDashboardRoutes.Routes.FindRoute(requestUrl);
 
@@ -55,33 +53,25 @@ namespace NLogDashboard
                 return;
             }
 
-            var list = Assembly.GetAssembly(typeof(NLogDashboardRoute)).GetType(router.Handle + "Handle");
-
-            var handle = Assembly.GetAssembly(typeof(NLogDashboardRoute))
-                .CreateInstance("NLogDashboard.Handle." + router.Handle + "Handle", true, BindingFlags.Default, null, new object[]
-                {
-                        new NLogDashboardContext(httpContext, router,
-                            httpContext.RequestServices.GetService<IRazorLightEngine>(),
-                            opts),
-
-                        httpContext.RequestServices
-
-                }, null, null);
-
+            var handle = httpContext.RequestServices.GetRequiredService(Assembly.GetAssembly(typeof(NLogDashboardRoute))
+                .GetType(NlogDashboardConsts.HandleNameSpace + router.Handle + "Handle")) as INLogDashboardHandle;
 
             if (handle == null)
             {
                 httpContext.Response.StatusCode = 404;
                 return;
             }
+            handle.Context = new NLogDashboardContext(httpContext, router,
+                httpContext.RequestServices.GetService<IRazorLightEngine>(),
+                opts);
 
             string html;
 
             var method = handle.GetType().GetMethod(router.Action);
             // ReSharper disable once PossibleNullReferenceException
-            var parameterslength = method.GetParameters().Length;
+            var parametersLength = method.GetParameters().Length;
 
-            if (parameterslength == 0)
+            if (parametersLength == 0)
             {
                 html = await (Task<string>)method.Invoke(handle, null);
             }
@@ -115,7 +105,6 @@ namespace NLogDashboard
 
                 }
             }
-
 
             await httpContext.Response.WriteAsync(html);
 

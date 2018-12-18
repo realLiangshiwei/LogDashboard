@@ -1,9 +1,13 @@
 ﻿using System;
+using DapperExtensions.Mapper;
 
 namespace NLogDashboard.Model
 {
+
     public class LogModel : ILogModel
     {
+        public int Id { get; set; }
+
         public DateTime LongDate { get; set; }
 
         public string Level { get; set; }
@@ -14,4 +18,5 @@ namespace NLogDashboard.Model
 
         public string Exception { get; set; }
     }
+
 }
