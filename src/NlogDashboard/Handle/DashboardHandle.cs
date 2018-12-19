@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
-using Dapper;
 using DapperExtensions;
-using Microsoft.Extensions.FileProviders;
-using Microsoft.Extensions.StackTrace.Sources;
 using NLogDashboard.Model;
 using NLogDashboard.Repository;
 
@@ -14,8 +9,6 @@ namespace NLogDashboard.Handle
 {
     public class DashboardHandle : NlogNLogDashboardHandleBase
     {
-        private readonly ExceptionDetailsProvider _exceptionDetailsProvider;
-
         private readonly IRepository<ILogModel> _logRepository;
 
         public DashboardHandle(
@@ -23,7 +16,7 @@ namespace NLogDashboard.Handle
             IRepository<ILogModel> logRepository) : base(serviceProvider)
         {
             _logRepository = logRepository;
-            _exceptionDetailsProvider = new ExceptionDetailsProvider(new PhysicalFileProvider(AppContext.BaseDirectory), 6);
+            //_exceptionDetailsProvider = new ExceptionDetailsProvider(new PhysicalFileProvider(AppContext.BaseDirectory), 6);
         }
 
         public async Task<string> Home()
@@ -61,56 +54,6 @@ namespace NLogDashboard.Handle
         {
             var result = _logRepository.FirstOrDefault(x => x.Id == input.Id).Exception;
             return result;
-        }
-
-        public async Task<string> Ha()
-        {
-            try
-            {
-                throw new ArgumentException("测试一场", new Exception("关联异常"));
-            }
-            catch (Exception e)
-            {
-                var ex = _exceptionDetailsProvider.GetDetails(e);
-                return await View(ex);
-            }
-
-        }
-
-        public string BuildSql(SearchlogInput input)
-        {
-            if (input.All)
-            {
-                return $"select * from log order by id desc offset {(input.Page - 1) * input.PageSize} rows fetch next {input.PageSize} rows only";
-            }
-
-            if (input.ToDay)
-            {
-                var now = DateTime.Now.ToShortDateString();
-                return
-                    $"select * from log where longdate>={now} order by id desc offset {(input.Page - 1) * input.PageSize} rows fetch next {input.PageSize} rows only";
-            }
-
-            if (input.Hour)
-            {
-                var now = DateTime.Now.AddHours(-1);
-
-                return $"select * from log where longDate>={now} order by id desc offset {(input.Page - 1) * input.PageSize} rows fetch next {input.PageSize} rows only";
-            }
-
-            if (input.Unique)
-            {
-                return
-                    $"select b.* from log b where b.Message in(select Message from log a group by a.Message having count(a.Message) = 1) order by b.Id desc  offset {(input.Page - 1) * input.PageSize} rows fetch next {input.PageSize} rows only";
-
-            }
-
-            if (!string.IsNullOrWhiteSpace(input.Level))
-            {
-                return
-                    $"select * from log where level= {input.Level} order by id desc offset {(input.Page - 1) * input.PageSize} rows fetch next {input.PageSize} rows only";
-            }
-            return $"select * from log order by id desc offset {(input.Page - 1) * input.PageSize} rows fetch next {input.PageSize} rows only";
         }
     }
 }
