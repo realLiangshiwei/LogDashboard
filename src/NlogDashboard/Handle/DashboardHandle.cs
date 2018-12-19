@@ -51,17 +51,17 @@ namespace NLogDashboard.Handle
         //    return await View(result, "Views.Dashboard.LogList.cshtml");
         //}
 
-        //public async Task<string> LogInfo(EnttiyDto input)
-        //{
-        //    var log = await Conn.QueryFirstOrDefaultAsync($"select * from log where id = {input.Id}");
-        //    return await View(log);
-        //}
+        public async Task<string> LogInfo(EnttiyDto input)
+        {
+            var log = _logRepository.FirstOrDefault(x => x.Id == input.Id); ;
+            return await View(log);
+        }
 
-        //public async Task<string> GetException(EnttiyDto input)
-        //{
-        //    var result = await Conn.QueryFirstAsync<string>($"select exception from log where id = {input.Id}");
-        //    return result;
-        //}
+        public  string GetException(EnttiyDto input)
+        {
+            var result = _logRepository.FirstOrDefault(x => x.Id == input.Id).Exception;
+            return result;
+        }
 
         public async Task<string> Ha()
         {

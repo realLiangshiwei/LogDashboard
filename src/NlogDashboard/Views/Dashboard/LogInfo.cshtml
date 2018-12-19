@@ -1,4 +1,4 @@
-﻿@model dynamic
+﻿@model NLogDashboard.Model.ILogModel
 @{
     Layout = "Views._layout.cshtml";
 }
@@ -18,10 +18,6 @@
                 <div class="table-responsive">
                     <table class="table table-bordered">
                         <tbody>
-                            <tr>
-                                <td>项目</td>
-                                <td class="text-nowrap">@Model.Application</td>
-                            </tr>
                             <tr>
                                 <td>时间</td>
                                 <td class="text-nowrap">@Model.LongDate</td>
@@ -56,7 +52,7 @@
             <div class="tab-pane" id="environment" role="tabpanel">
                 <table class="table table-bordered">
                     <tbody>
-                        <tr>
+                        @*<tr>
                             <td>请求方式</td>
                             <td class="text-nowrap">@Model.RequestMethod</td>
                         </tr>
@@ -75,7 +71,7 @@
                         <tr>
                             <td>用户身份</td>
                             <td class="text-nowrap">@Model.UserIdentity</td>
-                        </tr>
+                        </tr>*@
 
                     </tbody>
                 </table>
