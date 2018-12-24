@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using NLogDashboard.Authorization;
 using NLogDashboard.Handle;
+using NLogDashboard.Model;
 using NLogDashboard.Route;
 using RazorLight;
 
@@ -53,14 +54,17 @@ namespace NLogDashboard
                 return;
             }
 
-            var handle = httpContext.RequestServices.GetRequiredService(Assembly.GetAssembly(typeof(NLogDashboardRoute))
-                .GetType(NlogDashboardConsts.HandleNameSpace + router.Handle + "Handle")) as INLogDashboardHandle;
+            var handleType = Assembly.GetAssembly(typeof(NLogDashboardRoute))
+                .GetTypes().FirstOrDefault(x => x.Name.Contains(router.Handle + "Handle"));
+
+            var handle = httpContext.RequestServices.GetRequiredService(handleType.MakeGenericType(opts.LogModelType)) as INLogDashboardHandle;
 
             if (handle == null)
             {
                 httpContext.Response.StatusCode = 404;
                 return;
             }
+
             handle.Context = new NLogDashboardContext(httpContext, router,
                 httpContext.RequestServices.GetService<IRazorLightEngine>(),
                 opts);

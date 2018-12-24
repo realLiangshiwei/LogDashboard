@@ -7,6 +7,8 @@ using System.Text;
 using DapperExtensions;
 using NLogDashboard.Extensions;
 using System.Linq.Dynamic.Core;
+using System.Linq.Expressions;
+
 namespace NLogDashboard.Repository
 {
     public class FileRepository<T> : IRepository<T> where T : class, ILogModel, new()
@@ -59,25 +61,26 @@ namespace NLogDashboard.Repository
 
         }
 
-        public T FirstOrDefault(Func<T, bool> predicate)
+        public T FirstOrDefault(Expression<Func<T, bool>> predicate = null)
         {
             return GetList(predicate).FirstOrDefault();
         }
 
-        public IEnumerable<T> GetList(Func<T, bool> predicate)
+        public IEnumerable<T> GetList(Expression<Func<T, bool>> predicate = null)
         {
-            return _data.Where(predicate).ToList();
+            return _data.Where(predicate?.Compile()).ToList();
 
         }
 
-        public int Count(Func<T, bool> predicate)
+        public int Count(Expression<Func<T, bool>> predicate = null)
         {
-            return _data.Count(predicate);
+            return _data.Count(predicate?.Compile());
         }
 
-        public IEnumerable<T> GetPageList(Func<T, bool> predicate, int page, int size, params ISort[] sorts)
+
+        public IEnumerable<T> GetPageList(int page, int size, Expression<Func<T, bool>> predicate = null, params ISort[] sorts)
         {
-            var query = _data.Where(predicate).AsQueryable();
+            var query = _data.Where(predicate?.Compile()).AsQueryable();
             foreach (var sort in sorts.Select((value, i) => new { i, value }))
             {
                 var order = sort.value.Ascending ? "asc" : "desc";
@@ -86,5 +89,7 @@ namespace NLogDashboard.Repository
             }
             return query.Skip(page - 1 * size).Take(size).ToList();
         }
+
+
     }
 }

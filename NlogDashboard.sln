@@ -11,7 +11,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{23C6BF8F-66F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{8A7576A6-2F87-4572-8B04-3CA141C619E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NlogTest", "test\NlogTest\NlogTest.csproj", "{76FABF7E-2AED-4AA1-AD4F-E49B487DFA3D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NlogTest", "test\NlogTest\NlogTest.csproj", "{76FABF7E-2AED-4AA1-AD4F-E49B487DFA3D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DapperExtensions", "..\Dapper-Extensions\DapperExtensions\DapperExtensions.csproj", "{4C1A2C6C-A469-4C87-98D1-F1D517FA1ACF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +33,10 @@ Global
 		{76FABF7E-2AED-4AA1-AD4F-E49B487DFA3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76FABF7E-2AED-4AA1-AD4F-E49B487DFA3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76FABF7E-2AED-4AA1-AD4F-E49B487DFA3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C1A2C6C-A469-4C87-98D1-F1D517FA1ACF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C1A2C6C-A469-4C87-98D1-F1D517FA1ACF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C1A2C6C-A469-4C87-98D1-F1D517FA1ACF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C1A2C6C-A469-4C87-98D1-F1D517FA1ACF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -39,6 +45,7 @@ Global
 		{A005DD97-96F5-402D-935C-1232E6B41F5F} = {23C6BF8F-66F8-42DA-A2F9-6C1699C73687}
 		{8F92E7EE-9679-49A7-9AB1-65F5B7C905A4} = {8A7576A6-2F87-4572-8B04-3CA141C619E2}
 		{76FABF7E-2AED-4AA1-AD4F-E49B487DFA3D} = {8A7576A6-2F87-4572-8B04-3CA141C619E2}
+		{4C1A2C6C-A469-4C87-98D1-F1D517FA1ACF} = {23C6BF8F-66F8-42DA-A2F9-6C1699C73687}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E1C93D2C-3B11-4264-A897-A591D4C910E9}

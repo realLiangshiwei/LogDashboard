@@ -7,13 +7,13 @@ using NLogDashboard.Repository;
 
 namespace NLogDashboard.Handle
 {
-    public class DashboardHandle : NlogNLogDashboardHandleBase
+    public class DashboardHandle<T> : NlogNLogDashboardHandleBase where T : class, ILogModel
     {
-        private readonly IRepository<ILogModel> _logRepository;
+        private readonly IRepository<T> _logRepository;
 
         public DashboardHandle(
             IServiceProvider serviceProvider,
-            IRepository<ILogModel> logRepository) : base(serviceProvider)
+            IRepository<T> logRepository) : base(serviceProvider)
         {
             _logRepository = logRepository;
             //_exceptionDetailsProvider = new ExceptionDetailsProvider(new PhysicalFileProvider(AppContext.BaseDirectory), 6);
@@ -21,15 +21,14 @@ namespace NLogDashboard.Handle
 
         public async Task<string> Home()
         {
-            var result = _logRepository.GetPageList(x => true, 1, 10, new Sort { Ascending = false, PropertyName = "longDate" });
+            var result = _logRepository.GetPageList(1, 10, sorts: new Sort { Ascending = false, PropertyName = "longDate" });
 
-            ViewBag.unique = _logRepository.GetList(x => true).GroupBy(x => x.Message).Count(x => x.Count() == 1);
-            ViewBag.allCount = _logRepository.Count(x => true);
+            ViewBag.unique = _logRepository.GetList().GroupBy(x => x.Message).Count(x => x.Count() == 1);
+            ViewBag.allCount = _logRepository.Count();
 
             var now = DateTime.Now;
-
-            ViewBag.todayCount = _logRepository.Count(x =>
-                   x.LongDate.Date >= now.Date && x.LongDate <= now.Date.AddHours(23).AddMinutes(59));
+            var weeHours = now.Date.AddHours(23).AddMinutes(59);
+            ViewBag.todayCount = _logRepository.Count(x => x.LongDate >= now.Date && x.LongDate <= weeHours);
 
             var hour = now.AddHours(-1);
             ViewBag.hourCount = _logRepository.Count(x => x.LongDate >= hour && x.LongDate <= now);
@@ -50,7 +49,7 @@ namespace NLogDashboard.Handle
             return await View(log);
         }
 
-        public  string GetException(EnttiyDto input)
+        public string GetException(EnttiyDto input)
         {
             var result = _logRepository.FirstOrDefault(x => x.Id == input.Id).Exception;
             return result;

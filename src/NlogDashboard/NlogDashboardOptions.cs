@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
+using NLogDashboard.Model;
 
 namespace NLogDashboard
 {
@@ -18,6 +19,8 @@ namespace NLogDashboard
 
         public string ConnectionString { get; set; }
 
+        internal Type LogModelType { get; set; }
+
         internal List<IAuthorizeData> AuthorizeData { get; set; }
 
         public void UseAuthorization(List<AuthorizeAttribute> authorizeAttributes)
@@ -27,12 +30,17 @@ namespace NLogDashboard
             AuthorizeData.AddRange(authorizeAttributes);
         }
 
+        public void CustomLogModel<T>() where T : class, ILogModel
+        {
+            LogModelType = typeof(T);
+        }
 
         public NLogDashboardOptions()
         {
             FileSource = true;
             NogConfig = "NLog.config";
             PathMatch = "/NLogDashboard";
+            LogModelType = typeof(LogModel);
         }
 
         public void UseDataBase(string connectionString)

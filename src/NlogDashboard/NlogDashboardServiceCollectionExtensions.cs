@@ -2,9 +2,10 @@
 using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
-using DapperExtensions.Mapper;
 using Microsoft.Extensions.DependencyInjection;
+using NLogDashboard.Handle;
 using NLogDashboard.NLogDashboardBuilder;
+using NLogDashboard.Repository;
 using NLogDashboard.Route;
 using RazorLight;
 
@@ -23,37 +24,37 @@ namespace NLogDashboard
 
             var options = new NLogDashboardOptions();
             func?.Invoke(options);
-           
+
             services.AddSingleton(options);
 
             if (options.DatabaseSource)
             {
                 if (string.IsNullOrWhiteSpace(options.ConnectionString))
                 {
-                    throw new ArgumentNullException("ConnectionString cannot be null");
+                    throw new ArgumentNullException("ConnectionString Cannot be Null");
                 }
                 services.AddTransient(provider => new SqlConnection(options.ConnectionString));
-                builder.AddDatabaseSource();
+                builder.Services.AddTransient(typeof(IRepository<>), typeof(DatabaseRepository<>));
             }
             else
             {
-                builder.AddFileSource();
+                builder.Services.AddTransient(typeof(IRepository<>), typeof(FileRepository<>));
             }
 
-            RegisterHandle(services);
+            RegisterHandle(services, options);
 
             return builder;
         }
 
 
-        private static void RegisterHandle(IServiceCollection services)
+        private static void RegisterHandle(IServiceCollection services, NLogDashboardOptions opts)
         {
             var handles = Assembly.GetAssembly(typeof(NLogDashboardRoute)).GetTypes()
-                .Where(x => x.Name.EndsWith("Handle") && x.IsClass);
+                .Where(x => typeof(NlogNLogDashboardHandleBase).IsAssignableFrom(x) && x != typeof(NlogNLogDashboardHandleBase));
 
             foreach (var handle in handles)
             {
-                services.AddTransient(handle);
+                services.AddTransient(handle.MakeGenericType(opts.LogModelType));
             }
         }
     }

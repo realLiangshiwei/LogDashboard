@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Linq.Expressions;
-using Dapper;
 
 namespace NLogDashboard.Repository
 {
@@ -20,29 +19,27 @@ namespace NLogDashboard.Repository
             _conn.Open();
         }
 
-        public T FirstOrDefault(Func<T, bool> predicate)
+        public T FirstOrDefault(Expression<Func<T, bool>> predicate = null)
         {
             return GetList(predicate).FirstOrDefault();
         }
 
-        public IEnumerable<T> GetList(Func<T, bool> predicate)
+        public IEnumerable<T> GetList(Expression<Func<T, bool>> predicate = null)
         {
-            Expression<Func<T, bool>> exp = t => predicate(t);
-            return _conn.GetList<T>(exp.ToPredicateGroup());
+
+            return _conn.GetList<T>(predicate?.ToPredicateGroup());
+        }
+
+        public int Count(Expression<Func<T, bool>> predicate = null)
+        {
+            return _conn.Count<T>(predicate?.ToPredicateGroup());
+        }
+
+        public IEnumerable<T> GetPageList(int page, int size, Expression<Func<T, bool>> predicate = null, params ISort[] sorts)
+        {
+            return _conn.GetPage<T>(predicate?.ToPredicateGroup(), sorts, page, size).ToList();
 
         }
 
-        public int Count(Func<T, bool> predicate)
-        {
-            Expression<Func<T, bool>> exp = t => predicate(t);
-            return _conn.Count<T>(exp);
-        }
-
-        public IEnumerable<T> GetPageList(Func<T, bool> predicate, int page, int size, params ISort[] sorts)
-        {
-            Expression<Func<T, bool>> exp = t => predicate(t);
-            return _conn.GetPage<T>(exp, sorts, page, size);
-
-        }
     }
 }

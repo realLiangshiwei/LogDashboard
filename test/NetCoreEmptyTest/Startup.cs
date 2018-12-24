@@ -1,18 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-using DapperExtensions.Mapper;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileProviders;
 using NLogDashboard;
-using NLogDashboard.Model;
-using NLogDashboard.NLogDashboardBuilder;
 
 namespace NetCoreEmptyTest
 {
@@ -25,7 +15,7 @@ namespace NetCoreEmptyTest
 
             services.AddNLogDashboard(opt =>
             {
-                //opt.UseDataBase("Server=localhost; Database=log.test.edu.jingshonline.net;Integrated Security=True;");
+                opt.UseDataBase("Server=(localdb)\\mssqllocaldb; Database=log.test.edu.jingshonline.net;Integrated Security=True;");
             });
 
         }
