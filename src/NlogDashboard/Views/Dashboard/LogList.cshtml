@@ -1,53 +1,66 @@
-﻿@model IEnumerable<dynamic>
+﻿@inherits RazorLight.TemplatePage<IEnumerable<NLogDashboard.Model.ILogModel>>
 @{
     Layout = null;
 }
 <div class="table-responsive">
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Logger</th>
-                <th>Level</th>
-                <th>UserIdentity</th>
-                <th>Message</th>
-                <th>Date</th>
-            </tr>
+    <table class="table row mx-0">
+        <thead class="w-100">
+        <tr class="row mx-0">
+            <th class="col-1">Id</th>
+            <th class="col-3">Logger</th>
+            <th class="col-1">级别</th>
+            <th class="col-4">消息</th>
+            <th class="col-2">时间</th>
+            <th class="col-1">详情</th>
+        </tr>
         </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td><a href="@(ViewBag.DashboardMapPath)/Dashboard/LogInfo?id=@item.Id">@item.Id</a></td>
-                    <td>@item.Logger</td>
+        <tbody class="w-100">
+        @foreach (var item in Model)
+        {
+            <tr class="row mx-0">
+                <td class="col-1"><a href="#:" onclick="logInfo('@item.Id')">@item.Id</a></td>
+                <td class="col-3">@item.Logger</td>
+                @{
+                    if (item.Level.ToLower() == "error")
+                    {
+                        <td class="col-1"><button style="width:65px" onclick="showException('@item.Id')" class="btn btn-outline-@item.Level">@item.Level</button></td>
+                    }
+                    else
+                    {
+                        <td class="col-1"><button style="width:65px" class="btn btn-outline-@item.Level">@item.Level</button></td>
+                    }
+                }
+
+                <td class="col-4" onclick="$(this).next().show(); $(this).css('display','none');">
                     @{
-                        var level = item.Level as string;
-                        if (level.ToLower() == "error")
+                        var message = item.Message as string;
+                        if (message.Length > 90)
                         {
-                            <td><button style="width:65px" onclick="showException('@item.Id')" class="btn btn-outline-@item.Level">@item.Level</button></td>
-                        }
-                        else
-                        {
-                            <td><button style="width:65px" class="btn btn-outline-@item.Level">@item.Level</button></td>
+                            message = message.Substring(0, 90) + "........";
                         }
                     }
-
-                    <td>@item.UserIdentity</td>
-
-                    <td style="width: 35%;" onclick="$(this).next().show(); $(this).css('display','none');">
-                        @{
-                            var message = item.Message as string;
-                            if (message.Length > 110)
-                            {
-                                message = message.Substring(0, 110) + "........";
-                            }
-                        }
-                        @message
-                    </td>
-                    <td style="display: none; width: 35%;" onclick="$(this).prev().show(); $(this).css('display','none');">@item.Message</td>
-                    <td>@item.LongDate</td>
-                </tr>
-            }
+                    @message
+                </td>
+                <td class="col-4" style="display: none;" onclick="$(this).prev().show(); $(this).css('display','none');">@item.Message</td>
+                <td class="col-2">@item.LongDate</td>
+                <td class="col-1"><a href="#:" onclick="logInfo('@item.Id')">详情</a></td>
+            </tr>
+        }
         </tbody>
     </table>
+</div>
+<div class="modal fade show" id="logInfoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">日志详情</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body" id="logInfoBody">
+              
+            </div>
+        </div>
+    </div>
 </div>

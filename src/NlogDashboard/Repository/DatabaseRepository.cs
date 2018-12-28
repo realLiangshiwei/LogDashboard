@@ -26,9 +26,9 @@ namespace NLogDashboard.Repository
 
         public IEnumerable<T> GetList(Expression<Func<T, bool>> predicate = null)
         {
-
             return _conn.GetList<T>(predicate?.ToPredicateGroup());
         }
+
 
         public int Count(Expression<Func<T, bool>> predicate = null)
         {

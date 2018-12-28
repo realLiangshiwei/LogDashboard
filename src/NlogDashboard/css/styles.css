@@ -13,55 +13,43 @@
 /**
  * Options
  */
-
+.modal-lg
 /**
  * Body
  */
-
 /**
  * Components
  */
-
 /**
  * Tables
  */
-
 /**
  * Links
  */
-
 /**
  * Fonts
  */
-
 /**
  * Header
  */
-
 /**
  * Sidebar
  */
-
 /**
  * Content
  */
-
 /**
  * Cards
  */
-
 /**
  * Forms
  */
-
 /**
  * Dropdowns
  */
-
 /**
  * Bootstrap
  */
-
 :root {
     --blue: #42a5f5;
     --indigo: #3F51B5;
@@ -5962,7 +5950,7 @@ button.close {
 
 @media (min-width: 992px) {
     .modal-lg {
-        max-width: 800px;
+        max-width: 80%;
     }
 }
 

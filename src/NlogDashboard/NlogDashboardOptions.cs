@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using Microsoft.AspNetCore.Authorization;
 using NLogDashboard.Model;
 
@@ -23,6 +25,10 @@ namespace NLogDashboard
 
         internal List<IAuthorizeData> AuthorizeData { get; set; }
 
+        internal List<PropertyInfo> CustomPropertyInfos { get; set; }
+
+        internal string LogTableName { get; set; }
+
         public void UseAuthorization(List<AuthorizeAttribute> authorizeAttributes)
         {
             Authorization = true;
@@ -33,18 +39,26 @@ namespace NLogDashboard
         public void CustomLogModel<T>() where T : class, ILogModel
         {
             LogModelType = typeof(T);
+
+            CustomPropertyInfos = LogModelType.GetProperties().Where(x => !x.Name.Equals("LongDate", StringComparison.CurrentCultureIgnoreCase) &&
+                                              !x.Name.Equals("Id", StringComparison.CurrentCultureIgnoreCase) &&
+                                              !x.Name.Equals("Logger", StringComparison.CurrentCultureIgnoreCase) &&
+                                              !x.Name.Equals("Message", StringComparison.CurrentCultureIgnoreCase) &&
+                                              !x.Name.Equals("Exception", StringComparison.CurrentCultureIgnoreCase)).ToList();
         }
 
         public NLogDashboardOptions()
         {
+            CustomPropertyInfos = new List<PropertyInfo>();
             FileSource = true;
             NogConfig = "NLog.config";
             PathMatch = "/NLogDashboard";
             LogModelType = typeof(LogModel);
         }
 
-        public void UseDataBase(string connectionString)
+        public void UseDataBase(string connectionString, string tableName = "log")
         {
+            LogTableName = tableName;
             DatabaseSource = true;
             ConnectionString = connectionString;
         }

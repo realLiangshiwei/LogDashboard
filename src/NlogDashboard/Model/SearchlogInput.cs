@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NLogDashboard.Model
 {
-    public class SearchlogInput
+    public class SearchLogInput
     {
         public bool All { get; set; }
 
@@ -24,10 +22,12 @@ namespace NLogDashboard.Model
 
         public int PageSize { get; set; }
 
-        public SearchlogInput()
+        public string Message { get; set; }
+
+        public SearchLogInput()
         {
             Page = 1;
-            PageSize = 20;
+            PageSize = 10;
         }
     }
 }

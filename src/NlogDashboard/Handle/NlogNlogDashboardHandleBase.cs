@@ -1,14 +1,14 @@
 ﻿using System;
-using System.Data.SqlClient;
 using System.Dynamic;
+using System.Reflection;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using NLogDashboard.Model;
 
 namespace NLogDashboard.Handle
 {
     public abstract class NlogNLogDashboardHandleBase : INLogDashboardHandle
     {
-
         protected NlogNLogDashboardHandleBase(IServiceProvider serviceProvider)
         {
             ServiceProvider = serviceProvider;
@@ -24,6 +24,7 @@ namespace NLogDashboard.Handle
 
         public virtual async Task<string> View(object model = null, string viewName = null)
         {
+            ViewBag.CustomPropertyInfos = Context.Options.CustomPropertyInfos;
             Context.HttpContext.Response.ContentType = "text/html";
             ViewBag.DashboardMapPath = Context.Options.PathMatch;
             ViewBag.View = Context.Route.View;

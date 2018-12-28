@@ -10,7 +10,11 @@
 
             Routes.AddRoute(new NLogDashboardRoute("/Dashboard/Home", "Views.Dashboard.Home.cshtml"));
 
-            Routes.AddRoute(new NLogDashboardRoute("/Dashboard/Searchlog", "Views.Dashboard.LogList.cshtml"));
+            Routes.AddRoute(new NLogDashboardRoute("/Dashboard/SearchLog", "Views.Dashboard.LogList.cshtml"));
+
+            Routes.AddRoute(new NLogDashboardRoute("/Dashboard/BasicLog", "Views.Dashboard.BasicLog.cshtml"));
+
+            Routes.AddRoute(new NLogDashboardRoute("/Dashboard/ErrorLog", "Views.Dashboard.LogList.cshtml"));
 
             Routes.AddRoute(new NLogDashboardRoute("/Dashboard/LogInfo", "Views.Dashboard.LogInfo.cshtml"));
 

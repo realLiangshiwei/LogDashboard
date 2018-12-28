@@ -2,10 +2,12 @@
 using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
+using DapperExtensions.Mapper;
 using Microsoft.Extensions.DependencyInjection;
 using NLogDashboard.Handle;
 using NLogDashboard.NLogDashboardBuilder;
 using NLogDashboard.Repository;
+using NLogDashboard.Repository.Dapper;
 using NLogDashboard.Route;
 using RazorLight;
 
@@ -29,6 +31,8 @@ namespace NLogDashboard
 
             if (options.DatabaseSource)
             {
+                DapperExtensions.DapperExtensions.DefaultMapper = typeof(LogModelMapper<>);
+
                 if (string.IsNullOrWhiteSpace(options.ConnectionString))
                 {
                     throw new ArgumentNullException("ConnectionString Cannot be Null");
@@ -40,6 +44,8 @@ namespace NLogDashboard
             {
                 builder.Services.AddTransient(typeof(IRepository<>), typeof(FileRepository<>));
             }
+
+
 
             RegisterHandle(services, options);
 

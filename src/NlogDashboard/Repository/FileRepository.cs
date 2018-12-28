@@ -40,10 +40,10 @@ namespace NLogDashboard.Repository
                         {
                             Id = id,
                             LongDate = DateTime.Parse(line[0]),
-                            Level = line.TryGetValue(1),
+                            Level = line.TryGetValue(1).ToUpper(),
                             Logger = line.TryGetValue(2),
                             Message = line.TryGetValue(3),
-                            Exception = line.TryGetValue(4)
+                            Exception = line.TryGetValue(4).Trim()
                         };
 
                         var typeProperties = item.GetType().GetProperties();
@@ -68,19 +68,29 @@ namespace NLogDashboard.Repository
 
         public IEnumerable<T> GetList(Expression<Func<T, bool>> predicate = null)
         {
-            return _data.Where(predicate?.Compile()).ToList();
+            return _data.Where(CheckPredicate(predicate).Compile()).ToList();
 
         }
 
         public int Count(Expression<Func<T, bool>> predicate = null)
         {
-            return _data.Count(predicate?.Compile());
+            return _data.Count(CheckPredicate(predicate).Compile());
+        }
+
+        private Expression<Func<T, bool>> CheckPredicate(Expression<Func<T, bool>> predicate)
+        {
+            if (predicate == null)
+            {
+                return x => x.Id != 0;
+            }
+
+            return predicate;
         }
 
 
         public IEnumerable<T> GetPageList(int page, int size, Expression<Func<T, bool>> predicate = null, params ISort[] sorts)
         {
-            var query = _data.Where(predicate?.Compile()).AsQueryable();
+            var query = _data.Where(CheckPredicate(predicate).Compile()).AsQueryable();
             foreach (var sort in sorts.Select((value, i) => new { i, value }))
             {
                 var order = sort.value.Ascending ? "asc" : "desc";

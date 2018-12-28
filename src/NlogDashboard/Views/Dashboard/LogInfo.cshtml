@@ -1,6 +1,7 @@
-﻿@model NLogDashboard.Model.ILogModel
+﻿@using System.Reflection
+@inherits RazorLight.TemplatePage<NLogDashboard.Model.ILogModel>
 @{
-    Layout = "Views._layout.cshtml";
+    Layout = null;
 }
 <div class="container-fluid">
     <div class="mb-4 open">
@@ -9,22 +10,25 @@
                 <a class="nav-link active" data-toggle="tab" href="#overview" role="tab" aria-controls="overview" aria-selected="true">概览</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#environment" role="tab" aria-controls="environment" aria-selected="false">环境</a>
+                <a class="nav-link" data-toggle="tab" href="#environment" role="tab" aria-controls="environment" aria-selected="false">其他</a>
             </li>
         </ul>
-
         <div class="tab-content">
             <div class="tab-pane active" id="overview" role="tabpanel">
                 <div class="table-responsive">
                     <table class="table table-bordered">
                         <tbody>
                             <tr>
+                                <td>Id</td>
+                                <td class="text-nowrap">@Model.Id</td>
+                            </tr>
+                            <tr>
                                 <td>时间</td>
                                 <td class="text-nowrap">@Model.LongDate</td>
                             </tr>
                             <tr>
-                                <td>日志类型</td>
-                                <td class="text-nowrap"><button class="btn btn-outline-INFO">@Model.Level.ToUpper()</button></td>
+                                <td>级别</td>
+                                <td class="text-nowrap"><button class="btn btn-outline-@Model.Level.ToUpper()">@Model.Level.ToUpper()</button></td>
                             </tr>
                             <tr>
                                 <td>Logger</td>
@@ -41,9 +45,8 @@
                         <div class="card-header bg-light">
                             堆栈信息
                         </div>
-
                         <div class="card-body">
-                            @Model.Exception
+                            <pre>@Model.Exception</pre>
                         </div>
                     </div>
                 </div>
@@ -52,27 +55,15 @@
             <div class="tab-pane" id="environment" role="tabpanel">
                 <table class="table table-bordered">
                     <tbody>
-                        @*<tr>
-                            <td>请求方式</td>
-                            <td class="text-nowrap">@Model.RequestMethod</td>
-                        </tr>
-                        <tr>
-                            <td>请求地址</td>
-                            <td class="text-nowrap">@Model.RequestUrl</td>
-                        </tr>
-                        <tr>
-                            <td>客户端IP</td>
-                            <td class="text-nowrap">@Model.RequestIp</td>
-                        </tr>
-                        <tr>
-                            <td>UA</td>
-                            <td class="text-nowrap">@Model.RequestUserAgent</td>
-                        </tr>
-                        <tr>
-                            <td>用户身份</td>
-                            <td class="text-nowrap">@Model.UserIdentity</td>
-                        </tr>*@
-
+                        @{
+                            foreach (var propertyInfo in ((List<PropertyInfo>)ViewBag.CustomPropertyInfos))
+                            {
+                                <tr>
+                                    <td>@propertyInfo.Name</td>
+                                    <td class="text-nowrap">@propertyInfo.GetValue(Model)</td>
+                                </tr>
+                            }
+                        }
                     </tbody>
                 </table>
             </div>

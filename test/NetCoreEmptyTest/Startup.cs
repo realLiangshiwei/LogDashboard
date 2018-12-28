@@ -15,7 +15,6 @@ namespace NetCoreEmptyTest
 
             services.AddNLogDashboard(opt =>
             {
-                opt.UseDataBase("Server=(localdb)\\mssqllocaldb; Database=log.test.edu.jingshonline.net;Integrated Security=True;");
             });
 
         }

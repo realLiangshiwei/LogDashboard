@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace NLogDashboard.NlogConfigParse
+﻿namespace NLogDashboard.NlogConfigParse
 {
     public interface INLogConfigParse
     {

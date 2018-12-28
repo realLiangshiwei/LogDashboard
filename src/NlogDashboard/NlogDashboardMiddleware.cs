@@ -9,7 +9,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using NLogDashboard.Authorization;
 using NLogDashboard.Handle;
-using NLogDashboard.Model;
 using NLogDashboard.Route;
 using RazorLight;
 

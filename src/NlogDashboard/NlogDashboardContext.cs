@@ -15,8 +15,12 @@ namespace NLogDashboard
 
         public NLogDashboardOptions Options { get; }
 
+
+        public static NLogDashboardOptions StaticOptions { get; set; }
+
         public NLogDashboardContext(HttpContext httpContext, NLogDashboardRoute route, IRazorLightEngine engine, NLogDashboardOptions options)
         {
+            StaticOptions = options;
             Route = route ?? throw new ArgumentNullException(nameof(route));
             HttpContext = httpContext ?? throw new ArgumentNullException(nameof(httpContext));
             Engine = engine ?? throw new ArgumentNullException(nameof(engine));

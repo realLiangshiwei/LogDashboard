@@ -31,28 +31,15 @@
                     <ul class="nav">
                         <li class="nav-title">菜单</li>
                         <li class="nav-item">
-                            <a id="mapPath" href="@ViewBag.DashboardMapPath" class="nav-link active">
+                            <a id="mapPath" href="@ViewBag.DashboardMapPath" class="nav-link @ViewBag.dashboardNav">
                                 <i class="icon icon-speedometer"></i> Dashboard
                             </a>
                         </li>
-                        <li class="nav-item nav-dropdown">
-                            <a href="#" class="nav-link nav-dropdown-toggle">
-                                <i class="icon icon-target"></i> 日志<i class="fa fa-caret-left"></i>
+                        <li class="nav-item">
+                            <a href="@ViewBag.DashboardMapPath/Dashboard/BasicLog" class="nav-link @ViewBag.basicLogNav">
+                                <i class="icon icon-target"></i> 日志
                             </a>
-                            <ul class="nav-dropdown-items">
-                                <li class="nav-item">
-                                    <a href="layouts-normal.html" class="nav-link">
-                                        <i class="icon icon-target"></i> 基本日志
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="layouts-fixed-sidebar.html" class="nav-link">
-                                        <i class="icon icon-target"></i> 错误日志
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
-
                     </ul>
                 </nav>
             </div>
@@ -69,5 +56,6 @@
     <script src="@ViewBag.DashboardMapPath/js.carbon.js"></script>
     <script src="@ViewBag.DashboardMapPath/js.dashboard.js"></script>
     <script src="@ViewBag.DashboardMapPath/js.log.js"></script>
+    @RenderSection("Scripts", false);
 </body>
 </html>
