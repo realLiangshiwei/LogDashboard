@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
 
-namespace NLogDashboard.Repository.Dapper
+namespace LogDashboard.Repository.Dapper
 {
     /// <summary>
     ///     Reference

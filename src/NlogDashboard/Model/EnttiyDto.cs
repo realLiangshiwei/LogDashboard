@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace NLogDashboard.Model
+namespace LogDashboard.Model
 {
     public class EnttiyDto
     {

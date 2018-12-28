@@ -3,9 +3,9 @@ using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 
-namespace NLogDashboard.NlogConfigParse
+namespace LogDashboard.NlogConfigParse
 {
-    public class FileNLogConfigParse : INLogConfigParse
+    public class FileNLogConfigParse : ILogConfigParse
     {
 
         public ILogConfigOptions Parse(string nLogConfig)

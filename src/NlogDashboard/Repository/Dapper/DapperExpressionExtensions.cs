@@ -1,9 +1,9 @@
 ﻿using DapperExtensions;
-using NLogDashboard.Model;
+using LogDashboard.Model;
 using System;
 using System.Linq.Expressions;
 
-namespace NLogDashboard.Repository.Dapper
+namespace LogDashboard.Repository.Dapper
 {
     internal static class DapperExpressionExtensions
     {

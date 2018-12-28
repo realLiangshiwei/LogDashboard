@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2000
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NLogDashboard", "src\NlogDashboard\NLogDashboard.csproj", "{A005DD97-96F5-402D-935C-1232E6B41F5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogDashboard", "src\NlogDashboard\LogDashboard.csproj", "{A005DD97-96F5-402D-935C-1232E6B41F5F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCoreEmptyTest", "test\NetCoreEmptyTest\NetCoreEmptyTest.csproj", "{8F92E7EE-9679-49A7-9AB1-65F5B7C905A4}"
 EndProject
@@ -11,7 +11,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{23C6BF8F-66F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{8A7576A6-2F87-4572-8B04-3CA141C619E2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NlogTest", "test\NlogTest\NlogTest.csproj", "{76FABF7E-2AED-4AA1-AD4F-E49B487DFA3D}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{B7E1C8E9-D9C1-4687-851E-24A6F3240108}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetCoreEmpty", "samples\DotNetCoreEmpty\DotNetCoreEmpty.csproj", "{B9D91B2E-9C22-4063-B3D0-CF58D2D54E16}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,10 +29,10 @@ Global
 		{8F92E7EE-9679-49A7-9AB1-65F5B7C905A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F92E7EE-9679-49A7-9AB1-65F5B7C905A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F92E7EE-9679-49A7-9AB1-65F5B7C905A4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{76FABF7E-2AED-4AA1-AD4F-E49B487DFA3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{76FABF7E-2AED-4AA1-AD4F-E49B487DFA3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{76FABF7E-2AED-4AA1-AD4F-E49B487DFA3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{76FABF7E-2AED-4AA1-AD4F-E49B487DFA3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9D91B2E-9C22-4063-B3D0-CF58D2D54E16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9D91B2E-9C22-4063-B3D0-CF58D2D54E16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9D91B2E-9C22-4063-B3D0-CF58D2D54E16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9D91B2E-9C22-4063-B3D0-CF58D2D54E16}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -38,7 +40,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{A005DD97-96F5-402D-935C-1232E6B41F5F} = {23C6BF8F-66F8-42DA-A2F9-6C1699C73687}
 		{8F92E7EE-9679-49A7-9AB1-65F5B7C905A4} = {8A7576A6-2F87-4572-8B04-3CA141C619E2}
-		{76FABF7E-2AED-4AA1-AD4F-E49B487DFA3D} = {8A7576A6-2F87-4572-8B04-3CA141C619E2}
+		{B9D91B2E-9C22-4063-B3D0-CF58D2D54E16} = {B7E1C8E9-D9C1-4687-851E-24A6F3240108}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E1C93D2C-3B11-4264-A897-A591D4C910E9}

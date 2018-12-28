@@ -1,24 +1,24 @@
 ﻿using System;
 using Microsoft.AspNetCore.Http;
-using NLogDashboard.Route;
+using LogDashboard.Route;
 using RazorLight;
 
-namespace NLogDashboard
+namespace LogDashboard
 {
-    public class NLogDashboardContext
+    public class LogDashboardContext
     {
         public HttpContext HttpContext { get; }
 
-        public NLogDashboardRoute Route { get; }
+        public LogDashboardRoute Route { get; }
 
         public IRazorLightEngine Engine { get; }
 
-        public NLogDashboardOptions Options { get; }
+        public LogDashboardOptions Options { get; }
 
 
-        public static NLogDashboardOptions StaticOptions { get; set; }
+        public static LogDashboardOptions StaticOptions { get; set; }
 
-        public NLogDashboardContext(HttpContext httpContext, NLogDashboardRoute route, IRazorLightEngine engine, NLogDashboardOptions options)
+        public LogDashboardContext(HttpContext httpContext, LogDashboardRoute route, IRazorLightEngine engine, LogDashboardOptions options)
         {
             StaticOptions = options;
             Route = route ?? throw new ArgumentNullException(nameof(route));

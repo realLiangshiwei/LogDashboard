@@ -1,7 +1,7 @@
 ﻿using System;
 using DapperExtensions.Mapper;
 
-namespace NLogDashboard.Repository.Dapper
+namespace LogDashboard.Repository.Dapper
 {
     [Serializable]
     public sealed class LogModelMapper<T> : ClassMapper<T> where T : class
@@ -9,7 +9,7 @@ namespace NLogDashboard.Repository.Dapper
 
         public LogModelMapper()
         {
-            Table(NLogDashboardContext.StaticOptions.LogTableName);
+            Table(LogDashboardContext.StaticOptions.LogTableName);
             AutoMap();
         }
 

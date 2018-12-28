@@ -1,15 +1,15 @@
-﻿using NLogDashboard.Model;
+﻿using LogDashboard.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using DapperExtensions;
-using NLogDashboard.Extensions;
+using LogDashboard.Extensions;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 
-namespace NLogDashboard.Repository
+namespace LogDashboard.Repository
 {
     public class FileRepository<T> : IRepository<T> where T : class, ILogModel, new()
     {

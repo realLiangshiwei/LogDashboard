@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace NLogDashboard.NlogConfigParse
+namespace LogDashboard.NlogConfigParse
 {
     public interface ILogConfigOptions
     {

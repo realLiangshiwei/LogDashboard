@@ -1,13 +1,13 @@
 ﻿using DapperExtensions;
-using NLogDashboard.Model;
-using NLogDashboard.Repository.Dapper;
+using LogDashboard.Model;
+using LogDashboard.Repository.Dapper;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace NLogDashboard.Repository
+namespace LogDashboard.Repository
 {
     public class DatabaseRepository<T> : IRepository<T> where T : class, ILogModel
     {

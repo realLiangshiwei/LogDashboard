@@ -1,8 +1,8 @@
-﻿namespace NLogDashboard.Route
+﻿namespace LogDashboard.Route
 {
-    public class NLogDashboardRoute
+    public class LogDashboardRoute
     {
-        public NLogDashboardRoute(string key, string view)
+        public LogDashboardRoute(string key, string view)
         {
             HtmlView = true;
             Key = key;
@@ -10,7 +10,7 @@
 
         }
 
-        public NLogDashboardRoute()
+        public LogDashboardRoute()
         {
 
         }

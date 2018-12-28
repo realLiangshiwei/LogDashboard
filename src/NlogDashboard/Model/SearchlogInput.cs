@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NLogDashboard.Model
+namespace LogDashboard.Model
 {
     public class SearchLogInput
     {

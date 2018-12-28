@@ -7,19 +7,20 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
-using NLogDashboard.Authorization;
-using NLogDashboard.Handle;
-using NLogDashboard.Route;
+using LogDashboard.Authorization;
+using LogDashboard.EmbeddedFiles;
+using LogDashboard.Handle;
+using LogDashboard.Route;
 using RazorLight;
 
-namespace NLogDashboard
+namespace LogDashboard
 {
-    public class NLogDashboardMiddleware
+    public class LogDashboardMiddleware
     {
         private readonly RequestDelegate _next;
 
 
-        public NLogDashboardMiddleware(RequestDelegate next)
+        public LogDashboardMiddleware(RequestDelegate next)
         {
             _next = next;
         }
@@ -27,7 +28,7 @@ namespace NLogDashboard
 
         public async Task InvokeAsync(HttpContext httpContext)
         {
-            var opts = httpContext.RequestServices.GetService<NLogDashboardOptions>();
+            var opts = httpContext.RequestServices.GetService<LogDashboardOptions>();
 
             if (opts.Authorization)
             {
@@ -41,11 +42,11 @@ namespace NLogDashboard
 
             if (requestUrl.Contains("css") || requestUrl.Contains("js"))
             {
-                await httpContext.Response.WriteAsync(NLogDashboardEmbeddedFiles.IncludeEmbeddedFile(requestUrl));
+                await httpContext.Response.WriteAsync(LogDashboardEmbeddedFiles.IncludeEmbeddedFile(requestUrl));
                 return;
             }
 
-            var router = NLogDashboardRoutes.Routes.FindRoute(requestUrl);
+            var router = LogDashboardRoutes.Routes.FindRoute(requestUrl);
 
             if (router == null)
             {
@@ -53,10 +54,10 @@ namespace NLogDashboard
                 return;
             }
 
-            var handleType = Assembly.GetAssembly(typeof(NLogDashboardRoute))
+            var handleType = Assembly.GetAssembly(typeof(LogDashboardRoute))
                 .GetTypes().FirstOrDefault(x => x.Name.Contains(router.Handle + "Handle"));
 
-            var handle = httpContext.RequestServices.GetRequiredService(handleType.MakeGenericType(opts.LogModelType)) as INLogDashboardHandle;
+            var handle = httpContext.RequestServices.GetRequiredService(handleType.MakeGenericType(opts.LogModelType)) as ILogDashboardHandle;
 
             if (handle == null)
             {
@@ -64,7 +65,7 @@ namespace NLogDashboard
                 return;
             }
 
-            handle.Context = new NLogDashboardContext(httpContext, router,
+            handle.Context = new LogDashboardContext(httpContext, router,
                 httpContext.RequestServices.GetService<IRazorLightEngine>(),
                 opts);
 

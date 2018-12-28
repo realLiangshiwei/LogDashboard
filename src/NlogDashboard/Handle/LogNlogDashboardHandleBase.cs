@@ -3,19 +3,19 @@ using System.Dynamic;
 using System.Reflection;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using NLogDashboard.Model;
+using LogDashboard.Model;
 
-namespace NLogDashboard.Handle
+namespace LogDashboard.Handle
 {
-    public abstract class NlogNLogDashboardHandleBase : INLogDashboardHandle
+    public abstract class NlogLogDashboardHandleBase : ILogDashboardHandle
     {
-        protected NlogNLogDashboardHandleBase(IServiceProvider serviceProvider)
+        protected NlogLogDashboardHandleBase(IServiceProvider serviceProvider)
         {
             ServiceProvider = serviceProvider;
             ViewBag = new ExpandoObject();
         }
 
-        public NLogDashboardContext Context { get; set; }
+        public LogDashboardContext Context { get; set; }
 
         public IServiceProvider ServiceProvider { get; }
 

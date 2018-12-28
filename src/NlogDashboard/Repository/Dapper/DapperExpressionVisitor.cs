@@ -1,5 +1,5 @@
 ﻿using DapperExtensions;
-using NLogDashboard.Model;
+using LogDashboard.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 
-namespace NLogDashboard.Repository.Dapper
+namespace LogDashboard.Repository.Dapper
 {
     /// <summary>
     ///     This class converts an Expression{Func{T, bool}} into an IPredicate group that can be used with

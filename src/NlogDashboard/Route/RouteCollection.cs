@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using NLogDashboard.Route;
+using LogDashboard.Route;
 
-namespace NLogDashboard.Route
+namespace LogDashboard.Route
 {
     public class RouteCollection
     {
-        private static readonly List<NLogDashboardRoute> Routes = new List<NLogDashboardRoute>();
+        private static readonly List<LogDashboardRoute> Routes = new List<LogDashboardRoute>();
 
-        public void AddRoute(NLogDashboardRoute route)
+        public void AddRoute(LogDashboardRoute route)
         {
             if (route == null)
             {
@@ -61,7 +61,7 @@ namespace NLogDashboard.Route
 
         }
 
-        public NLogDashboardRoute FindRoute(string url)
+        public LogDashboardRoute FindRoute(string url)
         {
             if (string.IsNullOrWhiteSpace(url))
             {

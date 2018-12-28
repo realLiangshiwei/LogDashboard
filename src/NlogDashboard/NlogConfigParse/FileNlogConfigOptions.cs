@@ -1,4 +1,4 @@
-﻿namespace NLogDashboard.NlogConfigParse
+﻿namespace LogDashboard.NlogConfigParse
 {
     public class FileNlogConfigOptions : ILogConfigOptions
     {

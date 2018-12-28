@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace NLogDashboard.NLogDashboardBuilder
+namespace LogDashboard.LogDashboardBuilder
 {
-    public interface INlogDashboardBuilder
+    public interface ILogDashboardBuilder
     {
         IServiceCollection Services { get; }
     }

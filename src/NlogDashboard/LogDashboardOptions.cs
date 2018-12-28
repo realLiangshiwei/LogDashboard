@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Microsoft.AspNetCore.Authorization;
-using NLogDashboard.Model;
+using LogDashboard.Model;
 
-namespace NLogDashboard
+namespace LogDashboard
 {
-    public class NLogDashboardOptions
+    public class LogDashboardOptions
     {
         public string NogConfig { get; set; }
 
@@ -47,12 +47,12 @@ namespace NLogDashboard
                                               !x.Name.Equals("Exception", StringComparison.CurrentCultureIgnoreCase)).ToList();
         }
 
-        public NLogDashboardOptions()
+        public LogDashboardOptions()
         {
             CustomPropertyInfos = new List<PropertyInfo>();
             FileSource = true;
             NogConfig = "NLog.config";
-            PathMatch = "/NLogDashboard";
+            PathMatch = "/LogDashboard";
             LogModelType = typeof(LogModel);
         }
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace NLogDashboard.Extensions
+namespace LogDashboard.Extensions
 {
     public class Html
     {

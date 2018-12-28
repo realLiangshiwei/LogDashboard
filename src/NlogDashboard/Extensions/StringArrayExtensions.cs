@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace NLogDashboard.Extensions
+namespace LogDashboard.Extensions
 {
     public static class StringArrayExtensions
     {

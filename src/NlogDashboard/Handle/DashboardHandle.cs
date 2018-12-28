@@ -3,13 +3,13 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using DapperExtensions;
-using NLogDashboard.Extensions;
-using NLogDashboard.Model;
-using NLogDashboard.Repository;
+using LogDashboard.Extensions;
+using LogDashboard.Model;
+using LogDashboard.Repository;
 
-namespace NLogDashboard.Handle
+namespace LogDashboard.Handle
 {
-    public class DashboardHandle<T> : NlogNLogDashboardHandleBase where T : class, ILogModel
+    public class DashboardHandle<T> : NlogLogDashboardHandleBase where T : class, ILogModel
     {
         private readonly IRepository<T> _logRepository;
 

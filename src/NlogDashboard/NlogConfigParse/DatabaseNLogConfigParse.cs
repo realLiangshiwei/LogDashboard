@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace NLogDashboard.NlogConfigParse
+namespace LogDashboard.NlogConfigParse
 {
     //public class DatabaseNLogConfigParse : INLogConfigParse
     //{

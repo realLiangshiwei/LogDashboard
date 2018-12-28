@@ -1,10 +1,10 @@
-﻿using NLogDashboard.Model;
+﻿using LogDashboard.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using DapperExtensions;
 
-namespace NLogDashboard.Repository
+namespace LogDashboard.Repository
 {
     public interface IRepository<T> where T : class, ILogModel
     {

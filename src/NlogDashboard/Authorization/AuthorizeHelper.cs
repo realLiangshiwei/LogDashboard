@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization.Policy;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace NLogDashboard.Authorization
+namespace LogDashboard.Authorization
 {
     public class AuthorizeHelper
     {

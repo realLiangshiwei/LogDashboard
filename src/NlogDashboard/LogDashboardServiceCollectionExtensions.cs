@@ -4,27 +4,27 @@ using System.Linq;
 using System.Reflection;
 using DapperExtensions.Mapper;
 using Microsoft.Extensions.DependencyInjection;
-using NLogDashboard.Handle;
-using NLogDashboard.NLogDashboardBuilder;
-using NLogDashboard.Repository;
-using NLogDashboard.Repository.Dapper;
-using NLogDashboard.Route;
+using LogDashboard.Handle;
+using LogDashboard.LogDashboardBuilder;
+using LogDashboard.Repository;
+using LogDashboard.Repository.Dapper;
+using LogDashboard.Route;
 using RazorLight;
 
-namespace NLogDashboard
+namespace LogDashboard
 {
-    public static class NLogDashboardServiceCollectionExtensions
+    public static class LogDashboardServiceCollectionExtensions
     {
-        public static INlogDashboardBuilder AddNLogDashboard(this IServiceCollection services, Action<NLogDashboardOptions> func = null)
+        public static ILogDashboardBuilder AddLogDashboard(this IServiceCollection services, Action<LogDashboardOptions> func = null)
         {
-            var builder = new DefaultNlogDashboardBuilder(services);
+            var builder = new DefaultLogDashboardBuilder(services);
 
             services.AddSingleton<IRazorLightEngine>(new RazorLightEngineBuilder()
-                .UseEmbeddedResourcesProject(typeof(NLogDashboardMiddleware))
+                .UseEmbeddedResourcesProject(typeof(LogDashboardMiddleware))
                 .UseMemoryCachingProvider()
                 .Build());
 
-            var options = new NLogDashboardOptions();
+            var options = new LogDashboardOptions();
             func?.Invoke(options);
 
             services.AddSingleton(options);
@@ -53,10 +53,10 @@ namespace NLogDashboard
         }
 
 
-        private static void RegisterHandle(IServiceCollection services, NLogDashboardOptions opts)
+        private static void RegisterHandle(IServiceCollection services, LogDashboardOptions opts)
         {
-            var handles = Assembly.GetAssembly(typeof(NLogDashboardRoute)).GetTypes()
-                .Where(x => typeof(NlogNLogDashboardHandleBase).IsAssignableFrom(x) && x != typeof(NlogNLogDashboardHandleBase));
+            var handles = Assembly.GetAssembly(typeof(LogDashboardRoute)).GetTypes()
+                .Where(x => typeof(NlogLogDashboardHandleBase).IsAssignableFrom(x) && x != typeof(NlogLogDashboardHandleBase));
 
             foreach (var handle in handles)
             {
