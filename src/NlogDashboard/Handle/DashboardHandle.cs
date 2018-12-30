@@ -27,16 +27,13 @@ namespace LogDashboard.Handle
             var result = _logRepository.GetPageList(1, 10, sorts: new Sort { Ascending = false, PropertyName = "Id" });
 
             ViewBag.unique = _logRepository.GetList().GroupBy(x => x.Message).Count(x => x.Count() == 1);
-            ViewBag.allCount = _logRepository.Count();
-
             var now = DateTime.Now;
             var weeHours = now.Date.AddHours(23).AddMinutes(59);
             ViewBag.todayCount = _logRepository.Count(x => x.LongDate >= now.Date && x.LongDate <= weeHours);
 
             var hour = now.AddHours(-1);
             ViewBag.hourCount = _logRepository.Count(x => x.LongDate >= hour && x.LongDate <= now);
-
-
+            ViewBag.allCount = _logRepository.Count();
 
             //Chart Data
             var dayOfWeek = (int)now.DayOfWeek;

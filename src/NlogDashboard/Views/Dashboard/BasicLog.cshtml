@@ -68,13 +68,13 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="StartTime" class="form-control-label">开始时间</label>
-                        <input id="StartTime" class="form-control" type="datetime-local">
+                        <input type="text" class="form-control datetimepicker-input" id="StartTime" data-toggle="datetimepicker" data-target="#StartTime" />
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="EndTime" class="form-control-label">结束时间</label>
-                        <input id="EndTime" class="form-control" type="datetime-local">
+                        <input type="text" class="form-control datetimepicker-input" id="EndTime" data-toggle="datetimepicker" data-target="#EndTime" />
                     </div>
                 </div>
             </div>
@@ -92,14 +92,22 @@
 
 @section Scripts{
     <script>
-        $(function() {
+        $(function () {
+            $('#StartTime').datetimepicker({
+                locale: 'zh-cn',
+                Default: 'yyyy-mm-dd hh:mm:ss'
+            });
+            $('#EndTime').datetimepicker({
+                locale: 'zh-cn',
+                Default: 'yyyy-mm-dd hh:mm:ss'
+            });
             setCheckbox("All", "all");
             setCheckbox("Today", "today");
             setCheckbox("Unique", "unique");
             setCheckbox("Hour", "hour");
         });
 
-        function setCheckbox(str,id) {
+        function setCheckbox(str, id) {
             var val = getQueryString(str);
             if (val) {
                 $("#" + id).prop("checked", true);

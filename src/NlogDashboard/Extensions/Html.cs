@@ -41,7 +41,7 @@ namespace LogDashboard.Extensions
 
                 if (page - start < 3)
                 {
-                    end += Math.Abs(start - 3);
+                    end += Math.Abs(4 - page);
                 }
                 else
                 {

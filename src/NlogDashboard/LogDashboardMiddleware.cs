@@ -40,9 +40,22 @@ namespace LogDashboard
 
             var requestUrl = httpContext.Request.Path.Value;
 
-            if (requestUrl.Contains("css") || requestUrl.Contains("js"))
+            if (requestUrl.Contains("css") || requestUrl.Contains("js") || requestUrl.Contains(".ttf") || requestUrl.Contains(".woff"))
             {
+                if (requestUrl.Contains(".ttf"))
+                {
+                    httpContext.Response.ContentType = "application/x-font-ttf";
+                }
+                if (requestUrl.Contains(".woff2"))
+                {
+                    httpContext.Response.ContentType = "application/font-woff2";
+                }else
+                if (requestUrl.Contains(".woff"))
+                {
+                    httpContext.Response.ContentType = "application/font-woff";
+                }
                 await httpContext.Response.WriteAsync(LogDashboardEmbeddedFiles.IncludeEmbeddedFile(requestUrl));
+
                 return;
             }
 

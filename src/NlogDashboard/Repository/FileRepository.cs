@@ -24,8 +24,8 @@ namespace LogDashboard.Repository
 
         private void ReadLogs()
         {
-            var paths = Directory.GetFiles(Directory.GetCurrentDirectory(), "*.log", SearchOption.AllDirectories);
-            int id = 0;
+            var paths = Directory.GetFiles(AppContext.BaseDirectory, "*.log", SearchOption.AllDirectories);
+            int id = 1;
             foreach (var path in paths)
             {
                 var text = File.ReadAllText(path, Encoding.UTF8);
@@ -90,6 +90,7 @@ namespace LogDashboard.Repository
 
         public IEnumerable<T> GetPageList(int page, int size, Expression<Func<T, bool>> predicate = null, params ISort[] sorts)
         {
+
             var query = _data.Where(CheckPredicate(predicate).Compile()).AsQueryable();
             foreach (var sort in sorts.Select((value, i) => new { i, value }))
             {
@@ -97,7 +98,7 @@ namespace LogDashboard.Repository
 
                 query = sort.i == 0 ? query.OrderBy($"{sort.value.PropertyName} {order}") : ((IOrderedQueryable<T>)query).ThenBy($"{sort.value.PropertyName} {order}");
             }
-            return query.Skip(page - 1 * size).Take(size).ToList();
+            return query.Skip((page - 1) * size).Take(size).ToList();
         }
 
 
