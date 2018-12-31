@@ -16,8 +16,11 @@ namespace LogDashboard.Repository
 
         private readonly List<T> _data;
 
-        public FileRepository()
+        private readonly LogDashboardOptions _options;
+
+        public FileRepository(LogDashboardOptions options)
         {
+            _options = options;
             _data = new List<T>();
             ReadLogs();
         }
@@ -45,12 +48,10 @@ namespace LogDashboard.Repository
                             Message = line.TryGetValue(3),
                             Exception = line.TryGetValue(4).Trim()
                         };
-
-                        var typeProperties = item.GetType().GetProperties();
-
+                      
                         for (var i = 5; i < line.Length; i++)
                         {
-                            typeProperties[i].SetValue(item, line.TryGetValue(i));
+                            _options.CustomPropertyInfos[i - 5].SetValue(item, line.TryGetValue(i));
                         }
                         _data.Add(item);
                         id++;

@@ -42,6 +42,7 @@ namespace LogDashboard
 
             CustomPropertyInfos = LogModelType.GetProperties().Where(x => !x.Name.Equals("LongDate", StringComparison.CurrentCultureIgnoreCase) &&
                                               !x.Name.Equals("Id", StringComparison.CurrentCultureIgnoreCase) &&
+                                              !x.Name.Equals("Level", StringComparison.CurrentCultureIgnoreCase) &&
                                               !x.Name.Equals("Logger", StringComparison.CurrentCultureIgnoreCase) &&
                                               !x.Name.Equals("Message", StringComparison.CurrentCultureIgnoreCase) &&
                                               !x.Name.Equals("Exception", StringComparison.CurrentCultureIgnoreCase)).ToList();
