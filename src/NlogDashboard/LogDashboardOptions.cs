@@ -29,11 +29,16 @@ namespace LogDashboard
 
         internal string LogTableName { get; set; }
 
-        public void UseAuthorization(List<AuthorizeAttribute> authorizeAttributes)
+        public void UseAuthorization(params AuthorizeAttribute[] authorizeAttributes)
         {
             Authorization = true;
             AuthorizeData = new List<IAuthorizeData>();
-            AuthorizeData.AddRange(authorizeAttributes);
+
+            if (authorizeAttributes != null)
+            {
+                AuthorizeData.AddRange(authorizeAttributes);
+            }
+           
         }
 
         public void CustomLogModel<T>() where T : class, ILogModel

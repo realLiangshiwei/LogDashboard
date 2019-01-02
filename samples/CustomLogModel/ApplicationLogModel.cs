@@ -9,5 +9,7 @@ namespace CustomLogModel
     public class ApplicationLogModel : LogModel
     {
         public string Application { get; set; }
+
+        public string RequestMethod { get; set; }
     }
 }

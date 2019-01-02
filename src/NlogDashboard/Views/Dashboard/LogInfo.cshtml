@@ -53,19 +53,21 @@
             </div>
 
             <div class="tab-pane" id="environment" role="tabpanel">
-                <table class="table table-bordered">
-                    <tbody>
-                        @{
-                            foreach (var propertyInfo in ((List<PropertyInfo>)ViewBag.CustomPropertyInfos))
-                            {
-                                <tr>
-                                    <td>@propertyInfo.Name</td>
-                                    <td class="text-nowrap">@propertyInfo.GetValue(Model)</td>
-                                </tr>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <tbody>
+                            @{
+                                foreach (var propertyInfo in ((List<PropertyInfo>)ViewBag.CustomPropertyInfos))
+                                {
+                                    <tr>
+                                        <td style="width: 13%">@propertyInfo.Name</td>
+                                        <td class="text-nowrap">@propertyInfo.GetValue(Model)</td>
+                                    </tr>
+                                }
                             }
-                        }
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

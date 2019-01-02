@@ -16,14 +16,17 @@ namespace CustomLogModel
     {
         public static void Main(string[] args)
         {
-          
+
             // NLog: setup the logger first to catch all errors
             var logger = NLogBuilder.ConfigureNLog("NLog.config").GetCurrentClassLogger();
             LogManager.Configuration.Variables["application"] = "CustomLogModel";
+            LogManager.Configuration.Variables["requestMethod"] = "Get";
             try
             {
+               
                 logger.Debug("init main");
                 CreateWebHostBuilder(args).Run();
+                
             }
             catch (Exception ex)
             {
