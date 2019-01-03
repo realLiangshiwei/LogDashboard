@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using LogDashboard.Authorization;
 using Microsoft.AspNetCore.Authorization;
 using LogDashboard.Model;
 
@@ -25,20 +26,27 @@ namespace LogDashboard
 
         internal List<IAuthorizeData> AuthorizeData { get; set; }
 
+        internal List<ILogDashboardAuthorizationFilter> AuthorizationFiles { get; set; }
+
         internal List<PropertyInfo> CustomPropertyInfos { get; set; }
 
         internal string LogTableName { get; set; }
 
-        public void UseAuthorization(params AuthorizeAttribute[] authorizeAttributes)
+        public void AddAuthorizeAttribute(params IAuthorizeData[] authorizeAttributes)
         {
-            Authorization = true;
-            AuthorizeData = new List<IAuthorizeData>();
-
             if (authorizeAttributes != null)
             {
                 AuthorizeData.AddRange(authorizeAttributes);
             }
-           
+
+        }
+
+        public void AddAuthorizationFilter(params ILogDashboardAuthorizationFilter[] filters)
+        {
+            if (filters != null)
+            {
+                AuthorizationFiles.AddRange(filters);
+            }
         }
 
         public void CustomLogModel<T>() where T : class, ILogModel
@@ -60,6 +68,8 @@ namespace LogDashboard
             NogConfig = "NLog.config";
             PathMatch = "/LogDashboard";
             LogModelType = typeof(LogModel);
+            AuthorizeData = new List<IAuthorizeData>();
+            AuthorizationFiles = new List<ILogDashboardAuthorizationFilter>();
         }
 
         public void UseDataBase(string connectionString, string tableName = "log")

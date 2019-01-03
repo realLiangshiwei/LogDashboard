@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,35 +31,16 @@ namespace LogDashboard
         {
             var opts = httpContext.RequestServices.GetService<LogDashboardOptions>();
 
-            if (opts.Authorization)
-            {
-                if (!await AuthorizeHelper.AuthorizeAsync(httpContext, opts.AuthorizeData))
-                {
-                    return;
-                }
-            }
-
             var requestUrl = httpContext.Request.Path.Value;
 
-            if (requestUrl.Contains("css") || requestUrl.Contains("js") || requestUrl.Contains(".ttf") || requestUrl.Contains(".woff"))
+            //EmbeddedFile
+            if (requestUrl.Contains("css") || requestUrl.Contains("js"))
             {
-                if (requestUrl.Contains(".ttf"))
-                {
-                    httpContext.Response.ContentType = "application/x-font-ttf";
-                }
-                if (requestUrl.Contains(".woff2"))
-                {
-                    httpContext.Response.ContentType = "application/font-woff2";
-                }else
-                if (requestUrl.Contains(".woff"))
-                {
-                    httpContext.Response.ContentType = "application/font-woff";
-                }
                 await httpContext.Response.WriteAsync(LogDashboardEmbeddedFiles.IncludeEmbeddedFile(requestUrl));
-
                 return;
             }
 
+            // Find Router
             var router = LogDashboardRoutes.Routes.FindRoute(requestUrl);
 
             if (router == null)
@@ -67,6 +49,25 @@ namespace LogDashboard
                 return;
             }
 
+
+            //Authorization
+            if (!await AuthorizeHelper.AuthorizeAsync(httpContext, opts.AuthorizeData))
+            {
+                return;
+            }
+
+            var logDashboardContext = new LogDashboardContext(httpContext, router,
+                httpContext.RequestServices.GetService<IRazorLightEngine>(),
+                opts);
+
+            if (!AuthorizationFilterHelper.Authorization(opts.AuthorizationFiles, logDashboardContext))
+            {
+                httpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                return;
+            }
+
+
+            //Activate Handle
             var handleType = Assembly.GetAssembly(typeof(LogDashboardRoute))
                 .GetTypes().FirstOrDefault(x => x.Name.Contains(router.Handle + "Handle"));
 
@@ -78,9 +79,7 @@ namespace LogDashboard
                 return;
             }
 
-            handle.Context = new LogDashboardContext(httpContext, router,
-                httpContext.RequestServices.GetService<IRazorLightEngine>(),
-                opts);
+            handle.Context = logDashboardContext;
 
             string html;
 
