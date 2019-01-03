@@ -12,8 +12,6 @@ namespace LogDashboard
     {
         public string NogConfig { get; set; }
 
-        public bool Authorization { get; set; }
-
         public string PathMatch { get; set; }
 
         public bool FileSource { get; set; }

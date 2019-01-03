@@ -37,7 +37,7 @@ namespace LogDashboard.Repository
 
         public IEnumerable<T> GetPageList(int page, int size, Expression<Func<T, bool>> predicate = null, params ISort[] sorts)
         {
-            return _conn.GetPage<T>(predicate?.ToPredicateGroup(), sorts, page, size).ToList();
+            return _conn.GetPage<T>(predicate?.ToPredicateGroup(), sorts, page == 0 ? page : page-1, size).ToList();
 
         }
 

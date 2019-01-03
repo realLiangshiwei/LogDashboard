@@ -11,5 +11,7 @@ namespace CustomLogModel
         public string Application { get; set; }
 
         public string RequestMethod { get; set; }
+
+        public string MachineName { get; set; }
     }
 }

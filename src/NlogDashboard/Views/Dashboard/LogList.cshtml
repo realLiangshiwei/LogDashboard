@@ -23,17 +23,17 @@
                 @{
                     if (item.Level.ToLower() == "error")
                     {
-                        <td class="col-1"><button style="width:65px" onclick="showException('@item.Id')" class="btn btn-outline-@item.Level">@item.Level</button></td>
+                        <td class="col-1"><button style="width:65px" onclick="showException('@item.Id')" class="btn btn-outline-@item.Level.ToUpper()">@item.Level</button></td>
                     }
                     else
                     {
-                        <td class="col-1"><button style="width:65px" class="btn btn-outline-@item.Level">@item.Level</button></td>
+                        <td class="col-1"><button style="width:65px" class="btn btn-outline-@item.Level.ToUpper()">@item.Level</button></td>
                     }
                 }
 
                 <td class="col-4" onclick="$(this).next().show(); $(this).css('display','none');">
                     @{
-                        var message = item.Message as string;
+                        var message = item.Message;
                         if (message.Length > 90)
                         {
                             message = message.Substring(0, 90) + "........";

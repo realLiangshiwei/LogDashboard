@@ -15,12 +15,12 @@ namespace UseAuthorization
     {
         public static void Main(string[] args)
         {
-           // NLog: setup the logger first to catch all errors
+            // NLog: setup the logger first to catch all errors
             var logger = NLog.Web.NLogBuilder.ConfigureNLog("NLog.config").GetCurrentClassLogger();
             try
             {
                 logger.Debug("init main");
-                CreateWebHostBuilder(args).Run();
+                CreateWebHostBuilder(args).Build().Run();
             }
             catch (Exception ex)
             {
@@ -34,10 +34,10 @@ namespace UseAuthorization
                 NLog.LogManager.Shutdown();
             }
 
-            CreateWebHostBuilder(args).Run();
+            CreateWebHostBuilder(args).Build().Run();
         }
 
-        public static IWebHost CreateWebHostBuilder(string[] args) =>
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
                 .ConfigureLogging(logging =>
@@ -45,7 +45,6 @@ namespace UseAuthorization
                     logging.ClearProviders();
                     logging.SetMinimumLevel(LogLevel.Information);
                 })
-                .UseNLog()
-                .Build();
+                .UseNLog();
     }
 }
