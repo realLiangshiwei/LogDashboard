@@ -8,13 +8,13 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCoreEmptyTest", "test\NetCoreEmptyTest\NetCoreEmptyTest.csproj", "{8F92E7EE-9679-49A7-9AB1-65F5B7C905A4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{23C6BF8F-66F8-42DA-A2F9-6C1699C73687}"
-	ProjectSection(SolutionItems) = preProject
-		C:\Users\admin\Desktop\logo.png = C:\Users\admin\Desktop\logo.png
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{8A7576A6-2F87-4572-8B04-3CA141C619E2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{B7E1C8E9-D9C1-4687-851E-24A6F3240108}"
+	ProjectSection(SolutionItems) = preProject
+		src\NlogDashboard\logo.png = src\NlogDashboard\logo.png
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetCoreEmptyUseNlog", "samples\DotNetCoreEmptyUseNlog\DotNetCoreEmptyUseNlog.csproj", "{B9D91B2E-9C22-4063-B3D0-CF58D2D54E16}"
 EndProject
