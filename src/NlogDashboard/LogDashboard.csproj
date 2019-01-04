@@ -2,6 +2,10 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>梁士伟</Authors>
+    <Description>日志面板、LogDashboard、AspNetCore</Description>
+    <PackageProjectUrl>https://github.com/liangshiw/LogDashboard</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>

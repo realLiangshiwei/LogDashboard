@@ -8,6 +8,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCoreEmptyTest", "test\NetCoreEmptyTest\NetCoreEmptyTest.csproj", "{8F92E7EE-9679-49A7-9AB1-65F5B7C905A4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{23C6BF8F-66F8-42DA-A2F9-6C1699C73687}"
+	ProjectSection(SolutionItems) = preProject
+		C:\Users\admin\Desktop\logo.png = C:\Users\admin\Desktop\logo.png
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{8A7576A6-2F87-4572-8B04-3CA141C619E2}"
 EndProject
@@ -17,9 +20,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetCoreEmptyUseNlog", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomLogModel", "samples\CustomLogModel\CustomLogModel.csproj", "{3FB6E812-4EC1-47D5-A2CF-F27D58502C8D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UseAuthorization", "samples\UseAuthorization\UseAuthorization.csproj", "{37454222-9159-4004-B708-711B159DE42A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UseAuthorization", "samples\UseAuthorization\UseAuthorization.csproj", "{37454222-9159-4004-B708-711B159DE42A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseSource", "samples\DatabaseSource\DatabaseSource.csproj", "{31F4F7A8-6A86-4077-8D51-49DB90B6082A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatabaseSource", "samples\DatabaseSource\DatabaseSource.csproj", "{31F4F7A8-6A86-4077-8D51-49DB90B6082A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
