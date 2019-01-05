@@ -30,6 +30,17 @@ namespace LogDashboard
 
         internal string LogTableName { get; set; }
 
+        /// <summary>
+        /// file log field Delimiter
+        /// </summary>
+        public string FileFieldDelimiter { get; set; }
+
+
+        /// <summary>
+        /// file log end Delimiter
+        /// </summary>
+        public string FileEndDelimiter { get; set; }
+
         public void AddAuthorizeAttribute(params IAuthorizeData[] authorizeAttributes)
         {
             if (authorizeAttributes != null)
@@ -63,6 +74,8 @@ namespace LogDashboard
         {
             CustomPropertyInfos = new List<PropertyInfo>();
             FileSource = true;
+            FileFieldDelimiter = "||";
+            FileEndDelimiter = "||end";
             NogConfig = "NLog.config";
             PathMatch = "/LogDashboard";
             LogModelType = typeof(LogModel);

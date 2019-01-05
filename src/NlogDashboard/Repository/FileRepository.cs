@@ -32,11 +32,11 @@ namespace LogDashboard.Repository
             foreach (var path in paths)
             {
                 var text = File.ReadAllText(path, Encoding.UTF8);
-                var logLines = text.Trim().Split(new[] { "|end" }, StringSplitOptions.None);
+                var logLines = text.Trim().Split(new[] { _options.FileEndDelimiter }, StringSplitOptions.None);
 
                 foreach (var logLine in logLines)
                 {
-                    var line = logLine.Split('|');
+                    var line = logLine.Split(new[] { _options.FileFieldDelimiter }, StringSplitOptions.None);
                     if (line.Length > 1)
                     {
                         T item = new T
@@ -48,9 +48,10 @@ namespace LogDashboard.Repository
                             Message = line.TryGetValue(3),
                             Exception = line.TryGetValue(4).Trim()
                         };
-                      
+
                         for (var i = 5; i < line.Length; i++)
                         {
+
                             _options.CustomPropertyInfos[i - 5].SetValue(item, line.TryGetValue(i));
                         }
                         _data.Add(item);

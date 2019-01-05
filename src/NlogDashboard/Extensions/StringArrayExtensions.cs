@@ -10,7 +10,7 @@ namespace LogDashboard.Extensions
         {
             try
             {
-                return array[index];
+                return array[index].Trim();
             }
             catch (Exception e)
             {

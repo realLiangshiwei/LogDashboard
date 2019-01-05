@@ -22,6 +22,7 @@ namespace LogDashboard.Handle
 
         public async Task<string> Home()
         {
+
             ViewBag.dashboardNav = "active";
             ViewBag.basicLogNav = "";
             var result = _logRepository.GetPageList(1, 10, sorts: new Sort { Ascending = false, PropertyName = "Id" });
