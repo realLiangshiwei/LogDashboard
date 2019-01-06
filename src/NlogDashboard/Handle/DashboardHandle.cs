@@ -9,7 +9,7 @@ using LogDashboard.Repository;
 
 namespace LogDashboard.Handle
 {
-    public class DashboardHandle<T> : NlogLogDashboardHandleBase where T : class, ILogModel
+    public class DashboardHandle<T> : LogDashboardHandleBase where T : class, ILogModel
     {
         private readonly IRepository<T> _logRepository;
 

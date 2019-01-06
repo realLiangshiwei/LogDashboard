@@ -7,9 +7,9 @@ using LogDashboard.Model;
 
 namespace LogDashboard.Handle
 {
-    public abstract class NlogLogDashboardHandleBase : ILogDashboardHandle
+    public abstract class LogDashboardHandleBase : ILogDashboardHandle
     {
-        protected NlogLogDashboardHandleBase(IServiceProvider serviceProvider)
+        protected LogDashboardHandleBase(IServiceProvider serviceProvider)
         {
             ServiceProvider = serviceProvider;
             ViewBag = new ExpandoObject();

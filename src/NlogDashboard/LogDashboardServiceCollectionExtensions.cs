@@ -56,7 +56,7 @@ namespace LogDashboard
         private static void RegisterHandle(IServiceCollection services, LogDashboardOptions opts)
         {
             var handles = Assembly.GetAssembly(typeof(LogDashboardRoute)).GetTypes()
-                .Where(x => typeof(NlogLogDashboardHandleBase).IsAssignableFrom(x) && x != typeof(NlogLogDashboardHandleBase));
+                .Where(x => typeof(LogDashboardHandleBase).IsAssignableFrom(x) && x != typeof(LogDashboardHandleBase));
 
             foreach (var handle in handles)
             {
