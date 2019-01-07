@@ -9,7 +9,7 @@
     <PackageIconUrl>https://raw.githubusercontent.com/liangshiw/LogDashboard/master/logo.png</PackageIconUrl>
     <RepositoryUrl>https://github.com/liangshiw/LogDashboard</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <Company>liangshiwei</Company>
   </PropertyGroup>
 
@@ -41,8 +41,8 @@
   <ItemGroup>
     <PackageReference Include="Dapper" Version="1.50.5" />
     <PackageReference Include="DapperExtensions.DotnetCore" Version="1.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Authorization.Policy" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authorization.Policy" Version="2.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.1.0" />
     <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
     <PackageReference Include="RazorLight" Version="2.0.0-beta1" />
