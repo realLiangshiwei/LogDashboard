@@ -36,7 +36,7 @@ namespace LogDashboard
             //EmbeddedFile
             if (requestUrl.Contains("css") || requestUrl.Contains("js"))
             {
-                await httpContext.Response.WriteAsync(LogDashboardEmbeddedFiles.IncludeEmbeddedFile(requestUrl));
+                await httpContext.Response.WriteAsync(LogDashboardEmbeddedFiles.IncludeEmbeddedFile(httpContext, requestUrl));
                 return;
             }
 

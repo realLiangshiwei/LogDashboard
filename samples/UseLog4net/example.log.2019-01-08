@@ -1,0 +1,3 @@
+2019-01-08 17:40:30,038  INFO Microsoft.AspNetCore.Hosting.Internal.WebHost.? [?] - MESSAGE: Request starting HTTP/1.1 GET https://localhost:5001/  
+ 2019-01-08 17:40:30,060  INFO Microsoft.AspNetCore.Hosting.Internal.WebHost.? [?] - MESSAGE: Request finished in 27.6758ms 200 
+ 
