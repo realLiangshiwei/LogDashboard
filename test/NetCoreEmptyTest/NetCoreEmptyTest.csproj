@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\NlogDashboard\LogDashboard.csproj" />
+    <ProjectReference Include="..\..\src\LogDashboard\LogDashboard.csproj" />
   </ItemGroup>
 
   <ItemGroup>

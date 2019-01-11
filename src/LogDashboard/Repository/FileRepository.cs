@@ -29,9 +29,21 @@ namespace LogDashboard.Repository
         {
             var paths = Directory.GetFiles(AppContext.BaseDirectory, "*.log", SearchOption.AllDirectories);
             int id = 1;
+
             foreach (var path in paths)
             {
-                var text = File.ReadAllText(path, Encoding.UTF8);
+                var stringBuilder = new StringBuilder();
+
+                using (var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                using (var streamReader = new StreamReader(fileStream, Encoding.Default))
+                {
+                    while (!streamReader.EndOfStream)
+                    {
+                        stringBuilder.AppendLine(streamReader.ReadLine());
+                    }
+                }
+
+                var text = stringBuilder.ToString();
                 var logLines = text.Trim().Split(new[] { _options.FileEndDelimiter }, StringSplitOptions.None);
 
                 foreach (var logLine in logLines)
@@ -42,7 +54,7 @@ namespace LogDashboard.Repository
                         T item = new T
                         {
                             Id = id,
-                            LongDate = DateTime.Parse(line[0]),
+                            LongDate = DateTime.Parse(line.TryGetValue(0).ToUpper()),
                             Level = line.TryGetValue(1).ToUpper(),
                             Logger = line.TryGetValue(2),
                             Message = line.TryGetValue(3),

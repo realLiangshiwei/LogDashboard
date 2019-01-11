@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2000
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogDashboard", "src\NlogDashboard\LogDashboard.csproj", "{A005DD97-96F5-402D-935C-1232E6B41F5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogDashboard", "src\LogDashboard\LogDashboard.csproj", "{A005DD97-96F5-402D-935C-1232E6B41F5F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCoreEmptyTest", "test\NetCoreEmptyTest\NetCoreEmptyTest.csproj", "{8F92E7EE-9679-49A7-9AB1-65F5B7C905A4}"
 EndProject
@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{8A7576A6-2
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{B7E1C8E9-D9C1-4687-851E-24A6F3240108}"
 	ProjectSection(SolutionItems) = preProject
-		src\NlogDashboard\logo.png = src\NlogDashboard\logo.png
+		src\LogDashboard\logo.png = src\LogDashboard\logo.png
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetCoreEmptyUseNlog", "samples\DotNetCoreEmptyUseNlog\DotNetCoreEmptyUseNlog.csproj", "{B9D91B2E-9C22-4063-B3D0-CF58D2D54E16}"

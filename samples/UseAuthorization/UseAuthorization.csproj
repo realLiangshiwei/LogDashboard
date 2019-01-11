@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
@@ -15,7 +15,7 @@
 
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\NlogDashboard\LogDashboard.csproj" />
+    <ProjectReference Include="..\..\src\LogDashboard\LogDashboard.csproj" />
   </ItemGroup>
 
 
