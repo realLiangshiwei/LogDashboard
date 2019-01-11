@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using LogDashboard;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -31,11 +29,16 @@ namespace UseLog4net
             }
             loggerFactory.AddLog4Net(new Log4NetProviderOptions
             {
-                PropertyOverrides = new List<NodeInfo> { new NodeInfo { XPath = "/log4net/appender/file[last()]", Attributes = new Dictionary<string, string> { { "value", $"{AppContext.BaseDirectory}LogFiles/" } } } }
+                PropertyOverrides =
+                    new List<NodeInfo>
+                    {
+                        new NodeInfo { XPath = "/log4net/appender/file[last()]", Attributes = new Dictionary<string, string> { { "value", $"{AppContext.BaseDirectory}LogFiles/" } } }
+                    }
             });
             app.UseLogDashboard();
             app.Run(async (context) =>
             {
+                //ThreadContext.Properties["identity"] = context.TraceIdentifier;
                 var logger = app.ApplicationServices.GetService<ILogger<Startup>>();
                 logger.LogInformation("来点日志");
                 await context.Response.WriteAsync("Hello World!");

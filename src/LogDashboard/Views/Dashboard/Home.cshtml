@@ -1,4 +1,5 @@
-﻿@inherits RazorLight.TemplatePage<IEnumerable<LogDashboard.Model.ILogModel>>
+﻿@using LogDashboard.Extensions
+@inherits RazorLight.TemplatePage<IEnumerable<LogDashboard.Model.ILogModel>>
 @{
     Layout = "Views._layout.cshtml";
 }
@@ -99,14 +100,22 @@
                             @{
                                 if (item.Level.ToLower() == "error")
                                 {
-                                    <td class="col-1"><button style="width:65px" onclick="showException('@item.Id')" class="btn btn-outline-@item.Level.ToUpper()">@item.Level</button></td>
+                                    <div class="modal fade" id="@item.Id">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header bg-danger border-0"><h5 class="modal-title text-white">Exception</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div><div class="modal-body">
+                                                    <pre>@item.Exception</pre>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <td class="col-1"><button class="btn btn-outline-@item.Level.ToUpper()" onclick='$("#@item.Id").modal();'>@item.Level</button></td>
                                 }
                                 else
                                 {
-                                    <td class="col-1"><button style="width:65px" class="btn btn-outline-@item.Level.ToUpper()">@item.Level</button></td>
+                                    <td class="col-1"><button class="btn btn-outline-@item.Level.ToUpper()">@item.Level</button></td>
                                 }
                             }
-
                             <td class="col-4" onclick="$(this).next().show(); $(this).css('display','none');">
                                 @{
                                     var message = item.Message;
@@ -119,7 +128,8 @@
                             </td>
                             <td class="col-4" style="display: none;" onclick="$(this).prev().show(); $(this).css('display','none');">@item.Message</td>
                             <td class="col-2">@item.LongDate</td>
-                            <td class="col-1"><a href="javascript:void(0);" onclick="logInfo('@item.Id')">详情</a></td>
+                            <td class="col-1"><a href="javascript:void(0);" onclick="logInfo('@item.Id-info')">详情</a></td>
+                            <div style="display: none" id="@item.Id-info">@item.ToJsonString()</div>
                         </tr>
                     }
                 </tbody>
@@ -127,8 +137,8 @@
         </div>
     </div>
 </div>
-<div class="modal fade show" id="logInfoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+<div class="modal fade show" id="logInfoModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">日志详情</h5>

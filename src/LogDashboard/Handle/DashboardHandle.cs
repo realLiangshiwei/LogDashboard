@@ -128,15 +128,12 @@ namespace LogDashboard.Handle
             return new PagedResultModel<T>(totalCount, logs);
         }
 
-        public async Task<string> LogInfo(EnttiyDto input)
+        public async Task<string> LogInfo(T info)
         {
-            ViewBag.dashboardNav = "";
-            ViewBag.basicLogNav = "active";
-            var log = _logRepository.FirstOrDefault(x => x.Id == input.Id); ;
-            return await View(log);
+            return await View(info);
         }
 
-        public async Task<string> GetException(EnttiyDto input)
+        public async Task<string> GetException(EntityInput input)
         {
             var result = _logRepository.FirstOrDefault(x => x.Id == input.Id).Exception;
             return await Task.FromResult(result);

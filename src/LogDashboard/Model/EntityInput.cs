@@ -4,7 +4,7 @@ using System.Text;
 
 namespace LogDashboard.Model
 {
-    public class EnttiyDto
+    public class EntityInput
     {
         public int Id { get; set; }
     }

@@ -18,7 +18,7 @@
             llll: 'YYYY年M月D日dddd HH:mm'
         },
         meridiemParse: /凌晨|早上|上午|中午|下午|晚上/,
-        meridiemHour: function(hour, meridiem) {
+        meridiemHour: function (hour, meridiem) {
             if (hour === 12) {
                 hour = 0;
             }
@@ -33,7 +33,7 @@
                 return hour >= 11 ? hour : hour + 12;
             }
         },
-        meridiem: function(hour, minute, isLower) {
+        meridiem: function (hour, minute, isLower) {
             const hm = hour * 100 + minute;
             if (hm < 600) {
                 return '凌晨';
@@ -58,19 +58,19 @@
             sameElse: 'L'
         },
         dayOfMonthOrdinalParse: /\d{1,2}(日|月|周)/,
-        ordinal: function(number, period) {
+        ordinal: function (number, period) {
             switch (period) {
-            case 'd':
-            case 'D':
-            case 'DDD':
-                return number + '日';
-            case 'M':
-                return number + '月';
-            case 'w':
-            case 'W':
-                return number + '周';
-            default:
-                return number;
+                case 'd':
+                case 'D':
+                case 'DDD':
+                    return number + '日';
+                case 'M':
+                    return number + '月';
+                case 'w':
+                case 'W':
+                    return number + '周';
+                default:
+                    return number;
             }
         },
         relativeTime: {
@@ -218,40 +218,16 @@ function goPage(page) {
     doSearch();
 }
 
-function showException(id) {
-    $.ajax({
-        method: "post",
-        url: mapPath + "/Dashboard/GetException",
-        data: JSON.stringify({ id: id })
-    }).done(function (data) {
-
-        $("#LogList").append('<div class="modal fade" id="' + id + '"> ' +
-            '<div class= "modal-dialog modal-lg" role = "document">' +
-            '<div class="modal-content">' +
-            '<div class="modal-header bg-danger border-0">' +
-            '<h5 class="modal-title text-white">Exception</h5>' +
-            '<button type="button" class="close" data-dismiss="modal" aria-label="Close">' +
-            '<span aria-hidden="true">×</span>' +
-            '</button>' +
-            '</div>' +
-            '<div class="modal-body"><pre>' +
-            '' + data + '</pre></div>' +
-            '</div>' +
-            '</div >' +
-            '</div >');
-
-        $('#' + id).modal();
-    });
-}
 
 function logInfo(id) {
     $.ajax({
         method: "post",
         url: mapPath + "/Dashboard/LogInfo",
-        data: JSON.stringify({ id: id })
-    }).done(function (data) {
-        $("#logInfoBody").html(data);
+        data: $("#" + id).text()
+    }).done(function (html) {
+        $("#logInfoBody").html(html);
         $("#logInfoModal").modal();
+
     });
 }
 
