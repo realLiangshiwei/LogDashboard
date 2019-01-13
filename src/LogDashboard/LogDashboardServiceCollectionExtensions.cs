@@ -2,12 +2,13 @@
 using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
-using DapperExtensions.Mapper;
 using Microsoft.Extensions.DependencyInjection;
 using LogDashboard.Handle;
 using LogDashboard.LogDashboardBuilder;
+using LogDashboard.Model;
 using LogDashboard.Repository;
 using LogDashboard.Repository.Dapper;
+using LogDashboard.Repository.File;
 using LogDashboard.Route;
 using RazorLight;
 
@@ -38,13 +39,16 @@ namespace LogDashboard
                     throw new ArgumentNullException("ConnectionString Cannot be Null");
                 }
                 services.AddTransient(provider => new SqlConnection(options.ConnectionString));
-                builder.Services.AddTransient(typeof(IRepository<>), typeof(DatabaseRepository<>));
+                builder.Services.AddTransient(typeof(IRepository<>), typeof(DapperRepository<>));
+
+                builder.Services.AddScoped<IUnitOfWork, DapperUnitOfWork>();
             }
             else
             {
-                builder.Services.AddTransient(typeof(IRepository<>), typeof(FileRepository<>));
-            }
+                builder.Services.AddTransient(typeof(IRepository<>), typeof(FileRepository<>));               ;
 
+                builder.Services.AddScoped(typeof(IUnitOfWork), typeof(FileUnitOfWork<>).MakeGenericType(options.LogModelType));
+            }
 
 
             RegisterHandle(services, options);

@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using LogDashboard.Authorization;
 using LogDashboard.EmbeddedFiles;
 using LogDashboard.Handle;
+using LogDashboard.Repository;
 using LogDashboard.Route;
 using RazorLight;
 
@@ -79,52 +80,53 @@ namespace LogDashboard
                 return;
             }
 
-            handle.Context = logDashboardContext;
-
-            string html;
-
-            var method = handle.GetType().GetMethod(router.Action);
-            // ReSharper disable once PossibleNullReferenceException
-            var parametersLength = method.GetParameters().Length;
-
-            if (parametersLength == 0)
+            using (var uow = httpContext.RequestServices.GetService<IUnitOfWork>())
             {
-                html = await (Task<string>)method.Invoke(handle, null);
-            }
-            else
-            {
-                if (httpContext.Request.ContentLength == null && httpContext.Request.Query.Count <= 0)
+                handle.Context = logDashboardContext;
+
+                string html;
+
+                var method = handle.GetType().GetMethod(router.Action);
+                // ReSharper disable once PossibleNullReferenceException
+                var parametersLength = method.GetParameters().Length;
+
+                if (parametersLength == 0)
                 {
-                    html = await (Task<string>)method.Invoke(handle, new Object[] { null });
+                    html = await (Task<string>)method.Invoke(handle, null);
                 }
                 else
                 {
-                    object args;
-                    if (httpContext.Request.Query.Count > 0)
+                    if (httpContext.Request.ContentLength == null && httpContext.Request.Query.Count <= 0)
                     {
-                        var dict = new Dictionary<string, string>();
-                        httpContext.Request.Query.ToList().ForEach(x => dict.Add(x.Key, x.Value));
-                        args = JsonConvert.DeserializeObject(JsonConvert.SerializeObject(dict), method.GetParameters().First().ParameterType);
+                        html = await (Task<string>)method.Invoke(handle, new Object[] { null });
                     }
                     else
                     {
-                        // ReSharper disable once PossibleInvalidOperationException
-                        var bytes = new byte[(int)httpContext.Request.ContentLength];
-                        await httpContext.Request.Body.ReadAsync(bytes, 0, (int)httpContext.Request.ContentLength);
-                        string requestJson = Encoding.Default.GetString(bytes);
+                        object args;
+                        if (httpContext.Request.Query.Count > 0)
+                        {
+                            var dict = new Dictionary<string, string>();
+                            httpContext.Request.Query.ToList().ForEach(x => dict.Add(x.Key, x.Value));
+                            args = JsonConvert.DeserializeObject(JsonConvert.SerializeObject(dict), method.GetParameters().First().ParameterType);
+                        }
+                        else
+                        {
+                            // ReSharper disable once PossibleInvalidOperationException
+                            var bytes = new byte[(int)httpContext.Request.ContentLength];
+                            await httpContext.Request.Body.ReadAsync(bytes, 0, (int)httpContext.Request.ContentLength);
+                            string requestJson = Encoding.Default.GetString(bytes);
 
-                        args = JsonConvert.DeserializeObject(requestJson, method.GetParameters().First().ParameterType);
+                            args = JsonConvert.DeserializeObject(requestJson, method.GetParameters().First().ParameterType);
+
+                        }
+
+                        html = await (Task<string>)method.Invoke(handle, new[] { args });
 
                     }
-
-                    html = await (Task<string>)method.Invoke(handle, new[] { args });
-
                 }
+
+                await httpContext.Response.WriteAsync(html);
             }
-
-            await httpContext.Response.WriteAsync(html);
-
-
         }
     }
 }

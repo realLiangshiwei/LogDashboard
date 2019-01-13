@@ -12,7 +12,7 @@ namespace LogDashboard.Extensions
             {
                 return array[index].Trim().Replace(',', '.');
             }
-            catch (Exception e)
+            catch
             {
                 return null;
             }

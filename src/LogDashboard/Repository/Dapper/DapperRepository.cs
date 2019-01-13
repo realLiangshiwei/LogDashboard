@@ -1,22 +1,20 @@
 ﻿using DapperExtensions;
 using LogDashboard.Model;
-using LogDashboard.Repository.Dapper;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace LogDashboard.Repository
+namespace LogDashboard.Repository.Dapper
 {
-    public class DatabaseRepository<T> : IRepository<T> where T : class, ILogModel
+    public class DapperRepository<T> : IRepository<T> where T : class, ILogModel
     {
         private readonly SqlConnection _conn;
 
-        public DatabaseRepository(SqlConnection conn)
+        public DapperRepository(IUnitOfWork unitOfWork)
         {
-            _conn = conn;
-            _conn.Open();
+            _conn = (unitOfWork as DapperUnitOfWork)?.GetConnection();
         }
 
         public T FirstOrDefault(Expression<Func<T, bool>> predicate = null)
