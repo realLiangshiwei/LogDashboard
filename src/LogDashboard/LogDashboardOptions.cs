@@ -74,8 +74,8 @@ namespace LogDashboard
         {
             CustomPropertyInfos = new List<PropertyInfo>();
             FileSource = true;
-            FileFieldDelimiter = "|";
-            FileEndDelimiter = "|end";
+            FileFieldDelimiter = "||";
+            FileEndDelimiter = "||end";
             NogConfig = "NLog.config";
             PathMatch = "/LogDashboard";
             LogModelType = typeof(LogModel);
