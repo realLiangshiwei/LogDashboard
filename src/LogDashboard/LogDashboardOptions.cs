@@ -13,7 +13,9 @@ namespace LogDashboard
         public string NogConfig { get; set; }
 
         public string PathMatch { get; set; }
-
+        
+        public string RootPath {get;set;}
+        
         public bool FileSource { get; set; }
 
         public bool DatabaseSource { get; set; }
@@ -73,6 +75,7 @@ namespace LogDashboard
         public LogDashboardOptions()
         {
             CustomPropertyInfos = new List<PropertyInfo>();
+            RootPath=null; //为空就直接从根目录取
             FileSource = true;
             FileFieldDelimiter = "||";
             FileEndDelimiter = "||end";
