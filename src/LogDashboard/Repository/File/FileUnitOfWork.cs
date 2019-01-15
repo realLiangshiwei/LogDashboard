@@ -70,10 +70,14 @@ namespace LogDashboard.Repository.File
                             Exception = line.TryGetValue(4).Trim()
                         };
 
-                        for (var i = 5; i < line.Length; i++)
+                         //避免日志项不只6个，但是未配置自定义字段造成索引超出界限的异常
+                        if (_options.CustomPropertyInfos.Count > 0)
                         {
-
-                            _options.CustomPropertyInfos[i - 5].SetValue(item, line.TryGetValue(i));
+                            for (var i = 5; i < line.Length; i++)
+                            {
+    
+                                _options.CustomPropertyInfos[i - 5].SetValue(item, line.TryGetValue(i));
+                            }
                         }
                         _logs.Add(item);
                         id++;
