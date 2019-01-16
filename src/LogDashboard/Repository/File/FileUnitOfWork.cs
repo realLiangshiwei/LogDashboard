@@ -11,6 +11,10 @@ namespace LogDashboard.Repository.File
     {
         private List<T> _logs;
         private readonly LogDashboardOptions _options;
+        /// <summary>
+        /// 日志模板不完整标识
+        /// </summary>
+        private bool LogModelNotCompletion = false;
 
         public FileUnitOfWork(LogDashboardOptions options)
         {
@@ -36,8 +40,14 @@ namespace LogDashboard.Repository.File
 
         private void ReadLogs()
         {
-            var paths = Directory.GetFiles(_options.RootPath??AppContext.BaseDirectory, "*.log", SearchOption.AllDirectories);
             int id = 1;
+            var rootPath = _options.RootPath ?? AppContext.BaseDirectory; 
+            if (!Directory.Exists(rootPath))
+            {
+                _logs.Add(CreateWarnItem(id, "LogDashborad Warn:找不到日志目录，请检查配置。"));
+                return;
+            }
+            var paths = Directory.GetFiles(rootPath, "*.log", SearchOption.AllDirectories); 
 
             foreach (var path in paths)
             {
@@ -69,24 +79,44 @@ namespace LogDashboard.Repository.File
                             Message = line.TryGetValue(3),
                             Exception = line.TryGetValue(4).Trim()
                         };
-                        //避免日志项不只6个，但是未配置自定义字段造成索引超出界限的异常
-                        if (_options.CustomPropertyInfos.Count > 0)
-                        {
-                            for (var i = 5; i < line.Length; i++)
+                        //避免日志项不只6个，但是未配置自定义字段造成索引超出界限的异常,并标记日志模型配置不完整
+                         for (var i = 5; i < line.Length; i++)
+                         {
+                            if (i - 5 >= _options.CustomPropertyInfos.Count)
                             {
-    
-                                _options.CustomPropertyInfos[i - 5].SetValue(item, line.TryGetValue(i));
+                                LogModelNotCompletion = true;
+                                break;
                             }
-                        }
+                             _options.CustomPropertyInfos[i - 5].SetValue(item, line.TryGetValue(i));
+                         }
+                        
                         _logs.Add(item);
                         id++;
                     }
 
                 }
             }
+            
+            if (LogModelNotCompletion)
+            {
+                _logs.Add(CreateWarnItem(id, "LogDashborad Warn:自定义日志模型配置不完整。"));
+                LogModelNotCompletion = false;
+            }
 
         }
-
+        
+        public T CreateWarnItem(int id, string message)
+        {
+            return new T
+            {
+                Id = id,
+                Logger="LogDashboard",
+                LongDate = DateTime.Now,
+                Level="WARN",
+                Message= message
+            };
+        }
+        
         public void Dispose()
         {
             Close();
