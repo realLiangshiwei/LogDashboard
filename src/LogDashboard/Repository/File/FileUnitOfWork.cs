@@ -36,7 +36,7 @@ namespace LogDashboard.Repository.File
 
         private void ReadLogs()
         {
-            var paths = Directory.GetFiles(AppContext.BaseDirectory, "*.log", SearchOption.AllDirectories);
+            var paths = Directory.GetFiles(_options.RootPath??AppContext.BaseDirectory, "*.log", SearchOption.AllDirectories);
             int id = 1;
 
             foreach (var path in paths)
