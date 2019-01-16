@@ -16,6 +16,8 @@ namespace LogDashboard
 
         public bool FileSource { get; set; }
 
+        public string RootPath{get;set;}
+
         public bool DatabaseSource { get; set; }
 
         public string ConnectionString { get; set; }
