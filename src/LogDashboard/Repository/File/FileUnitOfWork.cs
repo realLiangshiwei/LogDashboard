@@ -70,7 +70,9 @@ namespace LogDashboard.Repository.File
                             Exception = line.TryGetValue(4).Trim()
                         };
 
+
                          //避免日志项不只6个，但是未配置自定义字段造成索引超出界限的异常
+
                         if (_options.CustomPropertyInfos.Count > 0)
                         {
                             for (var i = 5; i < line.Length; i++)
