@@ -1,5 +1,7 @@
-﻿@using LogDashboard.Extensions
-@inherits RazorLight.TemplatePage<IEnumerable<LogDashboard.Model.ILogModel>>
+﻿@using LogDashboard
+@using LogDashboard.Extensions
+@using LogDashboard.Models
+@inherits RazorLight.TemplatePage<IEnumerable<LogDashboard.Models.ILogModel>>
 @{
     Layout = "Views._layout.cshtml";
 }
@@ -116,6 +118,7 @@
                                     <td class="col-1"><button class="btn btn-outline-@item.Level.ToUpper()">@item.Level</button></td>
                                 }
                             }
+
                             <td class="col-4" onclick="$(this).next().show(); $(this).css('display','none');">
                                 @{
                                     var message = item.Message;
@@ -128,30 +131,32 @@
                             </td>
                             <td class="col-4" style="display: none;" onclick="$(this).prev().show(); $(this).css('display','none');">@item.Message</td>
                             <td class="col-2">@item.LongDate</td>
-                            <td class="col-1"><a href="javascript:void(0);" onclick="logInfo('@item.Id-info')">详情</a></td>
+                            <td class="col-1"><a href="javascript:void(0);" onclick="logInfo('@item.Id-info','logInfoModal','logInfoBody')">详情</a></td>
                             <div style="display: none" id="@item.Id-info">@item.ToJsonString()</div>
                         </tr>
                     }
                 </tbody>
             </table>
         </div>
-    </div>
-</div>
-<div class="modal fade show" id="logInfoModal" tabindex="-1">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">日志详情</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body" id="logInfoBody">
+        <div class="modal fade show" id="logInfoModal" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">日志详情</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="logInfoBody">
 
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+
 
 @section Scripts{
     <script>

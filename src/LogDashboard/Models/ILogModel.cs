@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LogDashboard.Model
+namespace LogDashboard.Models
 {
     public interface ILogModel
     {

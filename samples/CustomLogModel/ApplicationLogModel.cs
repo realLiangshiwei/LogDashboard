@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using LogDashboard.Model;
+using LogDashboard.Models;
 
 namespace CustomLogModel
 {

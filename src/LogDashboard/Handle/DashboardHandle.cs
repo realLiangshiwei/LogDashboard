@@ -4,8 +4,9 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using DapperExtensions;
 using LogDashboard.Extensions;
-using LogDashboard.Model;
+using LogDashboard.Models;
 using LogDashboard.Repository;
+using LogDashboard.Repository.Dapper;
 
 namespace LogDashboard.Handle
 {
@@ -74,7 +75,6 @@ namespace LogDashboard.Handle
             return await View();
         }
 
-
         public async Task<string> SearchLog(SearchLogInput input)
         {
             var result = GetPageResult(input);
@@ -133,10 +133,22 @@ namespace LogDashboard.Handle
             return await View(info);
         }
 
-        public async Task<string> GetException(EntityInput input)
+        public async Task<string> RequestTrace(LogModelInput input)
         {
-            var result = _logRepository.FirstOrDefault(x => x.Id == input.Id).Exception;
-            return await Task.FromResult(result);
+            var log = _logRepository.FirstOrDefault(x => x.Id == input.Id);
+
+            var traceIdentifier = (log as IRequestTrackLogModel)?.TraceIdentifier;
+
+            if (Context.Options.DatabaseSource)
+            {
+                return await View(await ((DapperRepository<T>)_logRepository).Query(
+                    $"select * from {Context.Options.LogTableName} where TraceIdentifier=@TraceIdentifier", new {traceIdentifier }), "Views.Dashboard.TraceLogList.cshtml");
+            }
+
+            return await View(_logRepository
+                .GetList(x =>
+                    ((IRequestTrackLogModel)x).TraceIdentifier == ((IRequestTrackLogModel)log).TraceIdentifier)
+                .OrderBy(x => x.LongDate).ToList(), "Views.Dashboard.TraceLogList.cshtml");
         }
     }
 }

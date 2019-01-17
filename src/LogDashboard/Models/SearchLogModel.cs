@@ -1,4 +1,4 @@
-﻿namespace LogDashboard.Model
+﻿namespace LogDashboard.Models
 {
     public class SearchLogModel
     {

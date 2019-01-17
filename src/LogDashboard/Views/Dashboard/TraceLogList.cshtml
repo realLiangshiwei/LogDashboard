@@ -4,7 +4,7 @@
     Layout = null;
 }
 <div class="table-responsive">
-    <table class="table row mx-0">
+    <table class="table row mx-0 table-hover table-expandable">
         <thead class="w-100">
             <tr class="row mx-0">
                 <th class="col-1">Id</th>
@@ -12,7 +12,6 @@
                 <th class="col-1">级别</th>
                 <th class="col-4">消息</th>
                 <th class="col-2">时间</th>
-                <th class="col-1">详情</th>
             </tr>
         </thead>
         <tbody class="w-100">
@@ -20,7 +19,7 @@
             {
                 <tr class="row mx-0">
                     <td class="col-1"><a href="javascript:void(0);" onclick="logInfo('@item.Id')">@item.Id</a></td>
-                    <td class="col-3">@item.Logger</td>
+                    <td class="col-3"><span>@item.Logger</span></td>
                     @{
                         if (item.Level.ToLower() == "error")
                         {
@@ -40,8 +39,7 @@
                             <td class="col-1"><button class="btn btn-outline-@item.Level.ToUpper()">@item.Level</button></td>
                         }
                     }
-
-                    <td class="col-4" onclick="$(this).next().show(); $(this).css('display','none');">
+                    <td class="col-4">
                         @{
                             var message = item.Message;
                             if (message.Length > 90)
@@ -51,27 +49,48 @@
                         }
                         @message
                     </td>
-                    <td class="col-4" style="display: none;" onclick="$(this).prev().show(); $(this).css('display','none');">@item.Message</td>
                     <td class="col-2">@item.LongDate</td>
-                    <td class="col-1"><a href="javascript:void(0);" onclick="logInfo('@item.Id-info','logInfoModal','logInfoBody')">详情</a></td>
-                    <div style="display: none" id="@item.Id-info">@item.ToJsonString()</div>
+                </tr>
+                <tr class="row mx-0">
+                    <td colspan="10" style="width: 100%">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td>Id</td>
+                                        <td class="text-nowrap">@item.Id</td>
+                                    </tr>
+                                    <tr>
+                                        <td>时间</td>
+                                        <td class="text-nowrap">@item.LongDate</td>
+                                    </tr>
+                                    <tr>
+                                        <td>级别</td>
+                                        <td class="text-nowrap"><button class="btn btn-outline-@item.Level">@item.Level</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Logger</td>
+                                        <td class="text-nowrap">@item.Logger</td>
+                                    </tr>
+                                    <tr>
+                                        <td>消息</td>
+                                        <td class="text-nowrap">@item.Message</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                            <div class="card">
+                                <div class="card-header bg-light">
+                                    堆栈信息
+                                </div>
+                                <div class="card-body">
+                                    <pre>@item.Exception</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
                 </tr>
             }
         </tbody>
     </table>
-</div>
-<div class="modal fade show" id="logInfoModal" tabindex="-1">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">日志详情</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body" id="logInfoBody">
-
-            </div>
-        </div>
-    </div>
 </div>

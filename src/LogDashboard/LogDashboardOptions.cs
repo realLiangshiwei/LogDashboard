@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using LogDashboard.Authorization;
 using Microsoft.AspNetCore.Authorization;
-using LogDashboard.Model;
+using LogDashboard.Models;
 
 namespace LogDashboard
 {
@@ -36,7 +36,6 @@ namespace LogDashboard
         /// file log field Delimiter
         /// </summary>
         public string FileFieldDelimiter { get; set; }
-
 
         /// <summary>
         /// file log end Delimiter
@@ -89,6 +88,7 @@ namespace LogDashboard
         {
             LogTableName = tableName;
             DatabaseSource = true;
+            FileSource = false;
             ConnectionString = connectionString;
         }
 

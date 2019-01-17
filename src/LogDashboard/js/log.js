@@ -199,7 +199,6 @@ function search() {
 }
 
 function doSearch() {
-
     var loading = $("#LogList").setLoading();
     $.ajax({
         method: "post",
@@ -213,20 +212,32 @@ function doSearch() {
     });
 }
 
+function requestTrace(id) {
+    $.ajax({
+        method: "post",
+        url: mapPath + "/Dashboard/RequestTrace",
+        data: JSON.stringify({ id: id })
+
+    }).done(function (data) {
+        $("#traceLogList").html(data);
+        tableExpandable();
+    });
+}
+
 function goPage(page) {
     searchInput.Page = page;
     doSearch();
 }
 
 
-function logInfo(id) {
+function logInfo(id, modalId, bodyId) {
     $.ajax({
         method: "post",
         url: mapPath + "/Dashboard/LogInfo",
         data: $("#" + id).text()
     }).done(function (html) {
-        $("#logInfoBody").html(html);
-        $("#logInfoModal").modal();
+        $("#" + bodyId).html(html);
+        $("#" + modalId).modal();
 
     });
 }
@@ -239,4 +250,25 @@ function getQueryString(name) {
     } else {
         return null;
     }
+}
+
+
+
+
+
+function tableExpandable() {
+    $('.table-expandable').each(function () {
+        var table = $(this);
+        table.children('thead').children('tr').append('<th class="col-1"></th>');
+        table.children('tbody').children('tr').filter(':odd').hide();
+        table.children('tbody').children('tr').filter(':even').click(function () {
+            var element = $(this);
+            element.next('tr').toggle('slow');
+            element.find(".table-expandable-arrow").toggleClass("up");
+        });
+        table.children('tbody').children('tr').filter(':even').each(function () {
+            var element = $(this);
+            element.append('<td class="col-1">展开</td>');
+        });
+    });
 }
