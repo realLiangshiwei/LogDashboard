@@ -1,8 +1,10 @@
 ﻿using LogDashboard;
+using LogDashboard.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace RequestTracking
 {
@@ -21,15 +23,25 @@ namespace RequestTracking
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            var log = app.ApplicationServices.GetService<ILogger<Startup>>();
+
+            log.LogInformation("请求开始");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-
+          
+            log.LogInformation("before LogDashboard");
             app.UseLogDashboard();
+            log.LogInformation("after LogDashboard");
             app.Run(async (context) =>
             {
+                log.LogInformation("before write Hello world");
+
                 await context.Response.WriteAsync("Hello World!");
+
+                log.LogInformation("after write Hello world");
             });
         }
     }

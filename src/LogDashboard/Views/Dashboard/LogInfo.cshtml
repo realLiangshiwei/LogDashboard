@@ -17,7 +17,7 @@
                 if (typeof(IRequestTrackLogModel).IsAssignableFrom((Type)ViewBag.LogModelType))
                 {
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#requestTrace" role="tab" aria-controls="requestTrace" aria-selected="false">请求追踪</a>
+                        <a class="nav-link" data-toggle="tab" href="#requestTrace" role="tab" aria-controls="requestTrace" onclick="requestTrace('@Model.Id')" aria-selected="false">请求追踪</a>
                     </li>
                 }
 
@@ -66,23 +66,25 @@
                 <div class="table-responsive">
                     <table class="table table-bordered">
                         <tbody>
-                        @{
-                            foreach (var propertyInfo in (List<PropertyInfo>)ViewBag.CustomPropertyInfos)
-                            {
-                                <tr>
-                                    <td style="width: 13%">@propertyInfo.Name</td>
-                                    <td class="text-nowrap">@propertyInfo.GetValue(Model)</td>
-                                </tr>
+                            @{
+                                foreach (var propertyInfo in (List<PropertyInfo>)ViewBag.CustomPropertyInfos)
+                                {
+                                    <tr>
+                                        <td style="width: 13%">@propertyInfo.Name</td>
+                                        <td class="text-nowrap">@propertyInfo.GetValue(Model)</td>
+                                    </tr>
+                                }
                             }
-                        }
                         </tbody>
                     </table>
                 </div>
             </div>
-            
+
             <div class="tab-pane" id="requestTrace" role="tabpanel">
                 <div class="table-responsive">
-                    
+                    <div id="traceLogList">
+
+                    </div>
                 </div>
             </div>
         </div>

@@ -24,8 +24,12 @@
                 HtmlView = false
             });
 
-            Routes.AddRoute(new LogDashboardRoute("/Dashboard/Ha", "Views.Dashboard.Exception.cshtml"));
-           
+            Routes.AddRoute(new LogDashboardRoute
+            {
+                Key = "/Dashboard/RequestTrace",
+                HtmlView = false
+            });
+
         }
     }
 }

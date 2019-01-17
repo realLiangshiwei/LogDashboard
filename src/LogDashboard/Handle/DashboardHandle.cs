@@ -6,6 +6,7 @@ using DapperExtensions;
 using LogDashboard.Extensions;
 using LogDashboard.Models;
 using LogDashboard.Repository;
+using LogDashboard.Repository.Dapper;
 
 namespace LogDashboard.Handle
 {
@@ -136,12 +137,18 @@ namespace LogDashboard.Handle
         {
             var log = _logRepository.FirstOrDefault(x => x.Id == input.Id);
 
-            var logs = _logRepository
+            var traceIdentifier = (log as IRequestTrackLogModel)?.TraceIdentifier;
+
+            if (Context.Options.DatabaseSource)
+            {
+                return await View(await ((DapperRepository<T>)_logRepository).Query(
+                    $"select * from {Context.Options.LogTableName} where TraceIdentifier=@TraceIdentifier", new {traceIdentifier }), "Views.Dashboard.TraceLogList.cshtml");
+            }
+
+            return await View(_logRepository
                 .GetList(x =>
                     ((IRequestTrackLogModel)x).TraceIdentifier == ((IRequestTrackLogModel)log).TraceIdentifier)
-                .OrderBy(x => x.LongDate).ToList();
-
-            return await View(logs, "Views.Dashboard.LogList.cshtml");
+                .OrderBy(x => x.LongDate).ToList(), "Views.Dashboard.TraceLogList.cshtml");
         }
     }
 }

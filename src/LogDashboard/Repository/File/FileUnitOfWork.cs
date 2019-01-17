@@ -94,9 +94,9 @@ namespace LogDashboard.Repository.File
                             LogModelCompletion = false;
                         }
 
-                        for (var i = 5; i < lineEnd; i++)
+                        for (var i = 0; i < lineEnd; i++)
                         {
-                            _options.CustomPropertyInfos[i - 5].SetValue(item, line.TryGetValue(i));
+                            _options.CustomPropertyInfos[i].SetValue(item, line.TryGetValue(i + 5));
                         }
 
                         _logs.Add(item);
