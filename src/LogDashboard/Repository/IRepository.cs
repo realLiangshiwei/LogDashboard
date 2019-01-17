@@ -1,4 +1,4 @@
-﻿using LogDashboard.Model;
+﻿using LogDashboard.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;

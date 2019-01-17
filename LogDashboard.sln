@@ -26,7 +26,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatabaseSource", "samples\D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UseLog4net", "samples\UseLog4net\UseLog4net.csproj", "{B867F7D7-EB26-4C9A-AF62-905BDAADC42E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StructuredLog", "samples\StructuredLog\StructuredLog.csproj", "{566D56EF-0B1A-4E96-A3AA-DC00EDFCBE39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StructuredLog", "samples\StructuredLog\StructuredLog.csproj", "{566D56EF-0B1A-4E96-A3AA-DC00EDFCBE39}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RequestTracking", "samples\RequestTracking\RequestTracking.csproj", "{CE4C8BDA-1960-4F96-9238-DFD4F9E76028}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -66,6 +68,10 @@ Global
 		{566D56EF-0B1A-4E96-A3AA-DC00EDFCBE39}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{566D56EF-0B1A-4E96-A3AA-DC00EDFCBE39}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{566D56EF-0B1A-4E96-A3AA-DC00EDFCBE39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE4C8BDA-1960-4F96-9238-DFD4F9E76028}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE4C8BDA-1960-4F96-9238-DFD4F9E76028}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE4C8BDA-1960-4F96-9238-DFD4F9E76028}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE4C8BDA-1960-4F96-9238-DFD4F9E76028}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -79,6 +85,7 @@ Global
 		{31F4F7A8-6A86-4077-8D51-49DB90B6082A} = {B7E1C8E9-D9C1-4687-851E-24A6F3240108}
 		{B867F7D7-EB26-4C9A-AF62-905BDAADC42E} = {B7E1C8E9-D9C1-4687-851E-24A6F3240108}
 		{566D56EF-0B1A-4E96-A3AA-DC00EDFCBE39} = {B7E1C8E9-D9C1-4687-851E-24A6F3240108}
+		{CE4C8BDA-1960-4F96-9238-DFD4F9E76028} = {B7E1C8E9-D9C1-4687-851E-24A6F3240108}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E1C93D2C-3B11-4264-A897-A591D4C910E9}

@@ -1,4 +1,4 @@
-﻿using LogDashboard.Model;
+﻿using LogDashboard.Models;
 
 namespace DatabaseSource
 {

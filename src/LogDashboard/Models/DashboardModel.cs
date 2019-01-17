@@ -1,6 +1,4 @@
-﻿using RazorLight;
-
-namespace LogDashboard.Model
+﻿namespace LogDashboard.Models
 {
     public class DashboardModel
     {

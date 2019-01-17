@@ -1,7 +1,7 @@
 ﻿using System;
 using DapperExtensions.Mapper;
 
-namespace LogDashboard.Model
+namespace LogDashboard.Models
 {
 
     public class LogModel : ILogModel

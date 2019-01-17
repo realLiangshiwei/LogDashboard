@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using DapperExtensions;
 using LogDashboard.Extensions;
-using LogDashboard.Model;
+using LogDashboard.Models;
 using LogDashboard.Repository;
 
 namespace LogDashboard.Handle
@@ -74,7 +74,6 @@ namespace LogDashboard.Handle
             return await View();
         }
 
-
         public async Task<string> SearchLog(SearchLogInput input)
         {
             var result = GetPageResult(input);
@@ -133,10 +132,16 @@ namespace LogDashboard.Handle
             return await View(info);
         }
 
-        public async Task<string> GetException(EntityInput input)
+        public async Task<string> RequestTrace(LogModelInput input)
         {
-            var result = _logRepository.FirstOrDefault(x => x.Id == input.Id).Exception;
-            return await Task.FromResult(result);
+            var log = _logRepository.FirstOrDefault(x => x.Id == input.Id);
+
+            var logs = _logRepository
+                .GetList(x =>
+                    ((IRequestTrackLogModel)x).TraceIdentifier == ((IRequestTrackLogModel)log).TraceIdentifier)
+                .OrderBy(x => x.LongDate).ToList();
+
+            return await View(logs, "Views.Dashboard.LogList.cshtml");
         }
     }
 }

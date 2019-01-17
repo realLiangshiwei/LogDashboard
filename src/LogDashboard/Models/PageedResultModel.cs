@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace LogDashboard.Model
+namespace LogDashboard.Models
 {
     public class PagedResultModel<T> where T : class, ILogModel
     {
