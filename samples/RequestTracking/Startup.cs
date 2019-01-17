@@ -25,16 +25,11 @@ namespace RequestTracking
         {
             var log = app.ApplicationServices.GetService<ILogger<Startup>>();
 
-            log.LogInformation("请求开始");
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-          
-            log.LogInformation("before LogDashboard");
             app.UseLogDashboard();
-            log.LogInformation("after LogDashboard");
             app.Run(async (context) =>
             {
                 log.LogInformation("before write Hello world");

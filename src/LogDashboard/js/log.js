@@ -268,7 +268,7 @@ function tableExpandable() {
         });
         table.children('tbody').children('tr').filter(':even').each(function () {
             var element = $(this);
-            element.append('<td>展开</td>');
+            element.append('<td class="col-1">展开</td>');
         });
     });
 }

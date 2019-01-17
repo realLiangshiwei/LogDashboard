@@ -19,7 +19,7 @@
             {
                 <tr class="row mx-0">
                     <td class="col-1"><a href="javascript:void(0);" onclick="logInfo('@item.Id')">@item.Id</a></td>
-                    <td class="col-3">@item.Logger</td>
+                    <td class="col-3"><span>@item.Logger</span></td>
                     @{
                         if (item.Level.ToLower() == "error")
                         {
