@@ -26,16 +26,16 @@ namespace LogDashboard.Handle
 
             ViewBag.dashboardNav = "active";
             ViewBag.basicLogNav = "";
-            var result = _logRepository.GetPageList(1, 10, sorts: new Sort { Ascending = false, PropertyName = "Id" });
+            var result = await _logRepository.GetPageList(1, 10, sorts: new Sort { Ascending = false, PropertyName = "Id" });
 
-            ViewBag.unique = _logRepository.GetList().GroupBy(x => x.Message).Count(x => x.Count() == 1);
+            ViewBag.unique = (await _logRepository.GetList()).GroupBy(x => x.Message).Count(x => x.Count() == 1);
             var now = DateTime.Now;
             var weeHours = now.Date.AddHours(23).AddMinutes(59);
-            ViewBag.todayCount = _logRepository.Count(x => x.LongDate >= now.Date && x.LongDate <= weeHours);
+            ViewBag.todayCount = await _logRepository.Count(x => x.LongDate >= now.Date && x.LongDate <= weeHours);
 
             var hour = now.AddHours(-1);
-            ViewBag.hourCount = _logRepository.Count(x => x.LongDate >= hour && x.LongDate <= now);
-            ViewBag.allCount = _logRepository.Count();
+            ViewBag.hourCount = await _logRepository.Count(x => x.LongDate >= hour && x.LongDate <= now);
+            ViewBag.allCount = await _logRepository.Count();
 
             //Chart Data
             var dayOfWeek = (int)now.DayOfWeek;
@@ -48,17 +48,17 @@ namespace LogDashboard.Handle
                 }
                 else
                 {
-                    ViewBag.ChartData[i] = WeekCount(now.AddDays(i - dayOfWeek));
+                    ViewBag.ChartData[i] = await WeekCount(now.AddDays(i - dayOfWeek));
                 }
             }
 
             return await View(result);
         }
 
-        private int WeekCount(DateTime date)
+        private async Task<int> WeekCount(DateTime date)
         {
             var weeHours = date.Date.AddHours(23).AddMinutes(59);
-            return _logRepository.Count(x => x.LongDate >= date.Date && x.LongDate <= weeHours);
+            return await _logRepository.Count(x => x.LongDate >= date.Date && x.LongDate <= weeHours);
         }
 
         public async Task<string> BasicLog(SearchLogInput input)
@@ -69,7 +69,7 @@ namespace LogDashboard.Handle
             {
                 input = new SearchLogInput();
             }
-            var result = GetPageResult(input);
+            var result = await GetPageResult(input);
             ViewBag.logs = await View(result.List, "Views.Dashboard.LogList.cshtml");
             ViewBag.page = Html.Page(input.Page, input.PageSize, result.TotalCount);
             return await View();
@@ -77,7 +77,7 @@ namespace LogDashboard.Handle
 
         public async Task<string> SearchLog(SearchLogInput input)
         {
-            var result = GetPageResult(input);
+            var result = await GetPageResult(input);
             ViewBag.totalCount = result.TotalCount;
             return Json(new SearchLogModel
             {
@@ -86,7 +86,7 @@ namespace LogDashboard.Handle
             });
         }
 
-        private PagedResultModel<T> GetPageResult(SearchLogInput input)
+        private async Task<PagedResultModel<T>> GetPageResult(SearchLogInput input)
         {
             Expression<Func<T, bool>> expression = x => x.Id != 0;
 
@@ -114,15 +114,15 @@ namespace LogDashboard.Handle
 
             if (input.Unique)
             {
-                var query = _logRepository.GetList(expression);
+                var query = await _logRepository.GetList(expression);
                 return new PagedResultModel<T>(query.GroupBy(x => x.Message).Count(x => x.Count() == 1),
                     query.GroupBy(x => x.Message).Where(x => x.Count() == 1)
                         .SelectMany(x => x.ToList()).Skip((input.Page - 1) * input.PageSize).Take(input.PageSize).ToList());
             }
 
-            var logs = _logRepository.GetPageList(input.Page, input.PageSize, expression, new Sort { Ascending = false, PropertyName = "Id" });
+            var logs = await _logRepository.GetPageList(input.Page, input.PageSize, expression, new Sort { Ascending = false, PropertyName = "Id" });
 
-            var totalCount = _logRepository.Count(expression);
+            var totalCount = await _logRepository.Count(expression);
 
 
             return new PagedResultModel<T>(totalCount, logs);
@@ -135,19 +135,19 @@ namespace LogDashboard.Handle
 
         public async Task<string> RequestTrace(LogModelInput input)
         {
-            var log = _logRepository.FirstOrDefault(x => x.Id == input.Id);
+            var log =await _logRepository.FirstOrDefault(x => x.Id == input.Id);
 
-            var traceIdentifier = (log as IRequestTrackLogModel)?.TraceIdentifier;
+            var traceIdentifier = ((IRequestTrackLogModel)log).TraceIdentifier;
 
             if (Context.Options.DatabaseSource)
             {
                 return await View(await ((DapperRepository<T>)_logRepository).Query(
-                    $"select * from {Context.Options.LogTableName} where TraceIdentifier=@TraceIdentifier", new {traceIdentifier }), "Views.Dashboard.TraceLogList.cshtml");
+                    $"select * from {Context.Options.LogTableName} where TraceIdentifier=@TraceIdentifier", new { traceIdentifier }), "Views.Dashboard.TraceLogList.cshtml");
             }
 
-            return await View(_logRepository
+            return await View((await _logRepository
                 .GetList(x =>
-                    ((IRequestTrackLogModel)x).TraceIdentifier == ((IRequestTrackLogModel)log).TraceIdentifier)
+                    ((IRequestTrackLogModel)x).TraceIdentifier == traceIdentifier))
                 .OrderBy(x => x.LongDate).ToList(), "Views.Dashboard.TraceLogList.cshtml");
         }
     }

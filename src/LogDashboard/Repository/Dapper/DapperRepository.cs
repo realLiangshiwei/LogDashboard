@@ -19,20 +19,20 @@ namespace LogDashboard.Repository.Dapper
             _conn = (unitOfWork as DapperUnitOfWork)?.GetConnection();
         }
 
-        public T FirstOrDefault(Expression<Func<T, bool>> predicate = null)
+        public async Task<T> FirstOrDefault(Expression<Func<T, bool>> predicate = null)
         {
-            return GetList(predicate).FirstOrDefault();
+            return await Task.FromResult((await GetList(predicate)).FirstOrDefault());
         }
 
-        public IEnumerable<T> GetList(Expression<Func<T, bool>> predicate = null)
+        public async Task<IEnumerable<T>> GetList(Expression<Func<T, bool>> predicate = null)
         {
-            return _conn.GetList<T>(predicate?.ToPredicateGroup());
+            return await Task.FromResult(_conn.GetList<T>(predicate?.ToPredicateGroup()));
         }
 
 
-        public int Count(Expression<Func<T, bool>> predicate = null)
+        public async Task<int> Count(Expression<Func<T, bool>> predicate = null)
         {
-            return _conn.Count<T>(predicate?.ToPredicateGroup());
+            return await Task.FromResult(_conn.Count<T>(predicate?.ToPredicateGroup()));
         }
 
         public async Task<IEnumerable<T>> Query(string sql, object param = null)
@@ -40,9 +40,9 @@ namespace LogDashboard.Repository.Dapper
             return await _conn.QueryAsync<T>(sql, param);
         }
 
-        public IEnumerable<T> GetPageList(int page, int size, Expression<Func<T, bool>> predicate = null, params ISort[] sorts)
+        public async Task<IEnumerable<T>> GetPageList(int page, int size, Expression<Func<T, bool>> predicate = null, params ISort[] sorts)
         {
-            return _conn.GetPage<T>(predicate?.ToPredicateGroup(), sorts, page == 0 ? page : page - 1, size).ToList();
+            return await Task.FromResult(_conn.GetPage<T>(predicate?.ToPredicateGroup(), sorts, page == 0 ? page : page - 1, size).ToList());
 
         }
 

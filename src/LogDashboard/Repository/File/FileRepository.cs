@@ -8,6 +8,7 @@ using DapperExtensions;
 using LogDashboard.Extensions;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace LogDashboard.Repository.File
 {
@@ -20,20 +21,20 @@ namespace LogDashboard.Repository.File
             _logs = (unitOfWork as FileUnitOfWork<T>)?.GetLogs();
         }
 
-        public T FirstOrDefault(Expression<Func<T, bool>> predicate = null)
+        public async Task<T> FirstOrDefault(Expression<Func<T, bool>> predicate = null)
         {
-            return GetList(predicate).FirstOrDefault();
+            return await Task.FromResult((await GetList(predicate)).FirstOrDefault());
         }
 
-        public IEnumerable<T> GetList(Expression<Func<T, bool>> predicate = null)
+        public async Task<IEnumerable<T>> GetList(Expression<Func<T, bool>> predicate = null)
         {
-            return _logs.Where(CheckPredicate(predicate).Compile()).ToList();
+            return await Task.FromResult(_logs.Where(CheckPredicate(predicate).Compile()).ToList());
 
         }
 
-        public int Count(Expression<Func<T, bool>> predicate = null)
+        public async Task<int> Count(Expression<Func<T, bool>> predicate = null)
         {
-            return _logs.Count(CheckPredicate(predicate).Compile());
+            return await Task.FromResult(_logs.Count(CheckPredicate(predicate).Compile()));
         }
 
         private Expression<Func<T, bool>> CheckPredicate(Expression<Func<T, bool>> predicate)
@@ -47,7 +48,7 @@ namespace LogDashboard.Repository.File
         }
 
 
-        public IEnumerable<T> GetPageList(int page, int size, Expression<Func<T, bool>> predicate = null, params ISort[] sorts)
+        public async Task<IEnumerable<T>> GetPageList(int page, int size, Expression<Func<T, bool>> predicate = null, params ISort[] sorts)
         {
             var query = _logs.Where(CheckPredicate(predicate).Compile()).AsQueryable();
             foreach (var sort in sorts.Select((value, i) => new { i, value }))
@@ -56,7 +57,7 @@ namespace LogDashboard.Repository.File
 
                 query = sort.i == 0 ? query.OrderBy($"{sort.value.PropertyName} {order}") : ((IOrderedQueryable<T>)query).ThenBy($"{sort.value.PropertyName} {order}");
             }
-            return query.Skip((page - 1) * size).Take(size).ToList();
+            return await Task.FromResult(query.Skip((page - 1) * size).Take(size).ToList());
         }
 
 
