@@ -1,4 +1,5 @@
-﻿using LogDashboard;
+﻿using System;
+using LogDashboard;
 using LogDashboard.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -23,6 +24,7 @@ namespace RequestTracking
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+     
             var log = app.ApplicationServices.GetService<ILogger<Startup>>();
 
             if (env.IsDevelopment())

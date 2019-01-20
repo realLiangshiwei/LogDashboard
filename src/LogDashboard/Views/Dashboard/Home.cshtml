@@ -60,22 +60,50 @@
             </div>
         </div>
     </div>
-    <div class="row ">
+    <div class="row">
         <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    走势
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#hourChartPanel" onclick="getLogChart(1)" role="tab" aria-controls="overview" aria-selected="true">小时</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#dayChartPanel" onclick="getLogChart(2)"  role="tab" aria-controls="environment" aria-selected="false">天</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#weekChartPanel" onclick="getLogChart(3)" role="tab" aria-controls="environment" aria-selected="false">周</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#monthChartPanel" onclick="getLogChart(4)"  role="tab" aria-controls="environment" aria-selected="false">月</a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <div class="tab-pane active" id="hourChartPanel"  role="tabpanel">
+                    <div class="table-responsive">
+                        <canvas id="hourChart" width="100%" height="20"></canvas>
+                    </div>
                 </div>
-                <div class="card-body p-0">
-                    <div class="p-4">
-                        <canvas id="logsChart" width="100%" height="20"></canvas>
+                <div class="tab-pane" id="dayChartPanel" role="tabpanel">
+                    <div class="table-responsive">
+                        <canvas id="dayChart" width="100%" height="20"></canvas>
+                    </div>
+                </div>
+                <div class="tab-pane" id="weekChartPanel"  role="tabpanel">
+                    <div class="table-responsive">
+                        <canvas id="weekChart" width="100%" height="20"></canvas>
+                    </div>
+                </div>
+                <div class="tab-pane" id="monthChartPanel" role="tabpanel">
+                    <div class="table-responsive">
+                        <canvas id="monthChart" width="100%" height="20"></canvas>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div class="card">
+
+<div class="card" style="margin-top: 3%">
     <div class="card-header bg-light">
         最近十条
         <i class="fa fa-refresh" onclick="loadList(1,10)" style="float: right"></i>
@@ -160,35 +188,94 @@
 
 @section Scripts{
     <script>
+
+        function monthChartLabels() {
+            var now = new Date();
+            month = parseInt(now.getMonth(), 10) + 1;
+            var days = new Date(now.getYear(), month, 0).getDate();
+            var res = [];
+            for (var i = 1; i <= days; i++) {
+                res.push(i + "d");
+            }
+            return res;
+        }
+
+        var charts = [
+            { chart: $('#hourChart'), id: '#hourChart', labels: ["10m", "20m", "30m", "40m", '50m', '60m'] },
+            {
+                chart: $('#dayChart'),
+                id: '#dayChart',
+                labels: [
+                    "1h", "2h", "3h", "4h", '5h', '6h', '7h', '8h', '9h', '10h', '11h', '12h', '13h', '14h', '15h',
+                    '16h', '17h', '18h', '19h', '20h', '21h', '22h', '23h', '24h'
+                ]
+            },
+            {
+                chart: $('#weekChart'),
+                id: '#weekChart',
+                labels: ["Monday", "Tuesday", "Wednesday", "Thursday", 'Friday', 'Saturday', 'Sunday']
+            },
+            { chart: $('#monthChart'), id: '#monthChart', labels: monthChartLabels() }
+        ];
+
+
         $(function() {
-            var lineChart = $('#logsChart');
-            if (lineChart.length > 0) {
-                new Chart(lineChart, {
+
+            var output = JSON.parse('@Raw(ViewBag.ChartData)');
+            charts[0].all = output.All;
+            charts[0].error = output.Error;
+            initLineChart(charts[0]);
+        });
+
+        function getLogChart(i) {
+            $.ajax({
+                method: "post",
+                url: mapPath + "/Dashboard/GetLogChart",
+                data: JSON.stringify({ ChartDataType: i })
+            }).done(function (data) {
+                charts[i - 1].all = data.All;
+                charts[i - 1].error = data.ERROR;
+                initLineChart(charts[i - 1]);
+            });
+        }
+
+        function initLineChart(opt) {
+            new Chart(opt.chart,
+                {
                     type: 'line',
                     data: {
-                        labels: ["Monday", "Tuesday", "Wednesday", "Thursday", 'Friday', 'Saturday', 'Sunday'],
-                        datasets: [{
-                            label: 'Users',
-                            data: [@ViewBag.ChartData[1], @ViewBag.ChartData[2], @ViewBag.ChartData[3], @ViewBag.ChartData[4], @ViewBag.ChartData[5], @ViewBag.ChartData[6], @ViewBag.ChartData[0]],
-                            backgroundColor: 'rgba(66, 165, 245, 0.5)',
-                            borderColor: '#2196F3',
-                            borderWidth: 1
-                        }]
+                        labels: opt.labels,
+                        datasets: [
+                            {
+                                label: 'all',
+                                data: opt.all,
+                                backgroundColor: 'rgba(66, 165, 245, 0.5)',
+                                borderColor: '#2196F3',
+                                borderWidth: 1
+                            }, {
+                                label: 'error',
+                                data: opt.error,
+                                backgroundColor: 'rgba(251, 105, 104, 0.5)',
+                                borderColor: '#f75656',
+                                borderWidth: 1
+                            }
+                        ]
                     },
                     options: {
                         legend: {
                             display: false
                         },
                         scales: {
-                            yAxes: [{
-                                ticks: {
-                                    beginAtZero: true
+                            yAxes: [
+                                {
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
                                 }
-                            }]
+                            ]
                         }
                     }
                 });
-            };
-        })
+        }
     </script>
 }

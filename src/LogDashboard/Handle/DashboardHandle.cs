@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using DapperExtensions;
 using LogDashboard.Extensions;
+using LogDashboard.Handle.LogChart;
 using LogDashboard.Models;
 using LogDashboard.Repository;
 using LogDashboard.Repository.Dapper;
@@ -23,7 +24,6 @@ namespace LogDashboard.Handle
 
         public async Task<string> Home()
         {
-
             ViewBag.dashboardNav = "active";
             ViewBag.basicLogNav = "";
             var result = await _logRepository.GetPageList(1, 10, sorts: new Sort { Ascending = false, PropertyName = "Id" });
@@ -38,28 +38,16 @@ namespace LogDashboard.Handle
             ViewBag.allCount = await _logRepository.Count();
 
             //Chart Data
-            var dayOfWeek = (int)now.DayOfWeek;
-            ViewBag.ChartData = new int[7];
-            for (var i = 0; i <= 6; i++)
-            {
-                if (i > dayOfWeek || (i != dayOfWeek && dayOfWeek == 0))
-                {
-                    ViewBag.ChartData[i] = 0;
-                }
-                else
-                {
-                    ViewBag.ChartData[i] = await WeekCount(now.AddDays(i - dayOfWeek));
-                }
-            }
+            ViewBag.ChartData = (await LogChartFactory.GetLogChart(ChartDataType.Hour).GetCharts(_logRepository)).ToJsonString();
 
             return await View(result);
         }
 
-        private async Task<int> WeekCount(DateTime date)
+        public async Task<string> GetLogChart(GetChartDataInput input)
         {
-            var weeHours = date.Date.AddHours(23).AddMinutes(59);
-            return await _logRepository.Count(x => x.LongDate >= date.Date && x.LongDate <= weeHours);
+            return Json(await LogChartFactory.GetLogChart(input.ChartDataType).GetCharts(_logRepository));
         }
+
 
         public async Task<string> BasicLog(SearchLogInput input)
         {
@@ -135,7 +123,7 @@ namespace LogDashboard.Handle
 
         public async Task<string> RequestTrace(LogModelInput input)
         {
-            var log =await _logRepository.FirstOrDefault(x => x.Id == input.Id);
+            var log = await _logRepository.FirstOrDefault(x => x.Id == input.Id);
 
             var traceIdentifier = ((IRequestTrackLogModel)log).TraceIdentifier;
 

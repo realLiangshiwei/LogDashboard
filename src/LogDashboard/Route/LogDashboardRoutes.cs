@@ -30,6 +30,12 @@
                 HtmlView = false
             });
 
+            Routes.AddRoute(new LogDashboardRoute
+            {
+                Key = "/Dashboard/GetLogChart",
+                HtmlView = false
+            });
+
         }
     }
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace LogDashboard.Extensions
+﻿namespace LogDashboard.Extensions
 {
     public static class StringArrayExtensions
     {

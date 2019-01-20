@@ -65,5 +65,7 @@ namespace LogDashboard.Extensions
 
             return build.ToString();
         }
+
+
     }
 }

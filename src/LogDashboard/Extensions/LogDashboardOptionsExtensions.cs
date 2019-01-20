@@ -1,6 +1,6 @@
 namespace LogDashboard.Extensions
 {
-    public static class LogDashboardOptionsExtension
+    public static class LogDashboardOptionsExtensions
     {
         /// <summary>
         /// 设置根目录
