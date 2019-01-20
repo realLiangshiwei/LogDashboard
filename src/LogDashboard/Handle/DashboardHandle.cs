@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -126,6 +127,11 @@ namespace LogDashboard.Handle
             var log = await _logRepository.FirstOrDefault(x => x.Id == input.Id);
 
             var traceIdentifier = ((IRequestTrackLogModel)log).TraceIdentifier;
+
+            if (string.IsNullOrWhiteSpace(traceIdentifier))
+            {
+                return await View(new List<T>(), "Views.Dashboard.TraceLogList.cshtml");
+            }
 
             if (Context.Options.DatabaseSource)
             {
