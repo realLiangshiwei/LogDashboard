@@ -10,6 +10,7 @@ using LogDashboard.Repository.Dapper;
 using LogDashboard.Repository.File;
 using LogDashboard.Route;
 using RazorLight;
+using LogDashboard.Repository.Cache;
 
 namespace LogDashboard
 {
@@ -49,6 +50,8 @@ namespace LogDashboard
                 builder.Services.AddTransient(typeof(IRepository<>), typeof(FileRepository<>));               ;
 
                 builder.Services.AddScoped(typeof(IUnitOfWork), typeof(FileUnitOfWork<>).MakeGenericType(options.LogModelType));
+
+                builder.Services.AddSingleton(typeof(ICacheUnitOfWork), typeof(LocalCacheUnitOfWork));
             }
 
 

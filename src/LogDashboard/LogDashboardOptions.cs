@@ -5,6 +5,7 @@ using System.Reflection;
 using LogDashboard.Authorization;
 using Microsoft.AspNetCore.Authorization;
 using LogDashboard.Models;
+using LogDashboard.Repository.Cache;
 
 namespace LogDashboard
 {
@@ -17,6 +18,18 @@ namespace LogDashboard
         public bool FileSource { get; set; }
 
         public string RootPath{get;set;}
+
+        /// <summary>
+        /// 如果有需要，可以配置按级别名称作为目录存放，以方便后面的有可能的扩展
+        /// </summary>
+        public List<string> LevelPath { get; set; }
+
+        /// <summary>
+        /// 缓存策略
+        /// </summary>
+        public CachePolicy cachePolicy { get; set; }
+
+        public ICacheUnitOfWork cacheUnitOfWork { get; set; }
 
         public bool DatabaseSource { get; set; }
 
@@ -92,6 +105,16 @@ namespace LogDashboard
             ConnectionString = connectionString;
         }
 
+    }
+
+    /// <summary>
+    /// 缓存策略
+    /// </summary>
+    public enum CachePolicy
+    {
+        Week,
+        Month,
+        FileCount
     }
 }
 
