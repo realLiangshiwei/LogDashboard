@@ -234,7 +234,7 @@
                 data: JSON.stringify({ ChartDataType: i })
             }).done(function (data) {
                 charts[i - 1].all = data.All;
-                charts[i - 1].error = data.ERROR;
+                charts[i - 1].error = data.Error;
                 initLineChart(charts[i - 1]);
             });
         }
