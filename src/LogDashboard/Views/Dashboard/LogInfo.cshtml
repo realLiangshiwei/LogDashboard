@@ -14,7 +14,7 @@
                 <a class="nav-link" data-toggle="tab" href="#environment" role="tab" aria-controls="environment" aria-selected="false">其他</a>
             </li>
             @{
-                if (typeof(IRequestTrackLogModel).IsAssignableFrom((Type)ViewBag.LogModelType))
+                if (typeof(IRequestTraceLogModel).IsAssignableFrom((Type)ViewBag.LogModelType))
                 {
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#requestTrace" role="tab" aria-controls="requestTrace" onclick="requestTrace('@Model.Id')" aria-selected="false">请求追踪</a>

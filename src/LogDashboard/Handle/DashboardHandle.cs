@@ -126,7 +126,7 @@ namespace LogDashboard.Handle
         {
             var log = await _logRepository.FirstOrDefault(x => x.Id == input.Id);
 
-            var traceIdentifier = ((IRequestTrackLogModel)log).TraceIdentifier;
+            var traceIdentifier = ((IRequestTraceLogModel)log).TraceIdentifier;
 
             if (string.IsNullOrWhiteSpace(traceIdentifier))
             {
@@ -141,7 +141,7 @@ namespace LogDashboard.Handle
 
             return await View((await _logRepository
                 .GetList(x =>
-                    ((IRequestTrackLogModel)x).TraceIdentifier == traceIdentifier))
+                    ((IRequestTraceLogModel)x).TraceIdentifier == traceIdentifier))
                 .OrderBy(x => x.LongDate).ToList(), "Views.Dashboard.TraceLogList.cshtml");
         }
     }

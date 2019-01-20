@@ -2,7 +2,7 @@
 
 namespace DatabaseSource
 {
-    public class CustomLogModel : LogModel, IRequestTrackLogModel
+    public class CustomLogModel : LogModel, IRequestTraceLogModel
     {
         public string TraceIdentifier { get; set; }
 

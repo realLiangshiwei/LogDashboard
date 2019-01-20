@@ -2,7 +2,7 @@
 
 namespace LogDashboard.Models
 {
-    public interface IRequestTrackLogModel : ILogModel
+    public interface IRequestTraceLogModel : ILogModel
     {
         string TraceIdentifier { get; set; }
     }
