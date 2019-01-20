@@ -56,6 +56,7 @@ namespace LogDashboard.Repository.File
 
         public List<T> GetLogs()
         {
+
             return _logs;
         }
 
@@ -97,33 +98,6 @@ namespace LogDashboard.Repository.File
             }
 
         }
-        #endregion 
-
-        #region 读取分页数据
-        /// <summary>
-        /// 此方法用作，读取分页数剧
-        /// 可以通过 LogCache.LogInfos.Count去推断读取哪部分文件或者缓存
-        /// 如果缓存里没有想要的文件，则重新从文件读取
-        /// </summary>
-        /// <param name="paths"></param>
-        private void ReadLogs(params string[] paths)
-        {
-            if (paths == null || paths.Count() < 1)
-                return; //这里抛个什么异常
-            ReadLogByPath(paths);
-
-        }
-
-        private void ReadLogFromMemory()
-        {
-
-        }
-
-        private string[] GetPaths()
-        {
-
-            return null;
-        } 
         #endregion 
 
         /// <summary>
