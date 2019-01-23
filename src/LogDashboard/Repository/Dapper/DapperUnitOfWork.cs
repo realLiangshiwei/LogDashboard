@@ -1,4 +1,5 @@
 ﻿using System.Data.SqlClient;
+using System.Threading.Tasks;
 
 namespace LogDashboard.Repository.Dapper
 {
@@ -9,12 +10,11 @@ namespace LogDashboard.Repository.Dapper
         public DapperUnitOfWork(SqlConnection conn)
         {
             _conn = conn;
-            Open();
         }
 
-        public void Open()
+        public async Task Open()
         {
-            _conn.Open();
+            await _conn.OpenAsync();
         }
 
         public void Close()

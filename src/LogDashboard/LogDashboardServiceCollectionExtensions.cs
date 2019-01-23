@@ -2,28 +2,86 @@
 using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
-using Microsoft.Extensions.DependencyInjection;
-using LogDashboard.Handle;
+#if NETFRAMEWORK
+using Owin;
+#endif
+#if NETSTANDARD2_0
 using LogDashboard.LogDashboardBuilder;
+#endif
+using LogDashboard.Handle;
+using LogDashboard.Ioc;
 using LogDashboard.Repository;
 using LogDashboard.Repository.Dapper;
 using LogDashboard.Repository.File;
 using LogDashboard.Route;
+using Microsoft.Extensions.DependencyInjection;
 using RazorLight;
 
 namespace LogDashboard
 {
     public static class LogDashboardServiceCollectionExtensions
     {
+
+#if NETSTANDARD2_0
+
         public static ILogDashboardBuilder AddLogDashboard(this IServiceCollection services, Action<LogDashboardOptions> func = null)
         {
             var builder = new DefaultLogDashboardBuilder(services);
 
-            services.AddSingleton<IRazorLightEngine>(new RazorLightEngineBuilder()
+            RegisterServices(services,func);
+
+            return builder;
+        }
+       
+#endif
+
+#if NETFRAMEWORK
+        /// <summary>
+        /// Maps LogDashboard to the app builder pipeline at "/LogDashboard".
+        /// </summary>
+        /// <param name="builder">The app builder</param>
+        /// <param name="currentAssembly">not null</param>
+        /// <param name="func"></param>
+        /// <param name="pathMatch"></param>
+        public static IAppBuilder MapLogDashboard(this IAppBuilder builder, Assembly currentAssembly, Action<LogDashboardOptions> func = null,
+            string pathMatch = "/LogDashboard")
+        {
+            var containerBuilder = new ServiceCollection();
+
+            RegisterServices(containerBuilder, func, currentAssembly);
+
+            IocManager.Container = containerBuilder.BuildServiceProvider();
+
+            return builder.Map(pathMatch, subApp => subApp.RunLogDashboard());
+        }
+
+        /// <summary>
+        /// Adds SignalR hubs to the app builder pipeline.
+        /// </summary>
+        /// <param name="builder">The app builder</param>
+        public static void RunLogDashboard(this IAppBuilder builder)
+        {
+            builder.Use<LogDashboardMiddleware>();
+        }
+
+#endif
+
+        private static void RegisterServices(IServiceCollection services, Action<LogDashboardOptions> func = null, Assembly currentAssembly = null)
+        {
+            // razor
+            var razorBuilder = new RazorLightEngineBuilder();
+            if (currentAssembly != null)
+            {
+                razorBuilder = razorBuilder.SetOperatingAssembly(currentAssembly);
+            }
+
+            services.AddSingleton<IRazorLightEngine>(razorBuilder
                 .UseEmbeddedResourcesProject(typeof(LogDashboardMiddleware))
                 .UseMemoryCachingProvider()
                 .Build());
 
+
+            // options
             var options = new LogDashboardOptions();
             func?.Invoke(options);
 
@@ -35,28 +93,26 @@ namespace LogDashboard
 
                 if (string.IsNullOrWhiteSpace(options.ConnectionString))
                 {
-                    throw new ArgumentNullException("ConnectionString Cannot be Null");
+                    throw new ArgumentNullException(nameof(options.ConnectionString));
                 }
 
-                services.AddTransient(provider => new SqlConnection(options.ConnectionString));
+                services.AddSingleton(provider => new SqlConnection(options.ConnectionString));
 
-                builder.Services.AddTransient(typeof(IRepository<>), typeof(DapperRepository<>));
+                services.AddTransient(typeof(IRepository<>), typeof(DapperRepository<>));
 
-                builder.Services.AddScoped<IUnitOfWork, DapperUnitOfWork>();
+                services.AddScoped<IUnitOfWork, DapperUnitOfWork>();
             }
             else
             {
-                builder.Services.AddTransient(typeof(IRepository<>), typeof(FileRepository<>));               ;
+                services.AddTransient(typeof(IRepository<>), typeof(FileRepository<>)); ;
 
-                builder.Services.AddScoped(typeof(IUnitOfWork), typeof(FileUnitOfWork<>).MakeGenericType(options.LogModelType));
+                services.AddScoped(typeof(IUnitOfWork), typeof(FileUnitOfWork<>).MakeGenericType(options.LogModelType));
             }
 
 
+            //register Handle
             RegisterHandle(services, options);
-
-            return builder;
         }
-
 
         private static void RegisterHandle(IServiceCollection services, LogDashboardOptions opts)
         {
@@ -68,5 +124,7 @@ namespace LogDashboard
                 services.AddTransient(handle.MakeGenericType(opts.LogModelType));
             }
         }
+
+
     }
 }

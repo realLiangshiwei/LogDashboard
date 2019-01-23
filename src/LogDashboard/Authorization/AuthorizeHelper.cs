@@ -1,5 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using LogDashboard.Ioc;
+#if NETFRAMEWORK
+using Microsoft.Owin;
+#endif
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Policy;
@@ -10,13 +14,13 @@ namespace LogDashboard.Authorization
 {
     public class AuthorizeHelper
     {
+#if NETSTANDARD2_0 || NETCOREAPP2_0
         public static async Task<bool> AuthorizeAsync(HttpContext context, IList<IAuthorizeData> policies)
         {
             if (policies.Count == 0)
             {
                 return true;
             }
-
             var policyProvider = context.RequestServices.GetRequiredService<IAuthorizationPolicyProvider>();
 
             var authorizePolicy = await AuthorizationPolicy.CombineAsync(policyProvider, policies);
@@ -62,5 +66,7 @@ namespace LogDashboard.Authorization
             }
             return false;
         }
+#endif
+
     }
 }

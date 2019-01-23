@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>liangshiwei</Authors>
     <Description>日志面板、LogDashboard、AspNetCore</Description>
@@ -9,8 +9,9 @@
     <PackageIconUrl>https://raw.githubusercontent.com/liangshiw/LogDashboard/master/logo.png</PackageIconUrl>
     <RepositoryUrl>https://github.com/liangshiw/LogDashboard</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <Version>1.0.5</Version>
+    <Version>1.0.5.1-beta</Version>
     <Company>liangshiwei</Company>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <ItemGroup>
@@ -38,16 +39,22 @@
     <None Remove="css\Simple-Line-Icons.woff2" />
   </ItemGroup>
 
+  <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
+    <PackageReference Include="Microsoft.Owin" Version="4.0.0" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+   
+  </ItemGroup>
   <ItemGroup>
+
     <PackageReference Include="Dapper" Version="1.50.5" />
     <PackageReference Include="DapperExtensions.DotnetCore" Version="1.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authorization.Policy" Version="2.1.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.1.0" />
     <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
-    <PackageReference Include="RazorLight" Version="2.0.0-beta1" />
-    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.0.9.1" />
+    <PackageReference Include="RazorLight.Unofficial" Version="2.0.0-beta1.3" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.0.9.2" />
   </ItemGroup>
-
 
 </Project>

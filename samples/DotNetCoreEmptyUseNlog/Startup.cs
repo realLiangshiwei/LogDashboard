@@ -15,11 +15,13 @@ namespace DotNetCoreEmpty
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddLogDashboard(opt => { });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+  
             // 静态文件中间件
             app.UseStaticFiles();
 

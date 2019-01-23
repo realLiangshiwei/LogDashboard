@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using LogDashboard.Extensions;
 using LogDashboard.Models;
 
@@ -23,7 +24,6 @@ namespace LogDashboard.Repository.File
         {
             _options = options;
             _logs = new List<T>();
-            Open();
         }
 
         public List<T> GetLogs()
@@ -31,9 +31,9 @@ namespace LogDashboard.Repository.File
             return _logs;
         }
 
-        public void Open()
+        public async Task Open()
         {
-            ReadLogs();
+            await ReadLogs();
         }
 
         public void Close()
@@ -41,7 +41,7 @@ namespace LogDashboard.Repository.File
             _logs = null;
         }
 
-        private void ReadLogs()
+        private async Task ReadLogs()
         {
             int id = 1;
             var rootPath = _options.RootPath ?? AppContext.BaseDirectory;
@@ -64,7 +64,7 @@ namespace LogDashboard.Repository.File
                 {
                     while (!streamReader.EndOfStream)
                     {
-                        stringBuilder.AppendLine(streamReader.ReadLine());
+                        stringBuilder.AppendLine(await streamReader.ReadLineAsync());
                     }
                 }
 

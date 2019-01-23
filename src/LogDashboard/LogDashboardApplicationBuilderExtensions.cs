@@ -1,23 +1,16 @@
-﻿using System;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using LogDashboard;
+﻿using Microsoft.AspNetCore.Builder;
 
 namespace LogDashboard
 {
-    public static class LogDashboardApplicationBuilderExtensions
-    {
-        public static IApplicationBuilder UseLogDashboard(
-            this IApplicationBuilder builder, string pathMatch = "/LogDashboard")
+#if NETSTANDARD2_0
+        public static class LogDashboardApplicationBuilderExtensions
         {
-            var options = builder.ApplicationServices.GetService<LogDashboardOptions>();
-
-            if (options == null)
+            public static IApplicationBuilder UseLogDashboard(
+                this IApplicationBuilder builder, string pathMatch = "/LogDashboard")
             {
-                throw new ArgumentNullException(nameof(options));
+                return builder.Map(pathMatch, app => { app.UseMiddleware<LogDashboardMiddleware>(); });
             }
-
-            return builder.Map(pathMatch, app => { app.UseMiddleware<LogDashboardMiddleware>(); });
         }
-    }
+#endif
+
 }

@@ -29,6 +29,7 @@ namespace LogDashboard.Handle
             Context.HttpContext.Response.ContentType = "text/html";
             ViewBag.DashboardMapPath = Context.Options.PathMatch;
             ViewBag.View = Context.Route.View;
+
             return await Context.Engine.CompileRenderAsync(viewName ?? Context.Route.View, model, ViewBag);
         }
 
