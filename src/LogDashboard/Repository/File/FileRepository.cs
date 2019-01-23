@@ -21,18 +21,18 @@ namespace LogDashboard.Repository.File
             _logs = (unitOfWork as FileUnitOfWork<T>)?.GetLogs();
         }
 
-        public async Task<T> FirstOrDefault(Expression<Func<T, bool>> predicate = null)
+        public async Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate = null)
         {
-            return await Task.FromResult((await GetList(predicate)).FirstOrDefault());
+            return await Task.FromResult((await GetListAsync(predicate)).FirstOrDefault());
         }
 
-        public async Task<IEnumerable<T>> GetList(Expression<Func<T, bool>> predicate = null)
+        public async Task<IEnumerable<T>> GetListAsync(Expression<Func<T, bool>> predicate = null)
         {
             return await Task.FromResult(_logs.Where(CheckPredicate(predicate).Compile()).ToList());
 
         }
 
-        public async Task<int> Count(Expression<Func<T, bool>> predicate = null)
+        public async Task<int> CountAsync(Expression<Func<T, bool>> predicate = null)
         {
             return await Task.FromResult(_logs.Count(CheckPredicate(predicate).Compile()));
         }
@@ -48,7 +48,7 @@ namespace LogDashboard.Repository.File
         }
 
 
-        public async Task<IEnumerable<T>> GetPageList(int page, int size, Expression<Func<T, bool>> predicate = null, params ISort[] sorts)
+        public async Task<IEnumerable<T>> GetPageListAsync(int page, int size, Expression<Func<T, bool>> predicate = null, params ISort[] sorts)
         {
             var query = _logs.Where(CheckPredicate(predicate).Compile()).AsQueryable();
             foreach (var sort in sorts.Select((value, i) => new { i, value }))

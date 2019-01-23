@@ -9,13 +9,13 @@ namespace LogDashboard.Repository
 {
     public interface IRepository<T> where T : class, ILogModel
     {
-        Task<T> FirstOrDefault(Expression<Func<T, bool>> predicate = null);
+        Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate = null);
 
-        Task<IEnumerable<T>> GetList(Expression<Func<T, bool>> predicate = null);
+        Task<IEnumerable<T>> GetListAsync(Expression<Func<T, bool>> predicate = null);
 
-        Task<int> Count(Expression<Func<T, bool>> predicate = null);
+        Task<int> CountAsync(Expression<Func<T, bool>> predicate = null);
 
-        Task<IEnumerable<T>> GetPageList(int page, int size, Expression<Func<T, bool>> predicate = null, params ISort[] sorts);
+        Task<IEnumerable<T>> GetPageListAsync(int page, int size, Expression<Func<T, bool>> predicate = null, params ISort[] sorts);
 
     }
 
