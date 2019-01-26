@@ -9,5 +9,7 @@ namespace LogDashboard
         public const string Root = "LogDashboard";
 
         public const string HandleNameSpace = "LogDashboard.Handle.";
+
+        public const string LogDashboardLogsCache = "LogDashboardLogsCache";
     }
 }
