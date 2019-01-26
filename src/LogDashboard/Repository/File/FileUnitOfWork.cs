@@ -4,25 +4,36 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LogDashboard.Cache;
 using LogDashboard.Extensions;
 using LogDashboard.Models;
 
 namespace LogDashboard.Repository.File
 {
-    public class FileUnitOfWork<T> : IUnitOfWork where T : ILogModel, new()
+    public class FileUnitOfWork<T> : IUnitOfWork where T : class, ILogModel, new()
     {
         private List<T> _logs;
 
         private readonly LogDashboardOptions _options;
+
+        private readonly ILogDashboardCacheManager<T> _cacheManager;
+
+
+        private static int _lineNumber;
+
+        private static DateTime? _lastFileWriteTime;
+
+        private static string _lastFileName;
 
         /// <summary>
         /// 日志模板完整标识
         /// </summary>
         public bool LogModelCompletion = true;
 
-        public FileUnitOfWork(LogDashboardOptions options)
+        public FileUnitOfWork(LogDashboardOptions options, ILogDashboardCacheManager<T> cacheManager)
         {
             _options = options;
+            _cacheManager = cacheManager;
             _logs = new List<T>();
         }
 
@@ -33,7 +44,19 @@ namespace LogDashboard.Repository.File
 
         public async Task Open()
         {
-            await ReadLogs();
+            _logs = await _cacheManager.GetCache(LogDashboardConsts.LogDashboardLogsCache);
+
+            if (_logs.Count > 0)
+            {
+                await ReadIncrementalLogs();
+            }
+            else
+            {
+                _lineNumber = 0;
+                _lastFileWriteTime = null;
+                _lastFileName = null;
+                await ReadAllLogs();
+            }
         }
 
         public void Close()
@@ -41,31 +64,78 @@ namespace LogDashboard.Repository.File
             _logs = null;
         }
 
-        private async Task ReadLogs()
+        private async Task ReadIncrementalLogs()
         {
-            int id = 1;
+            var logFiles = GetLogFiles();
+
+            logFiles.RemoveAll(x => x.LastWriteTime < _lastFileWriteTime);
+
+            if (_lastFileName != logFiles.FirstOrDefault().Path)
+            {
+                _lineNumber = 0;
+                logFiles.Remove(logFiles.FirstOrDefault());
+            }
+
+            await ReadLogs(logFiles, _logs.Last().Id++);
+        }
+
+        private List<(string Path, DateTime LastWriteTime)> GetLogFiles()
+        {
             var rootPath = _options.RootPath ?? AppContext.BaseDirectory;
 
             if (!Directory.Exists(rootPath))
             {
-                _logs.Add(CreateWarnItem(id, $"{LogDashboardConsts.Root} Warn:日志文件目录不存在,请检查 LogDashboardOption.RootPath 配置!"));
-                return;
+                _logs.Add(CreateWarnItem(_logs.Last().Id + 1, $"{LogDashboardConsts.Root} Warn:日志文件目录不存在,请检查 LogDashboardOption.RootPath 配置!"));
+                return new List<(string Path, DateTime LastWriteTime)>();
             }
+
             var paths = Directory.GetFiles(rootPath, "*.log", SearchOption.AllDirectories);
 
-            var logFiles = paths.Select(x => new { Path = x, LastWriteTime = System.IO.File.GetLastWriteTime(x) }).OrderBy(x => x.LastWriteTime).ToList();
+            return paths.Select(x => (Path: x, LastWriteTime: System.IO.File.GetLastWriteTime(x))).OrderBy(x => x.LastWriteTime).ToList();
+        }
+
+        private async Task ReadLogs(List<(string Path, DateTime LastWriteTime)> logFiles, int id = 1)
+        {
+            if (_lastFileWriteTime == logFiles.LastOrDefault().LastWriteTime)
+            {
+                return;
+            }
+
+            _lastFileWriteTime = logFiles.LastOrDefault().LastWriteTime;
+            _lastFileName = logFiles.LastOrDefault().Path;
 
             foreach (var logFile in logFiles)
             {
                 var stringBuilder = new StringBuilder();
-
+                var fileLine = 0;
                 using (var fileStream = new FileStream(logFile.Path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                 using (var streamReader = new StreamReader(fileStream, Encoding.Default))
                 {
+                    //Skip line
+                    for (var i = 0; i < _lineNumber; i++)
+                    {
+                        await streamReader.ReadLineAsync();
+                    }
+
+
                     while (!streamReader.EndOfStream)
                     {
                         stringBuilder.AppendLine(await streamReader.ReadLineAsync());
+                        fileLine++;
                     }
+                }
+
+                if (logFile == logFiles.Last())
+                {
+                    if (_lastFileName == logFile.Path)
+                    {
+                        _lineNumber += fileLine;
+                    }
+                    else
+                    {
+                        _lineNumber = fileLine;
+                    }
+
                 }
 
                 var text = stringBuilder.ToString();
@@ -110,6 +180,13 @@ namespace LogDashboard.Repository.File
                 _logs.Add(CreateWarnItem(id, $"{LogDashboardConsts.Root} Warn:自定义日志模型与Config不完全匹配,请检查代码!"));
             }
 
+            await _cacheManager.SetCache(LogDashboardConsts.LogDashboardLogsCache, _logs);
+        }
+
+        private async Task ReadAllLogs()
+        {
+            var logFiles = GetLogFiles();
+            await ReadLogs(logFiles);
         }
 
         public T CreateWarnItem(int id, string message)

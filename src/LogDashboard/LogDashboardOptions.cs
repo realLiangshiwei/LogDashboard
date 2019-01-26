@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using LogDashboard.Authorization;
 #if NETSTANDARD2_0
-  using Microsoft.AspNetCore.Authorization;  
+using Microsoft.AspNetCore.Authorization;
 #endif
 
 using LogDashboard.Models;
@@ -19,7 +19,7 @@ namespace LogDashboard
 
         public bool FileSource { get; set; }
 
-        public string RootPath{get;set;}
+        public string RootPath { get; set; }
 
         public bool DatabaseSource { get; set; }
 
@@ -27,8 +27,10 @@ namespace LogDashboard
 
         internal Type LogModelType { get; set; }
 
+        public TimeSpan CacheExpires { get; set; }
+
 #if NETSTANDARD2_0
-         internal List<IAuthorizeData> AuthorizeData { get; set; }
+        internal List<IAuthorizeData> AuthorizeData { get; set; }
 #endif
 
 
@@ -93,6 +95,7 @@ namespace LogDashboard
             AuthorizeData = new List<IAuthorizeData>();
 #endif
             AuthorizationFiles = new List<ILogDashboardAuthorizationFilter>();
+            CacheExpires = TimeSpan.FromMinutes(5);
         }
 
         public void UseDataBase(string connectionString, string tableName = "log")

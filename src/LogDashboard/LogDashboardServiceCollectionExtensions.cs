@@ -2,6 +2,7 @@
 using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
+using LogDashboard.Cache;
 #if NETFRAMEWORK
 using Owin;
 #endif
@@ -28,11 +29,11 @@ namespace LogDashboard
         {
             var builder = new DefaultLogDashboardBuilder(services);
 
-            RegisterServices(services,func);
+            RegisterServices(services, func);
 
             return builder;
         }
-       
+
 #endif
 
 #if NETFRAMEWORK
@@ -80,6 +81,7 @@ namespace LogDashboard
                 .UseMemoryCachingProvider()
                 .Build());
 
+            services.AddSingleton(typeof(ILogDashboardCacheManager<>), typeof(InMemoryLogDashboardCacheManager<>));
 
             // options
             var options = new LogDashboardOptions();
