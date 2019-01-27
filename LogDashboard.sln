@@ -34,9 +34,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RazorLight", "..\..\..\Razo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NfxAspNetMvc", "samples\NfxAspNetMvc\NfxAspNetMvc.csproj", "{CBC1255C-4DEE-4713-BB8C-AB2F3C040D01}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NfxAspnetCore", "samples\NfxAspnetCore\NfxAspnetCore.csproj", "{64D7FF5C-5300-429C-A64D-15C9A0809124}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NfxAspnetCore", "samples\NfxAspnetCore\NfxAspnetCore.csproj", "{64D7FF5C-5300-429C-A64D-15C9A0809124}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UseSerilog", "samples\UseSerilog\UseSerilog.csproj", "{05DAB10F-93AA-487F-B2F2-0CC7FF459A3E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UseSerilog", "samples\UseSerilog\UseSerilog.csproj", "{05DAB10F-93AA-487F-B2F2-0CC7FF459A3E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

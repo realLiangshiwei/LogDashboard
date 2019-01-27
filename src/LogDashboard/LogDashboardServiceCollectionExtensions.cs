@@ -91,14 +91,14 @@ namespace LogDashboard
 
             if (options.DatabaseSource)
             {
-                DapperExtensions.DapperExtensions.DefaultMapper = typeof(LogModelMapper<>);
+                DapperExtensions.DapperAsyncExtensions.DefaultMapper = typeof(LogModelMapper<>);
 
                 if (string.IsNullOrWhiteSpace(options.ConnectionString))
                 {
                     throw new ArgumentNullException(nameof(options.ConnectionString));
                 }
 
-                services.AddSingleton(provider => new SqlConnection(options.ConnectionString));
+                services.AddTransient(provider => new SqlConnection(options.ConnectionString));
 
                 services.AddTransient(typeof(IRepository<>), typeof(DapperRepository<>));
 
