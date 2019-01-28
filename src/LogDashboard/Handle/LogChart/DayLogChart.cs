@@ -25,8 +25,8 @@ namespace LogDashboard.Handle.LogChart
                 else
                 {
                     var startTime = date.AddHours(i);
-                    output.All[i] = await repository.CountAsync(x => x.LongDate >= startTime && x.LongDate <= startTime.AddMinutes(59));
-                    output.Error[i] = await repository.CountAsync(x => x.LongDate >= startTime && x.LongDate <= startTime.AddMinutes(59) && x.Level == "ERROR");
+                    output.All[i] = await repository.CountAsync(x => x.LongDate >= startTime && x.LongDate <= startTime.AddMinutes(59).AddSeconds(59));
+                    output.Error[i] = await repository.CountAsync(x => x.LongDate >= startTime && x.LongDate <= startTime.AddMinutes(59).AddSeconds(59) && x.Level == "ERROR");
                 }
             }
             return output;
