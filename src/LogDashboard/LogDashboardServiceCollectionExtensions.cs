@@ -92,6 +92,7 @@ namespace LogDashboard
             if (options.DatabaseSource)
             {
                 DapperExtensions.DapperAsyncExtensions.DefaultMapper = typeof(LogModelMapper<>);
+                DapperExtensions.DapperExtensions.DefaultMapper = typeof(LogModelMapper<>);
 
                 if (string.IsNullOrWhiteSpace(options.ConnectionString))
                 {

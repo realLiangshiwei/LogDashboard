@@ -1,11 +1,8 @@
 ﻿using LogDashboard.Models;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
 using DapperExtensions;
-using LogDashboard.Extensions;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -19,6 +16,20 @@ namespace LogDashboard.Repository.File
         public FileRepository(IUnitOfWork unitOfWork)
         {
             _logs = (unitOfWork as FileUnitOfWork<T>)?.GetLogs();
+        }
+
+        public async Task<IEnumerable<T>> RequestTraceAsync(T model)
+        {
+            var traceIdentifier = ((IRequestTraceLogModel)model).TraceIdentifier;
+            return await GetListAsync(x =>
+                        ((IRequestTraceLogModel)x).TraceIdentifier == traceIdentifier);
+        }
+
+        public Task<(int Count, List<int> ids)> UniqueCountAsync(Expression<Func<T, bool>> predicate = null)
+        {
+            var ids = _logs.Where(CheckPredicate(predicate).Compile()).GroupBy(x => new { x.Message, x.Exception })
+                 .Where(x => x.Count() == 1).SelectMany(x => x.ToList()).Select(x => x.Id).ToList();
+            return Task.FromResult((ids.Count, ids));
         }
 
         public async Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate = null)
@@ -48,9 +59,10 @@ namespace LogDashboard.Repository.File
         }
 
 
-        public async Task<IEnumerable<T>> GetPageListAsync(int page, int size, Expression<Func<T, bool>> predicate = null, params ISort[] sorts)
+        public async Task<IEnumerable<T>> GetPageListAsync(int page, int size, Expression<Func<T, bool>> predicate = null,
+            Sort[] sorts = null, List<int> uniqueIds = null)
         {
-            var query = _logs.Where(CheckPredicate(predicate).Compile()).AsQueryable();
+            var query = _logs.Where(CheckPredicate(predicate).Compile()).WhereIf(uniqueIds != null, x => uniqueIds.Contains(x.Id)).AsQueryable();
             foreach (var sort in sorts.Select((value, i) => new { i, value }))
             {
                 var order = sort.value.Ascending ? "asc" : "desc";
