@@ -61,6 +61,7 @@ namespace LogDashboard.Extensions
             }
 
             build.Append(endPage);
+            build.Append($"<li class='page-item'><a class='page-link' >总数{totalCount}条</a></li>");
             build.Append(@" </ul></ nav >");
 
             return build.ToString();
