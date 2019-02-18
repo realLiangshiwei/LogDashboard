@@ -11,47 +11,27 @@ namespace LogDashboard.Extensions
             var build = new StringBuilder();
             build.Append("<nav><ul class='pagination justify-content-end'>");
 
-            var start = page - 3;
+            var start = totalPage == 7 ? 1 : (page - 3) < 1 ? 1 : page - 3;
 
-            if (start > 1)
+            build.Append("<li class='page-item'><a class='page-link' onclick=goPage('1')>首页</a></li>");
+
+
+            var end = Math.Min(page + 3, totalPage);
+
+
+
+            if (page - start < 3)
             {
-                build.Append("<li class='page-item'><a class='page-link'  onclick=goPage('1')>首页</a></li>");
+                end += Math.Abs(4 - page);
             }
             else
             {
-                start = 1;
-            }
-
-            var end = totalPage - page;
-
-            var endPage = "";
-
-            if (end > 3)
-            {
-                end = page + 3;
-                endPage = $"<li class='page-item'><a class='page-link'  onclick=goPage('{totalPage}')>尾页</a></li>";
-            }
-            else if (end <= 3)
-            {
-                end = totalPage;
-            }
-
-            if (totalPage >= 7)
-            {
-
-                if (page - start < 3)
+                if (totalPage - end < 3)
                 {
-                    end += Math.Abs(4 - page);
+                    start -= Math.Abs(page + 3 - end);
                 }
-                else
-                {
-                    if (totalPage - end < 3)
-                    {
-                        start -= Math.Abs(page + 3 - end);
-                    }
-                }
-
             }
+
 
             for (var i = start; i <= end; i++)
             {
@@ -60,7 +40,7 @@ namespace LogDashboard.Extensions
                     : $"<li class='page-item'><a class='page-link' onclick=goPage('{i}')>{i}</a></li>");
             }
 
-            build.Append(endPage);
+            build.Append($"<li class='page-item'><a class='page-link' onclick=goPage('{totalPage}')>尾页</a></li>");
             build.Append($"<li class='page-item'><a class='page-link' >总数{totalCount}条</a></li>");
             build.Append(@" </ul></ nav >");
 
