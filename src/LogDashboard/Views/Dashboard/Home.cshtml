@@ -67,18 +67,18 @@
                     <a class="nav-link active" data-toggle="tab" href="#hourChartPanel" onclick="getLogChart(1)" role="tab" aria-controls="overview" aria-selected="true">小时</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#dayChartPanel" onclick="getLogChart(2)"  role="tab" aria-controls="environment" aria-selected="false">天</a>
+                    <a class="nav-link" data-toggle="tab" href="#dayChartPanel" onclick="getLogChart(2)" role="tab" aria-controls="environment" aria-selected="false">天</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#weekChartPanel" onclick="getLogChart(3)" role="tab" aria-controls="environment" aria-selected="false">周</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#monthChartPanel" onclick="getLogChart(4)"  role="tab" aria-controls="environment" aria-selected="false">月</a>
+                    <a class="nav-link" data-toggle="tab" href="#monthChartPanel" onclick="getLogChart(4)" role="tab" aria-controls="environment" aria-selected="false">月</a>
                 </li>
             </ul>
 
             <div class="tab-content">
-                <div class="tab-pane active" id="hourChartPanel"  role="tabpanel">
+                <div class="tab-pane active" id="hourChartPanel" role="tabpanel">
                     <div class="table-responsive">
                         <canvas id="hourChart" width="100%" height="20"></canvas>
                     </div>
@@ -88,7 +88,7 @@
                         <canvas id="dayChart" width="100%" height="20"></canvas>
                     </div>
                 </div>
-                <div class="tab-pane" id="weekChartPanel"  role="tabpanel">
+                <div class="tab-pane" id="weekChartPanel" role="tabpanel">
                     <div class="table-responsive">
                         <canvas id="weekChart" width="100%" height="20"></canvas>
                     </div>
@@ -127,27 +127,8 @@
                         <tr class="row mx-0">
                             <td class="col-1"><a href="javascript:void(0);" onclick="logInfo('@item.Id')">@item.Id</a></td>
                             <td class="col-3">@item.Logger</td>
-                            @{
-                                if (item.Level.ToLower() == "error")
-                                {
-                                    <div class="modal fade" id="@item.Id">
-                                        <div class="modal-dialog modal-lg" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header bg-danger border-0"><h5 class="modal-title text-white">Exception</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div><div class="modal-body">
-                                                    <pre>@item.Exception</pre>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <td class="col-1"><button class="btn btn-outline-@item.Level.ToUpper()" onclick='$("#@item.Id").modal();'>@item.Level</button></td>
-                                }
-                                else
-                                {
-                                    <td class="col-1"><button class="btn btn-outline-@item.Level.ToUpper()">@item.Level</button></td>
-                                }
-                            }
-
-                            <td class="col-4" onclick="$(this).next().show(); $(this).css('display','none');">
+                            <td class="col-1"><button class="btn btn-outline-@item.Level.ToUpper()">@item.Level</button></td>
+                            <td class="col-4" onclick="$(this).next().show();$(this).css('display', 'none');">
                                 @{
                                     var message = item.Message;
                                     if (message.Length > 90)
@@ -157,9 +138,9 @@
                                 }
                                 @message
                             </td>
-                            <td class="col-4" style="display: none;" onclick="$(this).prev().show(); $(this).css('display','none');">@item.Message</td>
+                            <td class="col-4" style="display: none;" onclick="$(this).prev().show();$(this).css('display', 'none');">@item.Message</td>
                             <td class="col-2">@item.LongDate</td>
-                            <td class="col-1"><a href="javascript:void(0);" onclick="logInfo('@item.Id-info','logInfoModal','logInfoBody')">详情</a></td>
+                            <td class="col-1"><a href="javascript:void(0);" onclick="logInfo('@item.Id-info', 'logInfoModal', 'logInfoBody')">详情</a></td>
                             <div style="display: none" id="@item.Id-info">@item.ToJsonString()</div>
                         </tr>
                     }
