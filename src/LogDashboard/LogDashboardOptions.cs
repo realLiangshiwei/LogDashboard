@@ -13,16 +13,28 @@ namespace LogDashboard
 {
     public class LogDashboardOptions
     {
-        public string NogConfig { get; set; }
+        /// <summary>
+        /// Default value : Log Dashboard
+        /// </summary>
+        public string Brand { get; set; }
 
+        /// <summary>
+        /// Url match
+        /// </summary>
         public string PathMatch { get; set; }
 
         public bool FileSource { get; set; }
 
+        /// <summary>
+        /// Log files path
+        /// </summary>
         public string RootPath { get; set; }
 
         public bool DatabaseSource { get; set; }
 
+        /// <summary>
+        /// Database ConnetionString
+        /// </summary>
         public string ConnectionString { get; set; }
 
         internal Type LogModelType { get; set; }
@@ -84,11 +96,11 @@ namespace LogDashboard
 
         public LogDashboardOptions()
         {
+            Brand = "Log Dashboard";
             CustomPropertyInfos = new List<PropertyInfo>();
             FileSource = true;
             FileFieldDelimiter = "||";
             FileEndDelimiter = "||end";
-            NogConfig = "NLog.config";
             PathMatch = "/LogDashboard";
             LogModelType = typeof(LogModel);
 #if NETSTANDARD2_0
