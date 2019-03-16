@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using LogDashboard;
 using LogDashboard.Extensions;
 using Microsoft.Owin;

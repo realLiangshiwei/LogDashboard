@@ -37,7 +37,7 @@ namespace LogDashboard
 
         public async Task InvokeAsync(HttpContext httpContext)
         {
-                  
+
             using (var scope = httpContext.RequestServices.CreateScope())
             {
                 var opts = scope.ServiceProvider.GetService<LogDashboardOptions>();
@@ -73,7 +73,10 @@ namespace LogDashboard
 
                 if (!AuthorizationFilterHelper.Authorization(opts.AuthorizationFiles, logDashboardContext))
                 {
-                    httpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                    if (httpContext.Response.StatusCode == (int)HttpStatusCode.OK)
+                    {
+                        httpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                    }
                     return;
                 }
 
@@ -94,7 +97,7 @@ namespace LogDashboard
                         httpContext.Response.StatusCode = 404;
                         return;
                     }
-   
+
 
                     handle.Context = logDashboardContext;
 
@@ -145,7 +148,7 @@ namespace LogDashboard
                 }
             }
 
-            
+
         }
     }
 #endif
@@ -189,7 +192,10 @@ namespace LogDashboard
 
                 if (!AuthorizationFilterHelper.Authorization(opts.AuthorizationFiles, logDashboardContext))
                 {
-                    httpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                    if (httpContext.Response.StatusCode == (int) HttpStatusCode.OK)
+                    {
+                        httpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                    }
                     return;
                 }
 

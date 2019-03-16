@@ -9,8 +9,13 @@ namespace UseAuthorization
 
         public bool Authorization(LogDashboardContext context)
         {
-            var url = context.HttpContext.Request.GetDisplayUrl();
-            return url.Contains("localhost") || url.Contains("127.0.0.1");
+            if (!context.HttpContext.User.Identity.IsAuthenticated)
+            {
+                context.HttpContext.Response.Redirect("/Identity/Account/Login?returnUrl=/logdashboard");
+                return false;
+            }
+      
+            return true;
         }
     }
 }

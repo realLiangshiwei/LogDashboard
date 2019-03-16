@@ -5,12 +5,12 @@ using System.Reflection;
 using LogDashboard.Cache;
 #if NETFRAMEWORK
 using Owin;
+using LogDashboard.Ioc;
 #endif
 #if NETSTANDARD2_0
 using LogDashboard.LogDashboardBuilder;
 #endif
 using LogDashboard.Handle;
-using LogDashboard.Ioc;
 using LogDashboard.Repository;
 using LogDashboard.Repository.Dapper;
 using LogDashboard.Repository.File;
