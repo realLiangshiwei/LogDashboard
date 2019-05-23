@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using LogDashboard.Models;
+using LogDashboard.StackTrace;
 
 namespace LogDashboard.Handle
 {
@@ -21,6 +22,7 @@ namespace LogDashboard.Handle
 
         public dynamic ViewBag { get; set; }
 
+ 
 
         public virtual async Task<string> View(object model = null, string viewName = null)
         {

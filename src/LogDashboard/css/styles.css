@@ -10339,3 +10339,29 @@ table.table-expandable > tbody > tr div.table-expandable-arrow {
 table.table-expandable > tbody > tr div.table-expandable-arrow.up {
     background-position: 0px 0px;
 }
+
+.stack-trace {
+    padding: 10px;
+    border: none;
+}
+
+.st-type {
+    font-weight: bold;
+}
+
+.st-param-name {
+    color: #666;
+}
+
+.st-file {
+    color: #999;
+}
+
+.st-method {
+    color: #00008B;
+    font-weight: bold;
+}
+
+.st-line {
+    color: #8B008B;
+}

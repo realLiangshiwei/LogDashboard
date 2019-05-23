@@ -1,4 +1,8 @@
-﻿@using System.Reflection
+﻿@using System
+@using System.Collections.Generic
+@using System.Reflection
+@using LogDashboard.Extensions
+@using LogDashboard.StackTrace
 @using LogDashboard.Models
 @inherits RazorLight.TemplatePage<LogDashboard.Models.ILogModel>
 @{
@@ -56,7 +60,7 @@
                             堆栈信息
                         </div>
                         <div class="card-body">
-                            <pre>@Model.Exception</pre>
+                            <pre>@Raw(StackTraceFormatter.FormatHtml(Model.Exception))</pre>
                         </div>
                     </div>
                 </div>

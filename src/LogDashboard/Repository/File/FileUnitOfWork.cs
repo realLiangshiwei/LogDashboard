@@ -139,7 +139,7 @@ namespace LogDashboard.Repository.File
                 }
 
                 var text = stringBuilder.ToString();
-                var logLines = text.Trim().Split(new[] { _options.FileEndDelimiter }, StringSplitOptions.None).Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
+                var logLines = text.Trim().Replace("|| end", _options.FileEndDelimiter).Split(new[] { _options.FileEndDelimiter }, StringSplitOptions.None).Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
 
                 foreach (var logLine in logLines)
                 {
