@@ -11,27 +11,21 @@ namespace LogDashboard.Extensions
             var build = new StringBuilder();
             build.Append("<nav><ul class='pagination justify-content-end'>");
 
-            var start = totalPage == 7 ? 1 : (page - 3) < 1 ? 1 : page - 3;
+            var start = totalPage == 7 ? 1 : Math.Max(page - 3, 1);
 
             build.Append("<li class='page-item'><a class='page-link' onclick=goPage('1')>首页</a></li>");
 
-
             var end = Math.Min(page + 3, totalPage);
-
-
 
             if (page - start < 3)
             {
-                end += Math.Abs(4 - page);
+                end += totalPage <= 7 ? totalPage - end : Math.Abs(4 - page);
             }
-            else
+            else if (totalPage - end < 3)
             {
-                if (totalPage - end < 3)
-                {
-                    start -= Math.Abs(page + 3 - end);
-                }
-            }
+                start -= Math.Abs(page + 3 - end);
 
+            }
 
             for (var i = start; i <= end; i++)
             {
