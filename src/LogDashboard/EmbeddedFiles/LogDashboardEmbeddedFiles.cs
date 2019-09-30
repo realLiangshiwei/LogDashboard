@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Reflection;
@@ -20,10 +21,21 @@ namespace LogDashboard.EmbeddedFiles
         static readonly Dictionary<string, string> ResponseType = new Dictionary<string, string>
         {
             { ".css","text/css"},
-            { ".js","application/javascript"}
+            { ".js","application/javascript"},
+            {".woff2","font/woff2" },
+            {".woff","font/woff" },
+            {".ttf","application/octet-stream" },
         };
+
+        private static Assembly _assembly;
+
+        static LogDashboardEmbeddedFiles()
+        {
+            _assembly = Assembly.GetAssembly(typeof(LogDashboardRoute));
+        }
+
 #if NETSTANDARD2_0
-        public static string IncludeEmbeddedFile(HttpContext context, string path)
+        public static void IncludeEmbeddedFile(HttpContext context, string path)
         {
 
             context.Response.OnStarting(() =>
@@ -36,11 +48,15 @@ namespace LogDashboard.EmbeddedFiles
                 return Task.CompletedTask;
             });
 
+            using (var inputStream = _assembly.GetManifestResourceStream($"{LogDashboardConsts.Root}.{path.Substring(1)}"))
+            {
+                if (inputStream == null)
+                {
+                    throw new ArgumentException($@"Resource with name {path.Substring(1)} not found in assembly {_assembly}.");
+                }
 
-
-            var stream = Assembly.GetAssembly(typeof(LogDashboardRoute)).GetManifestResourceStream($"{LogDashboardConsts.Root}.{path.Substring(1)}");
-            var reader = new StreamReader(stream);
-            return reader.ReadToEnd();
+                inputStream.CopyTo(context.Response.Body);
+            }
         }
 #endif
 
