@@ -5,6 +5,7 @@
     <UserSecretsId>aspnet-UseAuthorization-2F404B6B-121E-46DC-85D7-36DB20ADDB18</UserSecretsId>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
     <LangVersion>7.3</LangVersion>
+    <PreserveCompilationReferences>true</PreserveCompilationReferences>
   </PropertyGroup>
 
 
