@@ -6,9 +6,7 @@ using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-#if NETSTANDARD2_0
 using Microsoft.AspNetCore.Http;
-#endif
 using Newtonsoft.Json;
 using LogDashboard.Authorization;
 using LogDashboard.EmbeddedFiles;
@@ -17,14 +15,10 @@ using LogDashboard.Ioc;
 using LogDashboard.Repository;
 using LogDashboard.Route;
 using Microsoft.Extensions.DependencyInjection;
-#if NETFRAMEWORK
-using Microsoft.Owin;
-#endif
 using RazorLight;
 namespace LogDashboard
 {
 
-#if NETSTANDARD2_0
     public class LogDashboardMiddleware
     {
         private readonly RequestDelegate _next;
@@ -47,8 +41,7 @@ namespace LogDashboard
                 //EmbeddedFile
                 if (requestUrl.Contains("css") || requestUrl.Contains("js") || requestUrl.Contains("woff"))
                 {
-
-                    LogDashboardEmbeddedFiles.IncludeEmbeddedFile(httpContext, requestUrl);
+                    await LogDashboardEmbeddedFiles.IncludeEmbeddedFile(httpContext, requestUrl);
                     return;
                 }
 
@@ -151,120 +144,4 @@ namespace LogDashboard
 
         }
     }
-#endif
-
-#if NETFRAMEWORK
-    public class LogDashboardMiddleware : OwinMiddleware
-    {
-        public LogDashboardMiddleware(OwinMiddleware next) : base(next)
-        {
-        }
-
-        public override async Task Invoke(IOwinContext httpContext)
-        {
-            using (var scope = IocManager.Container.CreateScope())
-            {
-
-                var opts = scope.ServiceProvider.GetRequiredService<LogDashboardOptions>();
-
-                var requestUrl = httpContext.Request.Path.Value;
-
-                //EmbeddedFile
-                if (requestUrl.Contains("css") || requestUrl.Contains("js"))
-                {
-                    await httpContext.Response.WriteAsync(
-                        LogDashboardEmbeddedFiles.IncludeEmbeddedFile(httpContext, requestUrl));
-                    return;
-                }
-
-                // Find Router
-                var router = LogDashboardRoutes.Routes.FindRoute(requestUrl);
-
-                if (router == null)
-                {
-                    httpContext.Response.StatusCode = 404;
-                    return;
-                }
-
-                var logDashboardContext = new LogDashboardContext(httpContext, router,
-                    scope.ServiceProvider.GetService<IRazorLightEngine>(),
-                    opts);
-
-                if (!AuthorizationFilterHelper.Authorization(opts.AuthorizationFiles, logDashboardContext))
-                {
-                    if (httpContext.Response.StatusCode == (int) HttpStatusCode.OK)
-                    {
-                        httpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-                    }
-                    return;
-                }
-
-                using (var uow = scope.ServiceProvider.GetService<IUnitOfWork>())
-                {
-                    await uow.Open();
-                    //Activate Handle
-                    var handleType = Assembly.GetAssembly(typeof(LogDashboardRoute))
-                        .GetTypes().FirstOrDefault(x => x.Name.Contains(router.Handle + "Handle"));
-
-                    var handle =
-                        scope.ServiceProvider.GetRequiredService(handleType.MakeGenericType(opts.LogModelType)) as
-                            ILogDashboardHandle;
-
-                    if (handle == null)
-                    {
-                        httpContext.Response.StatusCode = 404;
-                        return;
-                    }
-
-                    handle.Context = logDashboardContext;
-
-                    string html;
-
-                    var method = handle.GetType().GetMethod(router.Action);
-                    // ReSharper disable once PossibleNullReferenceException
-                    var parametersLength = method.GetParameters().Length;
-
-                    if (parametersLength == 0)
-                    {
-                        html = await (Task<string>)method.Invoke(handle, null);
-                    }
-                    else
-                    {
-                        if (httpContext.Request.Body.Length == 0 && !httpContext.Request.Query.Any())
-                        {
-                            html = await (Task<string>)method.Invoke(handle, new Object[] { null });
-                        }
-                        else
-                        {
-                            object args;
-                            if (httpContext.Request.Query.Any())
-                            {
-                                var dict = new Dictionary<string, string>();
-                                httpContext.Request.Query.ToList().ForEach(x => dict.Add(x.Key, x.Value.FirstOrDefault()));
-                                args = JsonConvert.DeserializeObject(JsonConvert.SerializeObject(dict),
-                                    method.GetParameters().First().ParameterType);
-                            }
-                            else
-                            {
-                                // ReSharper disable once PossibleInvalidOperationException
-                                var bytes = new byte[(int)httpContext.Request.Body.Length];
-                                await httpContext.Request.Body.ReadAsync(bytes, 0, (int)httpContext.Request.Body.Length);
-                                string requestJson = Encoding.Default.GetString(bytes);
-
-                                args = JsonConvert.DeserializeObject(requestJson,
-                                    method.GetParameters().First().ParameterType);
-
-                            }
-
-                            html = await (Task<string>)method.Invoke(handle, new[] { args });
-
-                        }
-                    }
-
-                    await httpContext.Response.WriteAsync(html);
-                }
-            }
-        }
-    }
-#endif
 }

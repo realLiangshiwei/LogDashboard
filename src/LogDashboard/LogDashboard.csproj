@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
+    <TargetFrameworks>netstandard2.1</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>liangshiwei</Authors>
     <Description>日志面板、LogDashboard、AspNetCore</Description>
@@ -49,14 +49,14 @@
   </ItemGroup>
   <ItemGroup>
 
-    <PackageReference Include="Dapper" Version="1.60.1" />
+    <PackageReference Include="Dapper" Version="2.0.30" />
     <PackageReference Include="DapperExtensions.Standard" Version="1.1.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authorization.Policy" Version="2.1.0" />
-    <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.0" />  
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
-    <PackageReference Include="RazorLight.Unofficial" Version="2.0.0-beta1.3" />
-    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.0.11" />
+    <PackageReference Include="Microsoft.AspNetCore.Authorization.Policy" Version="2.2.0" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.6.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.0.0" />  
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="RazorLight.Unofficial" Version="2.0.0-beta1.4" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.0.19" />
   </ItemGroup>
 
 </Project>

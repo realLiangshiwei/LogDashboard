@@ -3,13 +3,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
 using LogDashboard.Cache;
-#if NETFRAMEWORK
-using Owin;
-using LogDashboard.Ioc;
-#endif
-#if NETSTANDARD2_0
 using LogDashboard.LogDashboardBuilder;
-#endif
 using LogDashboard.Handle;
 using LogDashboard.Repository;
 using LogDashboard.Repository.Dapper;
@@ -23,7 +17,6 @@ namespace LogDashboard
     public static class LogDashboardServiceCollectionExtensions
     {
 
-#if NETSTANDARD2_0
 
         public static ILogDashboardBuilder AddLogDashboard(this IServiceCollection services, Action<LogDashboardOptions> func = null)
         {
@@ -34,38 +27,6 @@ namespace LogDashboard
             return builder;
         }
 
-#endif
-
-#if NETFRAMEWORK
-        /// <summary>
-        /// Maps LogDashboard to the app builder pipeline at "/LogDashboard".
-        /// </summary>
-        /// <param name="builder">The app builder</param>
-        /// <param name="currentAssembly">not null</param>
-        /// <param name="func"></param>
-        /// <param name="pathMatch"></param>
-        public static IAppBuilder MapLogDashboard(this IAppBuilder builder, Assembly currentAssembly, Action<LogDashboardOptions> func = null,
-            string pathMatch = "/LogDashboard")
-        {
-            var containerBuilder = new ServiceCollection();
-
-            RegisterServices(containerBuilder, func, currentAssembly);
-
-            IocManager.Container = containerBuilder.BuildServiceProvider();
-
-            return builder.Map(pathMatch, subApp => subApp.RunLogDashboard());
-        }
-
-        /// <summary>
-        /// Adds SignalR hubs to the app builder pipeline.
-        /// </summary>
-        /// <param name="builder">The app builder</param>
-        public static void RunLogDashboard(this IAppBuilder builder)
-        {
-            builder.Use<LogDashboardMiddleware>();
-        }
-
-#endif
 
         private static void RegisterServices(IServiceCollection services, Action<LogDashboardOptions> func = null, Assembly currentAssembly = null)
         {

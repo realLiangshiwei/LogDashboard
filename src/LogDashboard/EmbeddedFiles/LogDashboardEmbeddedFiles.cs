@@ -5,13 +5,7 @@ using System.Net;
 using System.Reflection;
 using System.Threading.Tasks;
 using LogDashboard.Route;
-#if NETFRAMEWORK
-using Microsoft.Owin;
-#endif
-
-#if NETSTANDARD2_0
 using Microsoft.AspNetCore.Http;
-#endif
 
 
 namespace LogDashboard.EmbeddedFiles
@@ -31,11 +25,10 @@ namespace LogDashboard.EmbeddedFiles
 
         static LogDashboardEmbeddedFiles()
         {
-            _assembly = Assembly.GetAssembly(typeof(LogDashboardRoute));
+            _assembly = Assembly.GetExecutingAssembly();
         }
 
-#if NETSTANDARD2_0
-        public static void IncludeEmbeddedFile(HttpContext context, string path)
+        public static async Task IncludeEmbeddedFile(HttpContext context, string path)
         {
 
             context.Response.OnStarting(() =>
@@ -54,22 +47,8 @@ namespace LogDashboard.EmbeddedFiles
                 {
                     throw new ArgumentException($@"Resource with name {path.Substring(1)} not found in assembly {_assembly}.");
                 }
-
-                inputStream.CopyTo(context.Response.Body);
+                await inputStream.CopyToAsync(context.Response.Body).ConfigureAwait(false);
             }
         }
-#endif
-
-
-#if NETFRAMEWORK
-        public static string IncludeEmbeddedFile(IOwinContext context, string path)
-        {
-            context.Response.ContentType = ResponseType[Path.GetExtension(path)];
-            var stream = Assembly.GetAssembly(typeof(LogDashboardRoute)).GetManifestResourceStream($"{LogDashboardConsts.Root}.{path.Substring(1)}");
-            var reader = new StreamReader(stream);
-            return reader.ReadToEnd();
-        }
-#endif
-
     }
 }

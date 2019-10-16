@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using LogDashboard.Authorization;
-#if NETSTANDARD2_0
 using Microsoft.AspNetCore.Authorization;
-#endif
 
 using LogDashboard.Models;
 
@@ -41,9 +39,7 @@ namespace LogDashboard
 
         public TimeSpan CacheExpires { get; set; }
 
-#if NETSTANDARD2_0
         internal List<IAuthorizeData> AuthorizeData { get; set; }
-#endif
 
 
         internal List<ILogDashboardAuthorizationFilter> AuthorizationFiles { get; set; }
@@ -62,7 +58,6 @@ namespace LogDashboard
         /// </summary>
         public string FileEndDelimiter { get; set; }
 
-#if NETSTANDARD2_0
         public void AddAuthorizeAttribute(params IAuthorizeData[] authorizeAttributes)
         {
             if (authorizeAttributes != null)
@@ -71,8 +66,6 @@ namespace LogDashboard
             }
 
         }
-#endif
-
 
         public void AddAuthorizationFilter(params ILogDashboardAuthorizationFilter[] filters)
         {
@@ -103,9 +96,7 @@ namespace LogDashboard
             FileEndDelimiter = "||end";
             PathMatch = "/LogDashboard";
             LogModelType = typeof(LogModel);
-#if NETSTANDARD2_0
             AuthorizeData = new List<IAuthorizeData>();
-#endif
             AuthorizationFiles = new List<ILogDashboardAuthorizationFilter>();
             CacheExpires = TimeSpan.FromMinutes(5);
         }
