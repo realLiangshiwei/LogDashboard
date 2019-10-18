@@ -1,4 +1,5 @@
 ﻿using LogDashboard;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -13,7 +14,7 @@ namespace NetCoreEmptyTest
         {
             services.AddLogDashboard(opt =>
             {
-                opt.AddAuthorizeAttribute();
+                opt.AddAuthorizeAttribute(new AuthorizeAttribute("Cookie"));
             });
         }
 
