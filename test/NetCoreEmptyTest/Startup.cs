@@ -7,17 +7,14 @@ using Microsoft.Extensions.Hosting;
 
 namespace NetCoreEmptyTest
 {
-
-
     public class Startup
     {
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddLogDashboard(opt =>
             {
+                opt.AddAuthorizeAttribute();
             });
-
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
