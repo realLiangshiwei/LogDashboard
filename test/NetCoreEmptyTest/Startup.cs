@@ -1,4 +1,5 @@
 ﻿using LogDashboard;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -7,17 +8,14 @@ using Microsoft.Extensions.Hosting;
 
 namespace NetCoreEmptyTest
 {
-
-
     public class Startup
     {
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddLogDashboard(opt =>
             {
+                opt.AddAuthorizeAttribute(new AuthorizeAttribute("Cookie"));
             });
-
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
