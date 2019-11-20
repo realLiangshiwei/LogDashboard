@@ -1,12 +1,11 @@
-﻿@using System
-@using System.Collections.Generic
-@using System.Reflection
-@using LogDashboard.Extensions
+﻿@* Generator: Template TypeVisibility: Internal GeneratePrettyNames: true *@
 @using LogDashboard.StackTrace
 @using LogDashboard.Models
-@inherits RazorLight.TemplatePage<LogDashboard.Models.ILogModel>
+@inherits LogDashboard.Views.RazorPage
 @{
-    Layout = null;
+  
+    var log = (ILogModel)ViewData["Model"];
+
 }
 <div class="container-fluid">
     <div class="mb-4 open">
@@ -18,10 +17,11 @@
                 <a class="nav-link" data-toggle="tab" href="#environment" role="tab" aria-controls="environment" aria-selected="false">其他</a>
             </li>
             @{
-                if (typeof(IRequestTraceLogModel).IsAssignableFrom((Type)ViewBag.LogModelType))
+                if (typeof(IRequestTraceLogModel).IsAssignableFrom(Context.Options.LogModelType))
                 {
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#requestTrace" role="tab" aria-controls="requestTrace" onclick="requestTrace('@Model.Id')" aria-selected="false">请求追踪</a>
+
+                        <a class="nav-link" data-toggle="tab" href="#requestTrace" role="tab" aria-controls="requestTrace" onclick="requestTrace('@log.Id.ToString()')" aria-selected="false">请求追踪</a>
                     </li>
                 }
 
@@ -34,23 +34,23 @@
                         <tbody>
                             <tr>
                                 <td>Id</td>
-                                <td class="text-nowrap">@Model.Id</td>
+                                <td class="text-nowrap">@log.Id.ToString()</td>
                             </tr>
                             <tr>
                                 <td>时间</td>
-                                <td class="text-nowrap">@Model.LongDate</td>
+                                <td class="text-nowrap">@log.LongDate.ToString("yyyy-MM-dd hh:mm:ss")</td>
                             </tr>
                             <tr>
                                 <td>级别</td>
-                                <td class="text-nowrap"><button class="btn btn-outline-@Model.Level.ToUpper()">@Model.Level.ToUpper()</button></td>
+                                <td class="text-nowrap"><button class="btn btn-outline-@log.Level.ToString()">@log.Level.ToString()</button></td>
                             </tr>
                             <tr>
                                 <td>Logger</td>
-                                <td class="text-nowrap">@Model.Logger</td>
+                                <td class="text-nowrap">@log.Logger</td>
                             </tr>
                             <tr>
                                 <td>消息</td>
-                                <td class="text-nowrap">@Model.Message</td>
+                                <td class="text-nowrap">@log.Message</td>
                             </tr>
 
                         </tbody>
@@ -60,7 +60,7 @@
                             堆栈信息
                         </div>
                         <div class="card-body">
-                            <pre>@Raw(StackTraceFormatter.FormatHtml(Model.Exception))</pre>
+                            <pre>@Raw(StackTraceFormatter.FormatHtml(log.Exception))</pre>
                         </div>
                     </div>
                 </div>
@@ -71,11 +71,11 @@
                     <table class="table table-bordered">
                         <tbody>
                             @{
-                                foreach (var propertyInfo in (List<PropertyInfo>)ViewBag.CustomPropertyInfos)
+                                foreach (var propertyInfo in Context.Options.CustomPropertyInfos)
                                 {
                                     <tr>
                                         <td style="width: 13%">@propertyInfo.Name</td>
-                                        <td class="text-nowrap">@propertyInfo.GetValue(Model)</td>
+                                        <td class="text-nowrap">@propertyInfo.GetValue(log)</td>
                                     </tr>
                                 }
                             }

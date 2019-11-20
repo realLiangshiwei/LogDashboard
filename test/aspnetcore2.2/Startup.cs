@@ -1,14 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using LogDashboard;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using NLog;
 
-namespace CustomLogModel
+namespace aspnetcore2._2
 {
     public class Startup
     {
@@ -16,28 +16,21 @@ namespace CustomLogModel
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            LogManager.Configuration.Variables["application"] = "CustomLogModel";
-            LogManager.Configuration.Variables["requestMethod"] = "Get";
-            services.AddLogDashboard(opt => { opt.CustomLogModel<ApplicationLogModel>(); });
+            services.AddLogDashboard();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
             app.UseLogDashboard();
+
             app.Run(async (context) =>
             {
-                var log = app.ApplicationServices.GetService<ILogger<Startup>>();
-                log.LogInformation("info");
-                log.LogDebug("debug");
-                log.LogTrace("trace");
-                log.LogWarning("warn");
                 await context.Response.WriteAsync("Hello World!");
             });
         }

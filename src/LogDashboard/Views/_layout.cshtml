@@ -1,15 +1,19 @@
-﻿<!doctype html>
+﻿@* Generator: Template TypeVisibility: Internal GeneratePrettyNames: true *@
+
+@inherits LogDashboard.Views.RazorPage
+
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>日志面板</title>
-    <link href="@ViewBag.DashboardMapPath/css.simple-line-icons.css" rel="stylesheet">
-    <link href="@ViewBag.DashboardMapPath/css.bootstrap.min.css" rel="stylesheet">
-    <link href="@ViewBag.DashboardMapPath/css.font-awesome.min.css" rel="stylesheet">
-    <link href="@ViewBag.DashboardMapPath/css.tempusdominus-bootstrap-4.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="@ViewBag.DashboardMapPath/css.styles.css">
+    <link href="@Context.Options.PathMatch/css.simple-line-icons.css" rel="stylesheet">
+    <link href="@Context.Options.PathMatch/css.bootstrap.min.css" rel="stylesheet">
+    <link href="@Context.Options.PathMatch/css.font-awesome.min.css" rel="stylesheet">
+    <link href="@Context.Options.PathMatch/css.tempusdominus-bootstrap-4.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="@Context.Options.PathMatch/css.styles.css">
 </head>
 <body class="sidebar-fixed header-fixed">
     <div class="page-wrapper">
@@ -18,7 +22,7 @@
                 <i class="fa fa-bars"></i>
             </a>
             <a class="navbar-brand" href="https://github.com/liangshiw/LogDashboard" target="_blank">
-                <h2>@ViewBag.Brand</h2>
+                <h2>@Context.Options.Brand</h2>
             </a>
             <a href="#" class="btn btn-link sidebar-toggle d-md-down-none">
                 <i class="fa fa-bars"></i>
@@ -38,12 +42,12 @@
                     <ul class="nav">
                         <li class="nav-title">菜单</li>
                         <li class="nav-item">
-                            <a id="mapPath" href="@ViewBag.DashboardMapPath" class="nav-link @ViewBag.dashboardNav">
+                            <a id="mapPath" href="@Context.Options.PathMatch" class="nav-link @ViewData["dashboardNav"]">
                                 <i class="icon icon-speedometer"></i> Dashboard
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="@ViewBag.DashboardMapPath/Dashboard/BasicLog" class="nav-link @ViewBag.basicLogNav">
+                            <a href="@Context.Options.PathMatch/Dashboard/BasicLog" class="nav-link @ViewData["basicLogNav"]">
                                 <i class="icon icon-target"></i> 日志
                             </a>
                         </li>
@@ -55,13 +59,13 @@
             </div>
         </div>
     </div>
-    <script src="@ViewBag.DashboardMapPath/js.jquery.min.js"></script>
-    <script src="@ViewBag.DashboardMapPath/js.Chart.min.js"></script>
-    <script src="@ViewBag.DashboardMapPath/js.bootstrap.min.js"></script>
-    <script src="@ViewBag.DashboardMapPath/js.moment.min.js"></script>
-    <script src="@ViewBag.DashboardMapPath/js.tempusdominus-bootstrap-4.js"></script>
-    <script src="@ViewBag.DashboardMapPath/js.spin.min.js"></script>
-    <script src="@ViewBag.DashboardMapPath/js.log.js"></script>
-    @RenderSection("Scripts", false)
+    <script src="@Context.Options.PathMatch/js.jquery.min.js"></script>
+    <script src="@Context.Options.PathMatch/js.Chart.min.js"></script>
+    <script src="@Context.Options.PathMatch/js.bootstrap.min.js"></script>
+    <script src="@Context.Options.PathMatch/js.moment.min.js"></script>
+    <script src="@Context.Options.PathMatch/js.tempusdominus-bootstrap-4.js"></script>
+    <script src="@Context.Options.PathMatch/js.spin.min.js"></script>
+    <script src="@Context.Options.PathMatch/js.log.js"></script>
+    @RenderSection("Scripts")
 </body>
 </html>

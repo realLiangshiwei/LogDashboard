@@ -1,8 +1,11 @@
-﻿namespace LogDashboard.Route
+﻿using System;
+using LogDashboard.Views;
+
+namespace LogDashboard.Route
 {
     public class LogDashboardRoute
     {
-        public LogDashboardRoute(string key, string view)
+        public LogDashboardRoute(string key, Type view)
         {
             HtmlView = true;
             Key = key;
@@ -17,7 +20,7 @@
 
         public string Key { get; set; }
 
-        public string View { get; set; }
+        public Type View { get; set; }
 
         public string Handle { get; set; }
 

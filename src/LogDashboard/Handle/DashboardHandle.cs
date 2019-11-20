@@ -8,6 +8,7 @@ using LogDashboard.Extensions;
 using LogDashboard.Handle.LogChart;
 using LogDashboard.Models;
 using LogDashboard.Repository;
+using LogDashboard.Views.Dashboard;
 
 namespace LogDashboard.Handle
 {
@@ -24,22 +25,22 @@ namespace LogDashboard.Handle
 
         public async Task<string> Home()
         {
-            ViewBag.dashboardNav = "active";
-            ViewBag.basicLogNav = "";
+            ViewData["dashboardNav"] = "active";
+            ViewData["basicLogNav"] = "";
             var result = await _logRepository.GetPageListAsync(1, 10, sorts: new[] { new Sort { Ascending = false, PropertyName = "Id" } });
 
-            ViewBag.unique = (await _logRepository.UniqueCountAsync()).Count;
+            ViewData["unique"] = (await _logRepository.UniqueCountAsync()).Count;
 
             var now = DateTime.Now;
             var weeHours = now.Date.AddHours(23).AddMinutes(59).AddSeconds(59);
-            ViewBag.todayCount = await _logRepository.CountAsync(x => x.LongDate >= now.Date && x.LongDate <= weeHours);
+            ViewData["todayCount"] = await _logRepository.CountAsync(x => x.LongDate >= now.Date && x.LongDate <= weeHours);
 
             var hour = now.AddHours(-1);
-            ViewBag.hourCount = await _logRepository.CountAsync(x => x.LongDate >= hour && x.LongDate <= now);
-            ViewBag.allCount = await _logRepository.CountAsync();
+            ViewData["hourCount"] = await _logRepository.CountAsync(x => x.LongDate >= hour && x.LongDate <= now);
+            ViewData["allCount"] = await _logRepository.CountAsync();
 
             //Chart Data
-            ViewBag.ChartData = (await LogChartFactory.GetLogChart(ChartDataType.Hour).GetCharts(_logRepository)).ToJsonString();
+            ViewData["ChartData"] = (await LogChartFactory.GetLogChart(ChartDataType.Hour).GetCharts(_logRepository)).ToJsonString();
 
             return await View(result);
         }
@@ -52,26 +53,26 @@ namespace LogDashboard.Handle
 
         public async Task<string> BasicLog(SearchLogInput input)
         {
-            ViewBag.dashboardNav = "";
-            ViewBag.basicLogNav = "active";
+            ViewData["dashboardNav"] = "";
+            ViewData["basicLogNav"] = "active";
             if (input == null)
             {
                 input = new SearchLogInput();
             }
             var result = await GetPageResult(input);
-            ViewBag.logs = await View(result.List, "Views.Dashboard.LogList.cshtml");
-            ViewBag.page = Html.Page(input.Page, input.PageSize, result.TotalCount);
+            ViewData["logs"] = await View(result.List, typeof(LogList));
+            ViewData["page"] = Html.Page(input.Page, input.PageSize, result.TotalCount);
             return await View();
         }
 
         public async Task<string> SearchLog(SearchLogInput input)
         {
             var result = await GetPageResult(input);
-            ViewBag.totalCount = result.TotalCount;
+            ViewData["totalCount"] = result.TotalCount;
             return Json(new SearchLogModel
             {
                 Page = Html.Page(input.Page, input.PageSize, result.TotalCount),
-                Html = await View(result.List, "Views.Dashboard.LogList.cshtml")
+                Html = await View(result.List, typeof(LogList))
             });
         }
 
@@ -97,7 +98,7 @@ namespace LogDashboard.Handle
 
             expression = expression.AndIf(input.EndTime != null, () => { return x => x.LongDate <= input.EndTime.Value; });
 
-            expression = expression.AndIf(!string.IsNullOrWhiteSpace(input.Level), () => { return x => x.Level == input.Level; });
+            expression = expression.AndIf(input.Level.HasValue, () => { return x => x.Level == input.Level; });
 
             expression = expression.AndIf(!string.IsNullOrWhiteSpace(input.Message), () => { return x => x.Message.Contains(input.Message); });
 
@@ -129,12 +130,12 @@ namespace LogDashboard.Handle
 
             if (string.IsNullOrWhiteSpace(traceIdentifier))
             {
-                return await View(new List<T>(), "Views.Dashboard.TraceLogList.cshtml");
+                return await View(new List<T>(), typeof(TraceLogList));
             }
 
             return await View((await _logRepository
                 .RequestTraceAsync(log))
-                .OrderBy(x => x.LongDate).ToList(), "Views.Dashboard.TraceLogList.cshtml");
+                .OrderBy(x => x.LongDate).ToList(), typeof(TraceLogList));
         }
     }
 }

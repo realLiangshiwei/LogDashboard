@@ -10,7 +10,7 @@ namespace LogDashboard.Models
 
         public DateTime LongDate { get; set; }
 
-        public string Level { get; set; }
+        public LogLevel Level { get; set; }
 
         public string Message { get; set; }
 

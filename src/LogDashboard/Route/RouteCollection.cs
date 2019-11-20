@@ -23,12 +23,12 @@ namespace LogDashboard.Route
 
             if (route.HtmlView)
             {
-                if (string.IsNullOrWhiteSpace(route.View))
+                if (route.View == null)
                 {
                     throw new ArgumentNullException("route view can not be null");
                 }
             }
-           
+
 
             if (string.IsNullOrWhiteSpace(route.Handle) || string.IsNullOrWhiteSpace(route.Action))
             {
@@ -44,7 +44,7 @@ namespace LogDashboard.Route
                     {
                         throw new ArgumentException("route key fotmat handle/action", ex);
                     }
-                   
+
                 }
 
 
@@ -63,12 +63,7 @@ namespace LogDashboard.Route
 
         public LogDashboardRoute FindRoute(string url)
         {
-            if (string.IsNullOrWhiteSpace(url))
-            {
-                return Routes.FirstOrDefault(x => x.Key.ToLower() == "/Dashboard/Home".ToLower());
-            }
-            
-            return Routes.FirstOrDefault(x => x.Key.ToLower() == url.ToLower());
+            return string.IsNullOrWhiteSpace(url) ? Routes.FirstOrDefault(x => x.Key.ToLower() == "/Dashboard/Home".ToLower()) : Routes.FirstOrDefault(x => x.Key.ToLower() == url.ToLower());
         }
 
     }
