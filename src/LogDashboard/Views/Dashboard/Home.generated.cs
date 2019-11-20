@@ -88,7 +88,7 @@ WriteLiteral(@"/Dashboard/BasicLog?All=true')"">
 
             
             #line 19 "..\..\Views\Dashboard\Home.cshtml"
-                                                                    Write(ViewData["allCount"]);
+                                                                    Write(ViewData["allCount"].ToString());
 
             
             #line default
@@ -121,7 +121,7 @@ WriteLiteral(@"/Dashboard/BasicLog?Unique=true')"">
 
             
             #line 32 "..\..\Views\Dashboard\Home.cshtml"
-                                                                    Write(ViewData["unique"]);
+                                                                    Write(ViewData["unique"].ToString());
 
             
             #line default
@@ -154,7 +154,7 @@ WriteLiteral(@"/Dashboard/BasicLog?ToDay=true')"">
 
             
             #line 45 "..\..\Views\Dashboard\Home.cshtml"
-                                                                    Write(ViewData["todayCount"]);
+                                                                    Write(ViewData["todayCount"].ToString());
 
             
             #line default
@@ -187,7 +187,7 @@ WriteLiteral(@"/Dashboard/BasicLog?Hour=true')"">
 
             
             #line 58 "..\..\Views\Dashboard\Home.cshtml"
-                                                                    Write(ViewData["hourCount"]);
+                                                                    Write(ViewData["hourCount"].ToString());
 
             
             #line default
