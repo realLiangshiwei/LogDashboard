@@ -76,7 +76,8 @@ namespace LogDashboard.Repository.File
                 logFiles.Remove(logFiles.FirstOrDefault());
             }
 
-            await ReadLogs(logFiles, _logs.Last().Id++);
+            var id = _logs.Max(x => x.Id);
+            await ReadLogs(logFiles, ++id);
         }
 
         private List<(string Path, DateTime LastWriteTime)> GetLogFiles()
