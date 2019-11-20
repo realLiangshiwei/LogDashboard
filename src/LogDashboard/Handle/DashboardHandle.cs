@@ -98,7 +98,7 @@ namespace LogDashboard.Handle
 
             expression = expression.AndIf(input.EndTime != null, () => { return x => x.LongDate <= input.EndTime.Value; });
 
-            expression = expression.AndIf(!string.IsNullOrWhiteSpace(input.Level), () => { return x => x.Level == input.Level; });
+            expression = expression.AndIf(input.Level.HasValue, () => { return x => x.Level == input.Level; });
 
             expression = expression.AndIf(!string.IsNullOrWhiteSpace(input.Message), () => { return x => x.Message.Contains(input.Message); });
 

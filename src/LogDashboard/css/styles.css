@@ -3404,37 +3404,37 @@ fieldset[disabled] a.btn {
 
 
 
-.btn-outline-FETAL {
-    color: #ef5350;
+.btn-outline-FATAL {
+    color: #960c0a;
     background-color: transparent;
     background-image: none;
-    border-color: #ef5350;
+    border-color: #960c0a;
 }
 
-    .btn-outline-FETAL:hover {
+    .btn-outline-FATAL:hover {
         color: #fff;
-        background-color: #ef5350;
-        border-color: #ef5350;
+        background-color: #960c0a;
+        border-color: #960c0a;
     }
 
-    .btn-outline-FETAL:focus,
-    .btn-outline-FETAL.focus {
+    .btn-outline-FATAL:focus,
+    .btn-outline-FATAL.focus {
         -webkit-box-shadow: 0 0 0 0.2rem rgba(239, 83, 80, 0.5);
         box-shadow: 0 0 0 0.2rem rgba(239, 83, 80, 0.5);
     }
 
-    .btn-outline-FETAL.disabled,
-    .btn-outline-FETAL:disabled {
-        color: #ef5350;
+    .btn-outline-FATAL.disabled,
+    .btn-outline-FATAL:disabled {
+        color: #960c0a;
         background-color: transparent;
     }
 
-    .btn-outline-FETAL:not([disabled]):not(.disabled):active,
-    .btn-outline-FETAL:not([disabled]):not(.disabled).active,
-    .show > .btn-outline-FETAL.dropdown-toggle {
+    .btn-outline-FATAL:not([disabled]):not(.disabled):active,
+    .btn-outline-FATAL:not([disabled]):not(.disabled).active,
+    .show > .btn-outline-FATAL.dropdown-toggle {
         color: #4d4d4d;
-        background-color: #ef5350;
-        border-color: #ef5350;
+        background-color: #960c0a;
+        border-color: #960c0a;
         -webkit-box-shadow: 0 0 0 0.2rem rgba(239, 83, 80, 0.5);
         box-shadow: 0 0 0 0.2rem rgba(239, 83, 80, 0.5);
     }

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using NLog;
 
 namespace CustomLogModel
@@ -32,6 +33,11 @@ namespace CustomLogModel
             app.UseLogDashboard();
             app.Run(async (context) =>
             {
+                var log = app.ApplicationServices.GetService<ILogger<Startup>>();
+                log.LogInformation("info");
+                log.LogDebug("debug");
+                log.LogTrace("trace");
+                log.LogWarning("warn");
                 await context.Response.WriteAsync("Hello World!");
             });
         }

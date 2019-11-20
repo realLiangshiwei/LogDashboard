@@ -67,13 +67,13 @@ WriteLiteral(@"
             
             #line default
             #line hidden
-WriteLiteral("                <tr class=\"row mx-0\">\r\n                    <td class=\"col-1\"><a h" +
-"ref=\"javascript:void(0);\" onclick=\"logInfo(\'");
+WriteLiteral("            <tr class=\"row mx-0\">\r\n                <td class=\"col-1\"><a href=\"jav" +
+"ascript:void(0);\" onclick=\"logInfo(\'");
 
 
             
             #line 23 "..\..\Views\Dashboard\TraceLogList.cshtml"
-                                                                                 Write(item.Id.ToString());
+                                                                             Write(item.Id.ToString());
 
             
             #line default
@@ -83,17 +83,17 @@ WriteLiteral("\')\">");
 
             
             #line 23 "..\..\Views\Dashboard\TraceLogList.cshtml"
-                                                                                                        Write(item.Id.ToString());
+                                                                                                    Write(item.Id.ToString());
 
             
             #line default
             #line hidden
-WriteLiteral("</a></td>\r\n                    <td class=\"col-3\"><span>");
+WriteLiteral("</a></td>\r\n                <td class=\"col-3\"><span>");
 
 
             
             #line 24 "..\..\Views\Dashboard\TraceLogList.cshtml"
-                                       Write(item.Logger);
+                                   Write(item.Logger);
 
             
             #line default
@@ -103,8 +103,8 @@ WriteLiteral("</span></td>\r\n");
 
             
             #line 25 "..\..\Views\Dashboard\TraceLogList.cshtml"
-                      
-                        if (item.Level.ToLower() == "error")
+                  
+                        if (item.Level== LogLevel.ERROR)
                         {
 
             
@@ -145,7 +145,7 @@ WriteLiteral("                            <td class=\"col-1\"><button class=\"bt
 
             
             #line 37 "..\..\Views\Dashboard\TraceLogList.cshtml"
-                                                                        Write(item.Level.ToUpper());
+                                                                        Write(item.Level.ToString());
 
             
             #line default
@@ -155,7 +155,7 @@ WriteLiteral("\" onclick=\'$(\"#");
 
             
             #line 37 "..\..\Views\Dashboard\TraceLogList.cshtml"
-                                                                                                            Write(item.Id.ToString());
+                                                                                                             Write(item.Id.ToString());
 
             
             #line default
@@ -165,7 +165,7 @@ WriteLiteral("\").modal();\'>");
 
             
             #line 37 "..\..\Views\Dashboard\TraceLogList.cshtml"
-                                                                                                                                            Write(item.Level);
+                                                                                                                                             Write(item.Level.ToString());
 
             
             #line default
@@ -187,7 +187,7 @@ WriteLiteral("                            <td class=\"col-1\"><button class=\"bt
 
             
             #line 41 "..\..\Views\Dashboard\TraceLogList.cshtml"
-                                                                        Write(item.Level.ToUpper());
+                                                                        Write(item.Level.ToString());
 
             
             #line default
@@ -197,7 +197,7 @@ WriteLiteral("\">");
 
             
             #line 41 "..\..\Views\Dashboard\TraceLogList.cshtml"
-                                                                                               Write(item.Level);
+                                                                                                Write(item.Level.ToString());
 
             
             #line default
@@ -208,88 +208,88 @@ WriteLiteral("</button></td>\r\n");
             
             #line 42 "..\..\Views\Dashboard\TraceLogList.cshtml"
                         }
-                    
+                
 
             
             #line default
             #line hidden
-WriteLiteral("                    <td class=\"col-4\">\r\n");
+WriteLiteral("                <td class=\"col-4\">\r\n");
 
 
             
             #line 45 "..\..\Views\Dashboard\TraceLogList.cshtml"
-                          
+                      
                             var message = item.Message;
                             if (message.Length > 90)
                             {
                                 message = message.Substring(0, 90) + "........";
                             }
-                        
+                    
 
             
             #line default
             #line hidden
-WriteLiteral("                        ");
+WriteLiteral("                    ");
 
 
             
             #line 52 "..\..\Views\Dashboard\TraceLogList.cshtml"
-                   Write(message);
+               Write(message);
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                    </td>\r\n                    <td class=\"col-2\">");
+WriteLiteral("\r\n                </td>\r\n                <td class=\"col-2\">");
 
 
             
             #line 54 "..\..\Views\Dashboard\TraceLogList.cshtml"
-                                 Write(item.LongDate.ToString("yyyy-MM-dd hh:mm:ss"));
+                             Write(item.LongDate.ToString("yyyy-MM-dd hh:mm:ss"));
 
             
             #line default
             #line hidden
-WriteLiteral("</td>\r\n                </tr>\r\n");
+WriteLiteral("</td>\r\n            </tr>\r\n");
 
 
 
-WriteLiteral(@"                <tr class=""row mx-0"">
-                    <td colspan=""10"" style=""width: 100%"">
-                        <div class=""table-responsive"">
-                            <table class=""table table-bordered"">
-                                <tbody>
-                                    <tr>
-                                        <td>Id</td>
-                                        <td class=""text-nowrap"">");
+WriteLiteral(@"            <tr class=""row mx-0"">
+                <td colspan=""10"" style=""width: 100%"">
+                    <div class=""table-responsive"">
+                        <table class=""table table-bordered"">
+                            <tbody>
+                                <tr>
+                                    <td>Id</td>
+                                    <td class=""text-nowrap"">");
 
 
             
             #line 63 "..\..\Views\Dashboard\TraceLogList.cshtml"
-                                                           Write(item.Id.ToString());
+                                                       Write(item.Id.ToString());
 
             
             #line default
             #line hidden
-WriteLiteral("</td>\r\n                                    </tr>\r\n                               " +
-"     <tr>\r\n                                        <td>时间</td>\r\n                " +
-"                        <td class=\"text-nowrap\">");
+WriteLiteral("</td>\r\n                                </tr>\r\n                                <tr" +
+">\r\n                                    <td>时间</td>\r\n                            " +
+"        <td class=\"text-nowrap\">");
 
 
             
             #line 67 "..\..\Views\Dashboard\TraceLogList.cshtml"
-                                                           Write(item.LongDate.ToString("yyyy-MM-dd hh:mm:ss"));
+                                                       Write(item.LongDate.ToString("yyyy-MM-dd hh:mm:ss"));
 
             
             #line default
             #line hidden
-WriteLiteral("</td>\r\n                                    </tr>\r\n                               " +
-"     <tr>\r\n                                        <td>级别</td>\r\n                " +
-"                        <td class=\"text-nowrap\"><button class=\"btn btn-outline-");
+WriteLiteral("</td>\r\n                                </tr>\r\n                                <tr" +
+">\r\n                                    <td>级别</td>\r\n                            " +
+"        <td class=\"text-nowrap\"><button class=\"btn btn-outline-");
 
 
             
             #line 71 "..\..\Views\Dashboard\TraceLogList.cshtml"
-                                                                                          Write(item.Level);
+                                                                                      Write(item.Level);
 
             
             #line default
@@ -299,58 +299,57 @@ WriteLiteral("\">");
 
             
             #line 71 "..\..\Views\Dashboard\TraceLogList.cshtml"
-                                                                                                       Write(item.Level);
+                                                                                                   Write(item.Level);
 
             
             #line default
             #line hidden
-WriteLiteral("</button></td>\r\n                                    </tr>\r\n                      " +
-"              <tr>\r\n                                        <td>Logger</td>\r\n   " +
-"                                     <td class=\"text-nowrap\">");
+WriteLiteral("</button></td>\r\n                                </tr>\r\n                          " +
+"      <tr>\r\n                                    <td>Logger</td>\r\n               " +
+"                     <td class=\"text-nowrap\">");
 
 
             
             #line 75 "..\..\Views\Dashboard\TraceLogList.cshtml"
-                                                           Write(item.Logger);
+                                                       Write(item.Logger);
 
             
             #line default
             #line hidden
-WriteLiteral("</td>\r\n                                    </tr>\r\n                               " +
-"     <tr>\r\n                                        <td>消息</td>\r\n                " +
-"                        <td class=\"text-nowrap\">");
+WriteLiteral("</td>\r\n                                </tr>\r\n                                <tr" +
+">\r\n                                    <td>消息</td>\r\n                            " +
+"        <td class=\"text-nowrap\">");
 
 
             
             #line 79 "..\..\Views\Dashboard\TraceLogList.cshtml"
-                                                           Write(item.Message);
+                                                       Write(item.Message);
 
             
             #line default
             #line hidden
 WriteLiteral(@"</td>
-                                    </tr>
+                                </tr>
 
-                                </tbody>
-                            </table>
-                            <div class=""card"">
-                                <div class=""card-header bg-light"">
-                                    堆栈信息
-                                </div>
-                                <div class=""card-body"">
-                                    <pre>");
+                            </tbody>
+                        </table>
+                        <div class=""card"">
+                            <div class=""card-header bg-light"">
+                                堆栈信息
+                            </div>
+                            <div class=""card-body"">
+                                <pre>");
 
 
             
             #line 89 "..\..\Views\Dashboard\TraceLogList.cshtml"
-                                    Write(item.Exception);
+                                Write(item.Exception);
 
             
             #line default
             #line hidden
-WriteLiteral("</pre>\r\n                                </div>\r\n                            </div" +
-">\r\n                        </div>\r\n                    </td>\r\n                </" +
-"tr>\r\n");
+WriteLiteral("</pre>\r\n                            </div>\r\n                        </div>\r\n     " +
+"               </div>\r\n                </td>\r\n            </tr>\r\n");
 
 
             

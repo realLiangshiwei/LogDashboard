@@ -25,7 +25,7 @@
                 <tr class="row mx-0">
                     <td class="col-1"><a href="javascript:void(0);" onclick="logInfo('@item.Id.ToString()')">@item.Id.ToString()</a></td>
                     <td class="col-3">@item.Logger</td>
-                    <td class="col-1"><button class="btn btn-outline-@item.Level.ToUpper()">@item.Level.ToUpper()</button></td>
+                    <td class="col-1"><button class="btn btn-outline-@item.Level.ToString()">@item.Level.ToString()</button></td>
                     <td class="col-4" onclick="$(this).next().show(); $(this).css('display','none');">
                         @{
                             var message = item.Message;

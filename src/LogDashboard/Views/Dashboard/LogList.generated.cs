@@ -112,7 +112,7 @@ WriteLiteral("</td>\r\n                    <td class=\"col-1\"><button class=\"b
 
             
             #line 28 "..\..\Views\Dashboard\LogList.cshtml"
-                                                                Write(item.Level.ToUpper());
+                                                                Write(item.Level.ToString());
 
             
             #line default
@@ -122,7 +122,7 @@ WriteLiteral("\">");
 
             
             #line 28 "..\..\Views\Dashboard\LogList.cshtml"
-                                                                                       Write(item.Level.ToUpper());
+                                                                                        Write(item.Level.ToString());
 
             
             #line default

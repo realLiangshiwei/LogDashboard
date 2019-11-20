@@ -8,7 +8,7 @@ namespace LogDashboard.Models
 
         DateTime LongDate { get; set; }
 
-        string Level { get; set; }
+        LogLevel Level { get; set; }
 
         string Logger { get; set; }
 
