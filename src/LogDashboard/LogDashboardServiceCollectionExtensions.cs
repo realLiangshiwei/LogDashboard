@@ -9,8 +9,8 @@ using LogDashboard.Repository;
 using LogDashboard.Repository.Dapper;
 using LogDashboard.Repository.File;
 using LogDashboard.Route;
+using LogDashboard.Views;
 using Microsoft.Extensions.DependencyInjection;
-using RazorLight;
 
 namespace LogDashboard
 {
@@ -30,17 +30,7 @@ namespace LogDashboard
 
         private static void RegisterServices(IServiceCollection services, Action<LogDashboardOptions> func = null, Assembly currentAssembly = null)
         {
-            // razor
-            var razorBuilder = new RazorLightEngineBuilder();
-            if (currentAssembly != null)
-            {
-                razorBuilder = razorBuilder.SetOperatingAssembly(currentAssembly);
-            }
-
-            services.AddSingleton<IRazorLightEngine>(razorBuilder
-                .UseEmbeddedResourcesProject(typeof(LogDashboardMiddleware))
-                .UseMemoryCachingProvider()
-                .Build());
+    
 
             services.AddSingleton(typeof(ILogDashboardCacheManager<>), typeof(InMemoryLogDashboardCacheManager<>));
 
@@ -76,6 +66,9 @@ namespace LogDashboard
 
             //register Handle
             RegisterHandle(services, options);
+
+            //register Views
+            RegisterViews(services);
         }
 
         private static void RegisterHandle(IServiceCollection services, LogDashboardOptions opts)
@@ -86,6 +79,17 @@ namespace LogDashboard
             foreach (var handle in handles)
             {
                 services.AddTransient(handle.MakeGenericType(opts.LogModelType));
+            }
+        }
+
+        private static void RegisterViews(IServiceCollection services)
+        {
+            var views = Assembly.GetAssembly(typeof(LogDashboardRoute)).GetTypes()
+                .Where(x => typeof(RazorPage).IsAssignableFrom(x) && x != typeof(RazorPage));
+
+            foreach (var view in views)
+            {
+                services.AddTransient(view);
             }
         }
 

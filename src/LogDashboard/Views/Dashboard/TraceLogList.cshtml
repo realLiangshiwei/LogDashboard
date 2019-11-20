@@ -1,8 +1,10 @@
-﻿@using LogDashboard.Extensions
-@inherits RazorLight.TemplatePage<IEnumerable<LogDashboard.Models.ILogModel>>
-@{
-    Layout = null;
-}
+﻿@* Generator: Template TypeVisibility: Internal GeneratePrettyNames: true *@
+
+@inherits LogDashboard.Views.RazorPage
+
+@using System.Collections.Generic
+@using LogDashboard.Models
+
 <div class="table-responsive">
     <table class="table row mx-0 table-hover table-expandable">
         <thead class="w-100">
@@ -15,15 +17,15 @@
             </tr>
         </thead>
         <tbody class="w-100">
-            @foreach (var item in Model)
+            @foreach (var item in (IEnumerable<ILogModel>)ViewData["Model"])
             {
                 <tr class="row mx-0">
-                    <td class="col-1"><a href="javascript:void(0);" onclick="logInfo('@item.Id')">@item.Id</a></td>
+                    <td class="col-1"><a href="javascript:void(0);" onclick="logInfo('@item.Id.ToString()')">@item.Id.ToString()</a></td>
                     <td class="col-3"><span>@item.Logger</span></td>
                     @{
                         if (item.Level.ToLower() == "error")
                         {
-                            <div class="modal fade" id="@item.Id">
+                            <div class="modal fade" id="@item.Id.ToString()">
                                 <div class="modal-dialog modal-lg" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header bg-danger border-0"><h5 class="modal-title text-white">Exception</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div><div class="modal-body">
@@ -32,7 +34,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <td class="col-1"><button class="btn btn-outline-@item.Level.ToUpper()" onclick='$("#@item.Id").modal();'>@item.Level</button></td>
+                            <td class="col-1"><button class="btn btn-outline-@item.Level.ToUpper()" onclick='$("#@item.Id.ToString()").modal();'>@item.Level</button></td>
                         }
                         else
                         {
@@ -49,7 +51,7 @@
                         }
                         @message
                     </td>
-                    <td class="col-2">@item.LongDate</td>
+                    <td class="col-2">@item.LongDate.ToString("yyyy-MM-dd hh:mm:ss")</td>
                 </tr>
                 <tr class="row mx-0">
                     <td colspan="10" style="width: 100%">
@@ -58,11 +60,11 @@
                                 <tbody>
                                     <tr>
                                         <td>Id</td>
-                                        <td class="text-nowrap">@item.Id</td>
+                                        <td class="text-nowrap">@item.Id.ToString()</td>
                                     </tr>
                                     <tr>
                                         <td>时间</td>
-                                        <td class="text-nowrap">@item.LongDate</td>
+                                        <td class="text-nowrap">@item.LongDate.ToString("yyyy-MM-dd hh:mm:ss")</td>
                                     </tr>
                                     <tr>
                                         <td>级别</td>
