@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Dynamic;
-using System.Reflection;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using LogDashboard.Models;
-using LogDashboard.StackTrace;
+using LogDashboard.Views;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace LogDashboard.Handle
 {
@@ -13,27 +12,42 @@ namespace LogDashboard.Handle
         protected LogDashboardHandleBase(IServiceProvider serviceProvider)
         {
             ServiceProvider = serviceProvider;
-            ViewBag = new ExpandoObject();
+            ViewData = new Dictionary<string, object>();
         }
 
         public LogDashboardContext Context { get; set; }
 
         public IServiceProvider ServiceProvider { get; }
 
-        public dynamic ViewBag { get; set; }
+        public Dictionary<string, object> ViewData { get; set; }
 
- 
 
-        public virtual async Task<string> View(object model = null, string viewName = null)
+
+        public virtual async Task<string> View(object model = null, Type viewType = null)
         {
-            ViewBag.CustomPropertyInfos = Context.Options.CustomPropertyInfos;
-            ViewBag.LogModelType = Context.Options.LogModelType;
             Context.HttpContext.Response.ContentType = "text/html";
-            ViewBag.DashboardMapPath = Context.Options.PathMatch;
-            ViewBag.Brand = Context.Options.Brand;
-            ViewBag.View = Context.Route.View;
+            ViewData["DashboardMapPath"] = Context.Options.PathMatch;
+            ViewData["Brand"] = Context.Options.Brand;
+            ViewData["View"] = Context.Route.View;
 
-            return await Context.Engine.CompileRenderAsync(viewName ?? Context.Route.View, model, ViewBag);
+            //Activate View
+            var view =
+                ServiceProvider.GetRequiredService(viewType ?? Context.Route.View) as
+                    RazorPage;
+
+            if (view == null)
+            {
+                throw new ArgumentException("view not found");
+            }
+
+            if (model != null)
+            {
+                ViewData["Model"] = model;
+            }
+
+            view.Context = Context;
+            view.ViewData = ViewData;
+            return await Task.FromResult(view.ToString());
         }
 
 

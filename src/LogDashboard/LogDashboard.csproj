@@ -19,8 +19,6 @@
     <None Remove="css\**\*.css" />
     <None Remove="js\*.js" />
     <None Remove="js\**\*.js" />
-    <None Remove="Views\*.cshtml" />
-    <None Remove="Views\**\*.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,6 +26,18 @@
     <EmbeddedResource Include="js\\**\*" />
     <EmbeddedResource Include="Views\\**\*" />
     <EmbeddedResource Include="font\\**\*" />
+  </ItemGroup>
+
+
+
+  <ItemGroup>
+    <EmbeddedResource Remove="Views\Dashboard\BasicLog.cshtml" />
+    <EmbeddedResource Remove="Views\Dashboard\Home.cshtml" />
+    <EmbeddedResource Remove="Views\Dashboard\LogInfo.cshtml" />
+    <EmbeddedResource Remove="Views\Dashboard\LogList.cshtml" />
+    <EmbeddedResource Remove="Views\Dashboard\TraceLogList.cshtml" />
+    <EmbeddedResource Remove="Views\RazorPage.cs" />
+    <EmbeddedResource Remove="Views\_layout.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -55,8 +65,97 @@
     <PackageReference Include="Microsoft.CSharp" Version="4.6.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.0.0" />  
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
-    <PackageReference Include="RazorLight.Unofficial" Version="2.0.0-beta1.4" />
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.0.19" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Views\Dashboard\BasicLog.generated.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>BasicLog.cshtml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Dashboard\Home.generated.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Home.cshtml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Dashboard\LogInfo.generated.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>LogInfo.cshtml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Dashboard\LogList.generated.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>LogList.cshtml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Dashboard\TraceLogList.generated.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TraceLogList.cshtml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\_layout.generated.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>_layout.cshtml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Views\Dashboard\BasicLog.generated.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>BasicLog.cshtml</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Dashboard\Home.generated.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Home.cshtml</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Dashboard\LogInfo.generated.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>LogInfo.cshtml</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Dashboard\LogList.generated.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>LogList.cshtml</DependentUpon>
+    </EmbeddedResource>
+    <None Update="Views\Dashboard\TraceLogList.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>TraceLogList.generated.cs</LastGenOutput>
+    </None>
+    <EmbeddedResource Update="Views\Dashboard\TraceLogList.generated.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TraceLogList.cshtml</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\_layout.generated.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>_layout.cshtml</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Views\Dashboard\BasicLog.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>BasicLog.generated.cs</LastGenOutput>
+    </None>
+    <None Update="Views\Dashboard\Home.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Home.generated.cs</LastGenOutput>
+    </None>
+    <None Update="Views\Dashboard\LogInfo.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>LogInfo.generated.cs</LastGenOutput>
+    </None>
+    <None Update="Views\Dashboard\LogList.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>LogList.generated.cs</LastGenOutput>
+    </None>
+    <None Update="Views\_layout.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_layout.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 
 </Project>

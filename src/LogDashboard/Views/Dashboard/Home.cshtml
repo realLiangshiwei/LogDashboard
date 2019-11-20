@@ -1,15 +1,22 @@
-﻿@using LogDashboard.Extensions
-@inherits RazorLight.TemplatePage<IEnumerable<LogDashboard.Models.ILogModel>>
+﻿@* Generator: Template TypeVisibility: Internal GeneratePrettyNames: true *@
+
+@inherits LogDashboard.Views.RazorPage
+
+@using System.Collections.Generic
+@using LogDashboard.Extensions
+@using LogDashboard.Models
+@using LogDashboard.Views
 @{
-    Layout = "Views._layout.cshtml";
+    Layout = new _layout { Context = Context, Section = { ["Scripts"] = $"<script> var output = JSON.parse('{Raw(ViewData["ChartData"])}');</script> <script src='{Context.Options.PathMatch}/js.home.js'></script>" }, ViewData = ViewData };
+    var logs = (IEnumerable<ILogModel>)ViewData["Model"];
 }
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-3" style="cursor:pointer;" onclick="(window.location.href='@ViewBag.DashboardMapPath/Dashboard/BasicLog?All=true')">
+        <div class="col-md-3" style="cursor:pointer;" onclick="(window.location.href='@Context.Options.PathMatch/Dashboard/BasicLog?All=true')">
             <div class="card p-4">
                 <div class="card-body d-flex justify-content-between align-items-center">
                     <div>
-                        <span class="h4 d-block font-weight-normal mb-2">@ViewBag.allCount</span>
+                        <span class="h4 d-block font-weight-normal mb-2">@ViewData["allCount"]</span>
                         <span class="font-weight-light">所有日志</span>
                     </div>
                     <div class="h2 text-muted">
@@ -18,11 +25,11 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3" style="cursor:pointer;" onclick="(window.location.href='@ViewBag.DashboardMapPath/Dashboard/BasicLog?Unique=true')">
+        <div class="col-md-3" style="cursor:pointer;" onclick="(window.location.href='@Context.Options.PathMatch/Dashboard/BasicLog?Unique=true')">
             <div class="card p-4">
                 <div class="card-body d-flex justify-content-between align-items-center">
                     <div>
-                        <span class="h4 d-block font-weight-normal mb-2">@ViewBag.unique</span>
+                        <span class="h4 d-block font-weight-normal mb-2">@ViewData["unique"]</span>
                         <span class="font-weight-light">不重复的日志</span>
                     </div>
                     <div class="h2 text-muted">
@@ -31,11 +38,11 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3" style="cursor:pointer;" onclick="(window.location.href='@ViewBag.DashboardMapPath/Dashboard/BasicLog?ToDay=true')">
+        <div class="col-md-3" style="cursor:pointer;" onclick="(window.location.href='@Context.Options.PathMatch/Dashboard/BasicLog?ToDay=true')">
             <div class="card p-4">
                 <div class="card-body d-flex justify-content-between align-items-center">
                     <div>
-                        <span class="h4 d-block font-weight-normal mb-2">@ViewBag.todayCount</span>
+                        <span class="h4 d-block font-weight-normal mb-2">@ViewData["todayCount"]</span>
                         <span class="font-weight-light">今天的日志</span>
                     </div>
                     <div class="h2 text-muted">
@@ -44,11 +51,11 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3" style="cursor:pointer;" onclick="(window.location.href='@ViewBag.DashboardMapPath/Dashboard/BasicLog?Hour=true')">
+        <div class="col-md-3" style="cursor:pointer;" onclick="(window.location.href='@Context.Options.PathMatch/Dashboard/BasicLog?Hour=true')">
             <div class="card p-4">
                 <div class="card-body d-flex justify-content-between align-items-center">
                     <div>
-                        <span class="h4 d-block font-weight-normal mb-2">@ViewBag.hourCount</span>
+                        <span class="h4 d-block font-weight-normal mb-2">@ViewData["hourCount"]</span>
                         <span class="font-weight-light">一小时之内</span>
                     </div>
                     <div class="h2 text-muted">
@@ -120,10 +127,10 @@
                     </tr>
                 </thead>
                 <tbody class="w-100">
-                    @foreach (var item in Model)
+                    @foreach (var item in logs)
                     {
                         <tr class="row mx-0">
-                            <td class="col-1"><a href="javascript:void(0);" onclick="logInfo('@item.Id')">@item.Id</a></td>
+                            <td class="col-1"><a href="javascript:void(0);" onclick="logInfo('@item.Id.ToString()')">@item.Id.ToString()</a></td>
                             <td class="col-3">@item.Logger</td>
                             <td class="col-1"><button class="btn btn-outline-@item.Level.ToUpper()">@item.Level.ToUpper()</button></td>
                             <td class="col-4" onclick="$(this).next().show();$(this).css('display', 'none');">
@@ -137,9 +144,9 @@
                                 @message
                             </td>
                             <td class="col-4" style="display: none;" onclick="$(this).prev().show();$(this).css('display', 'none');">@item.Message</td>
-                            <td class="col-2">@item.LongDate</td>
-                            <td class="col-1"><a href="javascript:void(0);" onclick="logInfo('@item.Id-info', 'logInfoModal', 'logInfoBody')">详情</a></td>
-                            <div style="display: none" id="@item.Id-info">@item.ToJsonString()</div>
+                            <td class="col-2">@item.LongDate.ToString("yyyy-MM-dd hh:mm:ss")</td>
+                            <td class="col-1"><a href="javascript:void(0);" onclick="logInfo('@item.Id.ToString()-info', 'logInfoModal', 'logInfoBody')">详情</a></td>
+                            <div style="display: none" id="@item.Id.ToString()-info">@item.ToJsonString()</div>
                         </tr>
                     }
                 </tbody>
@@ -162,99 +169,3 @@
         </div>
     </div>
 </div>
-
-
-
-@section Scripts{
-    <script>
-
-        function monthChartLabels() {
-            var now = new Date();
-            month = parseInt(now.getMonth(), 10) + 1;
-            var days = new Date(now.getYear(), month, 0).getDate();
-            var res = [];
-            for (var i = 1; i <= days; i++) {
-                res.push(i + "d");
-            }
-            return res;
-        }
-
-        var charts = [
-            { chart: $('#hourChart'), id: '#hourChart', labels: ["10m", "20m", "30m", "40m", '50m', '60m'] },
-            {
-                chart: $('#dayChart'),
-                id: '#dayChart',
-                labels: [
-                    "1h", "2h", "3h", "4h", '5h', '6h', '7h', '8h', '9h', '10h', '11h', '12h', '13h', '14h', '15h',
-                    '16h', '17h', '18h', '19h', '20h', '21h', '22h', '23h', '24h'
-                ]
-            },
-            {
-                chart: $('#weekChart'),
-                id: '#weekChart',
-                labels: ["Monday", "Tuesday", "Wednesday", "Thursday", 'Friday', 'Saturday', 'Sunday']
-            },
-            { chart: $('#monthChart'), id: '#monthChart', labels: monthChartLabels() }
-        ];
-
-
-        $(function() {
-
-            var output = JSON.parse('@Raw(ViewBag.ChartData)');
-            charts[0].all = output.All;
-            charts[0].error = output.Error;
-            initLineChart(charts[0]);
-        });
-
-        function getLogChart(i) {
-            $.ajax({
-                method: "post",
-                url: mapPath + "/Dashboard/GetLogChart",
-                data: JSON.stringify({ ChartDataType: i })
-            }).done(function (data) {
-                charts[i - 1].all = data.All;
-                charts[i - 1].error = data.Error;
-                initLineChart(charts[i - 1]);
-            });
-        }
-
-        function initLineChart(opt) {
-            new Chart(opt.chart,
-                {
-                    type: 'line',
-                    data: {
-                        labels: opt.labels,
-                        datasets: [
-                            {
-                                label: 'all',
-                                data: opt.all,
-                                backgroundColor: 'rgba(66, 165, 245, 0.5)',
-                                borderColor: '#2196F3',
-                                borderWidth: 1
-                            }, {
-                                label: 'error',
-                                data: opt.error,
-                                backgroundColor: 'rgba(251, 105, 104, 0.5)',
-                                borderColor: '#f75656',
-                                borderWidth: 1
-                            }
-                        ]
-                    },
-                    options: {
-                        legend: {
-                            display: false
-                        },
-                        scales: {
-                            yAxes: [
-                                {
-                                    ticks: {
-                                        beginAtZero: true
-                                    }
-                                }
-                            ]
-                        }
-                    }
-                });
-        }
-    </script>
-}

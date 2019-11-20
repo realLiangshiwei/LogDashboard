@@ -1,8 +1,12 @@
-﻿@using LogDashboard.Extensions
-@inherits RazorLight.TemplatePage<IEnumerable<LogDashboard.Models.ILogModel>>
-@{
-    Layout = null;
-}
+﻿@* Generator: Template TypeVisibility: Internal GeneratePrettyNames: true *@
+
+@inherits LogDashboard.Views.RazorPage
+
+@using System.Collections.Generic
+@using LogDashboard.Extensions
+@using LogDashboard.Models
+
+
 <div class="table-responsive">
     <table class="table row mx-0">
         <thead class="w-100">
@@ -16,10 +20,10 @@
             </tr>
         </thead>
         <tbody class="w-100">
-            @foreach (var item in Model)
+            @foreach (var item in (IEnumerable<ILogModel>)ViewData["Model"])
             {
                 <tr class="row mx-0">
-                    <td class="col-1"><a href="javascript:void(0);" onclick="logInfo('@item.Id')">@item.Id</a></td>
+                    <td class="col-1"><a href="javascript:void(0);" onclick="logInfo('@item.Id.ToString()')">@item.Id.ToString()</a></td>
                     <td class="col-3">@item.Logger</td>
                     <td class="col-1"><button class="btn btn-outline-@item.Level.ToUpper()">@item.Level.ToUpper()</button></td>
                     <td class="col-4" onclick="$(this).next().show(); $(this).css('display','none');">
@@ -33,9 +37,9 @@
                         @message
                     </td>
                     <td class="col-4" style="display: none;" onclick="$(this).prev().show(); $(this).css('display','none');">@item.Message</td>
-                    <td class="col-2">@item.LongDate</td>
-                    <td class="col-1"><a href="javascript:void(0);" onclick="logInfo('@item.Id-info','logInfoModal','logInfoBody')">详情</a></td>
-                    <div style="display: none" id="@item.Id-info">@item.ToJsonString()</div>
+                    <td class="col-2">@item.LongDate.ToString("yyyy-MM-dd hh:mm:ss")</td>
+                    <td class="col-1"><a href="javascript:void(0);" onclick="logInfo('@item.Id.ToString()-info','logInfoModal','logInfoBody')">详情</a></td>
+                    <div style="display: none" id="@item.Id.ToString()-info">@item.ToJsonString()</div>
                 </tr>
             }
         </tbody>

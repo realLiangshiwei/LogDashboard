@@ -1,6 +1,9 @@
-﻿
+﻿@* Generator: Template TypeVisibility: Internal GeneratePrettyNames: true *@
+
+@using LogDashboard.Views
+@inherits LogDashboard.Views.RazorPage
 @{
-    Layout = "Views._layout.cshtml";
+    Layout = new _layout {Context = Context, Section = { ["Scripts"] = $"<script src='{Context.Options.PathMatch}/js.basicLog.js'></script>" }, ViewData = ViewData };
 }
 <div class="card">
     <div class="card-header border border-top-0 border-right-0 border-left-0">
@@ -83,36 +86,9 @@
 
     </div>
     <div id="LogList">
-        @Raw(ViewBag.logs)
+        @Raw(ViewData["logs"])
     </div>
     <div id="page">
-        @Raw(ViewBag.page)
+        @Raw(ViewData["page"])
     </div>
 </div>
-
-@section Scripts{
-    <script>
-        $(function () {
-            $('#StartTime').datetimepicker({
-                locale: 'zh-cn',
-                Default: 'yyyy-mm-dd hh:mm:ss'
-            });
-            $('#EndTime').datetimepicker({
-                locale: 'zh-cn',
-                Default: 'yyyy-mm-dd hh:mm:ss'
-            });
-            setCheckbox("All", "all");
-            setCheckbox("Today", "today");
-            setCheckbox("Unique", "unique");
-            setCheckbox("Hour", "hour");
-        });
-
-        function setCheckbox(str, id) {
-            var val = getQueryString(str);
-            if (val) {
-                $("#" + id).prop("checked", true);
-                searchInput[str] = val;
-            }
-        }
-    </script>
-}
