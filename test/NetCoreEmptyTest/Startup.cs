@@ -12,10 +12,7 @@ namespace NetCoreEmptyTest
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddLogDashboard(opt =>
-            {
-                opt.AddAuthorizeAttribute(new AuthorizeAttribute("Cookie"));
-            });
+            services.AddLogDashboard();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -51,9 +51,6 @@
     <None Remove="css\Simple-Line-Icons.woff2" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
-    <PackageReference Include="Microsoft.Owin" Version="4.0.1" />
-  </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
    
   </ItemGroup>
@@ -61,8 +58,7 @@
 
     <PackageReference Include="Dapper" Version="2.0.30" />
     <PackageReference Include="DapperExtensions.Standard" Version="1.1.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="2.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authorization.Policy" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.0.0" />
     <PackageReference Include="Microsoft.CSharp" Version="4.6.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.0.0" />  
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />

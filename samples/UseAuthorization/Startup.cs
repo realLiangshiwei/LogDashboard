@@ -49,7 +49,8 @@ namespace UseAuthorization
 
             services.AddLogDashboard(opt =>
             {
-                //opt.AddAuthorizeAttribute(new AuthorizeAttribute());
+                
+                //opt.AddAuthorizeAttribute();
                 opt.AddAuthorizationFilter(new SamplesAuthorizationFilter());
             });
         }

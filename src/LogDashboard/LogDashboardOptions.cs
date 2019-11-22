@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using LogDashboard.Authorization;
-using Microsoft.AspNetCore.Authorization;
 
 using LogDashboard.Models;
 
@@ -31,16 +30,13 @@ namespace LogDashboard
         public bool DatabaseSource { get; set; }
 
         /// <summary>
-        /// Database ConnetionString
+        /// Database ConnectionString
         /// </summary>
         public string ConnectionString { get; set; }
 
         internal Type LogModelType { get; set; }
 
         public TimeSpan CacheExpires { get; set; }
-
-        internal List<IAuthorizeData> AuthorizeData { get; set; }
-
 
         internal List<ILogDashboardAuthorizationFilter> AuthorizationFiles { get; set; }
 
@@ -58,14 +54,6 @@ namespace LogDashboard
         /// </summary>
         public string FileEndDelimiter { get; set; }
 
-        public void AddAuthorizeAttribute(params IAuthorizeData[] authorizeAttributes)
-        {
-            if (authorizeAttributes != null)
-            {
-                AuthorizeData.AddRange(authorizeAttributes);
-            }
-
-        }
 
         public void AddAuthorizationFilter(params ILogDashboardAuthorizationFilter[] filters)
         {
@@ -96,7 +84,6 @@ namespace LogDashboard
             FileEndDelimiter = "||end";
             PathMatch = "/LogDashboard";
             LogModelType = typeof(LogModel);
-            AuthorizeData = new List<IAuthorizeData>();
             AuthorizationFiles = new List<ILogDashboardAuthorizationFilter>();
             CacheExpires = TimeSpan.FromMinutes(5);
         }
