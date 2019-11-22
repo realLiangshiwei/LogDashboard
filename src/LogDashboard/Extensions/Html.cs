@@ -21,7 +21,7 @@ namespace LogDashboard.Extensions
             {
                 end += totalPage <= 7 ? totalPage - end : Math.Abs(4 - page);
             }
-            else if (totalPage - end < 3)
+            else if (totalPage - end < 3 && start != 1)
             {
                 start -= Math.Abs(page + 3 - end);
 
