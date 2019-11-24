@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/liangshiw/LogDashboard/de/develop.png" width="200" height="200" /> 
+<img src="https://raw.githubusercontent.com/liangshiw/LogDashboard/develop/logo.png" width="200" height="200" /> 
 
 # LogDashboard
 
