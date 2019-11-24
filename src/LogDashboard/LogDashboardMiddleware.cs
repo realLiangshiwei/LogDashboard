@@ -51,11 +51,6 @@ namespace LogDashboard
             }
 
             //Authorization
-            if (!await AuthorizeHelper.AuthorizeAsync(httpContext, opts.AuthorizeData))
-            {
-                return;
-            }
-
             var logDashboardContext = new LogDashboardContext(httpContext, router,
                 opts);
 
