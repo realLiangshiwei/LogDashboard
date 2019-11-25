@@ -1,8 +1,6 @@
 # LogDashboard
 
-## 什么是LogDashbaord
-
-![](.gitbook/assets/image.png)
+![](https://blobscdn.gitbook.com/v0/b/gitbook-28427.appspot.com/o/assets%2F-LVN1HYgo-k1Fbhi8zVY%2F-LuXVi0e8IztQlB2CZ7M%2F-LuXVw5g8qiMEmJiMBTg%2Fimage.png?alt=media&token=8285b592-f36a-443b-a3ac-da686488fe8e)
 
  [![NuGet](https://camo.githubusercontent.com/bc8dec0292ca0c47891f945a1b635973c59944b0/68747470733a2f2f696d672e736869656c64732e696f2f6e756765742f762f4c6f6744617368626f6172642e737667)](https://www.nuget.org/packages/LogDashboard/) [![NuGet](https://camo.githubusercontent.com/b25e4e88cb2f008b50ba357d1de414277ea87018/68747470733a2f2f696d672e736869656c64732e696f2f6e756765742f64742f4c6f6744617368626f6172642e737667)](https://www.nuget.org/packages/LogDashboard/)
 
@@ -18,7 +16,7 @@ LogDashboard适用于aspnetcore 2.x - aspnetcore3.x 项目, 采用aspnetcore`中
 
 #### 首页 <a id="esa_index_2"></a>
 
-![](.gitbook/assets/image%20%287%29.png)
+![](https://blobscdn.gitbook.com/v0/b/gitbook-28427.appspot.com/o/assets%2F-LVN1HYgo-k1Fbhi8zVY%2F-LuVw_UzlCi5nVCnBqjV%2F-LuVxUCqidH8V6C0nAmm%2Fimage.png?alt=media&token=490e4fa8-2c1a-470e-b008-98780f1f2f9b)
 
 实时查看应用程序运行中产生的日志
 
@@ -28,7 +26,7 @@ LogDashboard适用于aspnetcore 2.x - aspnetcore3.x 项目, 采用aspnetcore`中
 
 #### 列表
 
-![](.gitbook/assets/image%20%283%29.png)
+![](https://blobscdn.gitbook.com/v0/b/gitbook-28427.appspot.com/o/assets%2F-LVN1HYgo-k1Fbhi8zVY%2F-LuVw_UzlCi5nVCnBqjV%2F-LuVyq_ZFHzenIDg97Oz%2Fimage.png?alt=media&token=d66da484-12a3-44f9-abfd-f00a3586be03)
 
 复合检索所有日志并查看详情等操作
 
@@ -53,8 +51,6 @@ LogDashboard适用于aspnetcore 2.x - aspnetcore3.x 项目, 采用aspnetcore`中
 ## 线路图
 
 * 日志中心
-
-
 
 
 ## 交流群
