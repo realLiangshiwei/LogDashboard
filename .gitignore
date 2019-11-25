@@ -75,3 +75,5 @@ src/.vs/config/applicationhost.config
 !SQLite.Interop.dll
 /tools
 /samples/CustomLogModel
+
+samples/abpvnext/src/BootStore.Web/wwwroot/libs/
