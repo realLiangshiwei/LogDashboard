@@ -9,7 +9,7 @@
     <PackageIconUrl>https://raw.githubusercontent.com/liangshiw/LogDashboard/master/logo.png</PackageIconUrl>
     <RepositoryUrl>https://github.com/liangshiw/LogDashboard</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <Version>1.4.1</Version>
+    <Version>1.4.2</Version>
     <Company>liangshiwei</Company>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <LangVersion>8.0</LangVersion>
