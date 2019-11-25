@@ -37,9 +37,19 @@ namespace UseAuthorization
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddRazorPages();
 
-            //services.ConfigureApplicationCookie(options => { options.LoginPath = $"/Account/Login"; });
 
-            services.AddLogDashboard(opt => opt.AddAuthorizationFilter(new LogDashboardRoleAuthorizeFilter(new List<String>() { "admin" })));
+            //services.AddLogDashboard(opt =>
+            //{
+            //    opt.AddAuthorizationFilter(new LogDashboardRoleAuthorizeFilter(new List<string> {"admin"}));
+            //});
+
+            services.AddLogDashboard(opt =>
+            {
+                opt.AddAuthorizationFilter(new LogDashboardBasicAuthFilter("admin", "123qwe"));
+            });
+
+            //services.AddLogDashboard(opt => opt.AddAuthorizationFilter(new SimpleAuthFilter()));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

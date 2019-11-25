@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NLog;
 using NLog.Web;
@@ -16,20 +17,20 @@ namespace CustomLogModel
     {
         public static void Main(string[] args)
         {
-
-          
-            CreateWebHostBuilder(args).Run();
+            CreateHostBuilder(args).Build().Run();
         }
 
-        public static IWebHost CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
-                .ConfigureLogging(logging =>
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder=>
                 {
-                    logging.ClearProviders();
-                    logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Information);
-                })
-                .UseNLog()
-                .Build();
+                    webBuilder.UseStartup<Startup>()
+                        .ConfigureLogging(logging =>
+                        {
+                            logging.ClearProviders();
+                            logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Information);
+                        })
+                        .UseNLog();
+                });
     }
 }
