@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using LogDashboard.Authorization;
-
 using LogDashboard.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LogDashboard
 {
@@ -38,6 +38,8 @@ namespace LogDashboard
 
         public TimeSpan CacheExpires { get; set; }
 
+        internal List<IAuthorizeData> AuthorizeData { get; set; } = new List<IAuthorizeData>();
+        
         internal List<ILogDashboardAuthorizationFilter> AuthorizationFiles { get; set; }
 
         internal List<PropertyInfo> CustomPropertyInfos { get; set; }
@@ -54,6 +56,13 @@ namespace LogDashboard
         /// </summary>
         public string FileEndDelimiter { get; set; }
 
+        public void AddAuthorizeAttribute(params IAuthorizeData[] authorizeAttributes)
+        {
+            if (authorizeAttributes != null)
+            {
+                AuthorizeData.AddRange(authorizeAttributes);
+            }
+        }
 
         public void AddAuthorizationFilter(params ILogDashboardAuthorizationFilter[] filters)
         {
@@ -95,7 +104,6 @@ namespace LogDashboard
             FileSource = false;
             ConnectionString = connectionString;
         }
-
     }
 }
 
