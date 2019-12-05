@@ -124,7 +124,7 @@ WriteLiteral("</td>\r\n                            </tr>\r\n                    
 
             
             #line 41 "..\..\Views\Dashboard\LogInfo.cshtml"
-                                                   Write(log.LongDate.ToString("yyyy-MM-dd hh:mm:ss"));
+                                                   Write(log.LongDate.ToString("yyyy-MM-dd HH:mm:ss"));
 
             
             #line default

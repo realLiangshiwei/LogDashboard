@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Data.Common;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
+using DapperExtensions.Sql;
 using LogDashboard.Cache;
 using LogDashboard.LogDashboardBuilder;
 using LogDashboard.Handle;
@@ -30,7 +32,7 @@ namespace LogDashboard
 
         private static void RegisterServices(IServiceCollection services, Action<LogDashboardOptions> func = null, Assembly currentAssembly = null)
         {
-    
+
 
             services.AddSingleton(typeof(ILogDashboardCacheManager<>), typeof(InMemoryLogDashboardCacheManager<>));
 
@@ -44,13 +46,15 @@ namespace LogDashboard
             {
                 DapperExtensions.DapperAsyncExtensions.DefaultMapper = typeof(LogModelMapper<>);
                 DapperExtensions.DapperExtensions.DefaultMapper = typeof(LogModelMapper<>);
+                DapperExtensions.DapperAsyncExtensions.SqlDialect = options.SqlDialect;
+                DapperExtensions.DapperExtensions.SqlDialect = options.SqlDialect;
 
-                if (string.IsNullOrWhiteSpace(options.ConnectionString))
+                if (options.DbConnectionFactory == null)
                 {
-                    throw new ArgumentNullException(nameof(options.ConnectionString));
+                    throw new ArgumentNullException(nameof(options.DbConnectionFactory));
                 }
 
-                services.AddTransient(provider => new SqlConnection(options.ConnectionString));
+                services.AddTransient(typeof(DbConnection), provider => options.DbConnectionFactory.Invoke());
 
                 services.AddTransient(typeof(IRepository<>), typeof(DapperRepository<>));
 

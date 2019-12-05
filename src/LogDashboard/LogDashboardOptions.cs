@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Reflection;
+using DapperExtensions.Sql;
 using LogDashboard.Authorization;
 
 using LogDashboard.Models;
@@ -29,10 +31,9 @@ namespace LogDashboard
 
         public bool DatabaseSource { get; set; }
 
-        /// <summary>
-        /// Database ConnectionString
-        /// </summary>
-        public string ConnectionString { get; set; }
+        internal Func<DbConnection> DbConnectionFactory { get; set; }
+
+        internal ISqlDialect SqlDialect { get; set; }
 
         internal Type LogModelType { get; set; }
 
@@ -53,6 +54,7 @@ namespace LogDashboard
         /// file log end Delimiter
         /// </summary>
         public string FileEndDelimiter { get; set; }
+
 
 
         public void AddAuthorizationFilter(params ILogDashboardAuthorizationFilter[] filters)
@@ -88,12 +90,13 @@ namespace LogDashboard
             CacheExpires = TimeSpan.FromMinutes(5);
         }
 
-        public void UseDataBase(string connectionString, string tableName = "log")
+        public void UseDataBase(Func<DbConnection> dbConnectionFactory, string tableName = "log", ISqlDialect sqlDialect = null)
         {
             LogTableName = tableName;
             DatabaseSource = true;
             FileSource = false;
-            ConnectionString = connectionString;
+            DbConnectionFactory = dbConnectionFactory;
+            SqlDialect = sqlDialect ?? new SqlServerDialect();
         }
 
     }
