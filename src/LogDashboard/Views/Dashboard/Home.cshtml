@@ -144,7 +144,7 @@
                                 @message
                             </td>
                             <td class="col-4" style="display: none;" onclick="$(this).prev().show();$(this).css('display', 'none');">@item.Message</td>
-                            <td class="col-2">@item.LongDate.ToString("yyyy-MM-dd hh:mm:ss")</td>
+                            <td class="col-2">@item.LongDate.ToString("yyyy-MM-dd HH:mm:ss")</td>
                             <td class="col-1"><a href="javascript:void(0);" onclick="logInfo('@item.Id.ToString()-info', 'logInfoModal', 'logInfoBody')">详情</a></td>
                             <div style="display: none" id="@item.Id.ToString()-info">@item.ToJsonString()</div>
                         </tr>

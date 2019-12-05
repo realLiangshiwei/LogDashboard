@@ -1,13 +1,13 @@
-﻿using System.Data.SqlClient;
+﻿using System.Data.Common;
 using System.Threading.Tasks;
 
 namespace LogDashboard.Repository.Dapper
 {
     public class DapperUnitOfWork : IUnitOfWork
     {
-        private readonly SqlConnection _conn;
+        private readonly DbConnection _conn;
 
-        public DapperUnitOfWork(SqlConnection conn)
+        public DapperUnitOfWork(DbConnection conn)
         {
             _conn = conn;
         }
@@ -22,7 +22,7 @@ namespace LogDashboard.Repository.Dapper
             _conn.Close();
         }
 
-        public SqlConnection GetConnection()
+        public DbConnection GetConnection()
         {
             return _conn;
         }

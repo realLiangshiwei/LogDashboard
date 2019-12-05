@@ -1,11 +1,11 @@
 ﻿$(function () {
     $('#StartTime').datetimepicker({
         locale: 'zh-cn',
-        Default: 'yyyy-mm-dd hh:mm:ss'
+        Default: 'yyyy-MM-dd HH:mm:ss'
     });
     $('#EndTime').datetimepicker({
         locale: 'zh-cn',
-        Default: 'yyyy-mm-dd hh:mm:ss'
+        Default: 'yyyy-MM-dd HH:mm:ss'
     });
     setCheckbox("All", "all");
     setCheckbox("Today", "today");

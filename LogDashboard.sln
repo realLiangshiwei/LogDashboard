@@ -36,6 +36,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "aspnetcore2.2", "test\aspne
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UseAuthorization", "samples\UseAuthorization\UseAuthorization.csproj", "{18ECBB64-4939-4C0B-B00D-D9382AB4F6DC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySqlDatabase", "samples\MySqlDatabase\MySqlDatabase.csproj", "{EB0A1237-E9B8-4138-A8CE-DBD6C41771FC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -90,6 +92,10 @@ Global
 		{18ECBB64-4939-4C0B-B00D-D9382AB4F6DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18ECBB64-4939-4C0B-B00D-D9382AB4F6DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{18ECBB64-4939-4C0B-B00D-D9382AB4F6DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB0A1237-E9B8-4138-A8CE-DBD6C41771FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB0A1237-E9B8-4138-A8CE-DBD6C41771FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB0A1237-E9B8-4138-A8CE-DBD6C41771FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB0A1237-E9B8-4138-A8CE-DBD6C41771FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -107,6 +113,7 @@ Global
 		{30068651-0969-4121-87DE-57B3830C8C52} = {8A7576A6-2F87-4572-8B04-3CA141C619E2}
 		{7ACE37A6-E4FD-4715-BEA2-6D21ED8E848A} = {8A7576A6-2F87-4572-8B04-3CA141C619E2}
 		{18ECBB64-4939-4C0B-B00D-D9382AB4F6DC} = {B7E1C8E9-D9C1-4687-851E-24A6F3240108}
+		{EB0A1237-E9B8-4138-A8CE-DBD6C41771FC} = {B7E1C8E9-D9C1-4687-851E-24A6F3240108}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E1C93D2C-3B11-4264-A897-A591D4C910E9}

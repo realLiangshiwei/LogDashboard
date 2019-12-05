@@ -1,4 +1,5 @@
-﻿using LogDashboard;
+﻿using System.Data.SqlClient;
+using LogDashboard;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -36,7 +37,7 @@ namespace DatabaseSource
 
             services.AddLogDashboard(opt =>
             {
-                opt.UseDataBase(connectionString);
+                opt.UseDataBase(() => new SqlConnection(connectionString));
                 opt.CustomLogModel<CustomLogModel>();
             });
 

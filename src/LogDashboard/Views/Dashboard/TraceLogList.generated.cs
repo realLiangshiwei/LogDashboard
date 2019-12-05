@@ -244,7 +244,7 @@ WriteLiteral("\r\n                </td>\r\n                <td class=\"col-2\">"
 
             
             #line 54 "..\..\Views\Dashboard\TraceLogList.cshtml"
-                             Write(item.LongDate.ToString("yyyy-MM-dd hh:mm:ss"));
+                             Write(item.LongDate.ToString("yyyy-MM-dd HH:mm:ss"));
 
             
             #line default
@@ -277,7 +277,7 @@ WriteLiteral("</td>\r\n                                </tr>\r\n                
 
             
             #line 67 "..\..\Views\Dashboard\TraceLogList.cshtml"
-                                                       Write(item.LongDate.ToString("yyyy-MM-dd hh:mm:ss"));
+                                                       Write(item.LongDate.ToString("yyyy-MM-dd HH:mm:ss"));
 
             
             #line default
