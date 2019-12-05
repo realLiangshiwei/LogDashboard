@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace LogDashboard.Models
+﻿namespace LogDashboard.Models
 {
-    public enum LogLevel
+    public class LogLevelConst
     {
-        DEBUG = 1,
-        INFO = 2,
-        TRACE = 3,
-        WARN = 4,
-        ERROR = 5,
-        FATAL = 6
+        public const string Info = "INFO";
+        public const string Error = "ERROR";
+        public const string Debug = "DEBUG";
+        public const string Trace = "TRACE";
+        public const string Warn = "WARN";
+        public const string Fatal = "FATAL";
     }
 
 }

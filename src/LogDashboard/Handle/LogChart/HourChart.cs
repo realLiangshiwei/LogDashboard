@@ -28,18 +28,18 @@ namespace LogDashboard.Handle.LogChart
                 else
                 {
                     output.All[i / 10] = await repository.CountAsync(x => x.LongDate >= hourTime.AddMinutes(i) && x.LongDate <= hourTime.AddMinutes(i + 9).AddSeconds(59));
-                    output.Error[i / 10] = await CountAsync(LogLevel.ERROR, repository, hourTime, i);
-                    output.Info[i / 10] = await CountAsync(LogLevel.INFO, repository, hourTime, i);
-                    output.Debug[i / 10] = await CountAsync(LogLevel.DEBUG, repository, hourTime, i);
-                    output.Fatal[i / 10] = await CountAsync(LogLevel.FATAL, repository, hourTime, i);
-                    output.Trace[i / 10] = await CountAsync(LogLevel.TRACE, repository, hourTime, i);
-                    output.Warn[i / 10] = await CountAsync(LogLevel.WARN, repository, hourTime, i);
+                    output.Error[i / 10] = await CountAsync(LogLevelConst.Error, repository, hourTime, i);
+                    output.Info[i / 10] = await CountAsync(LogLevelConst.Info, repository, hourTime, i);
+                    output.Debug[i / 10] = await CountAsync(LogLevelConst.Debug, repository, hourTime, i);
+                    output.Fatal[i / 10] = await CountAsync(LogLevelConst.Fatal, repository, hourTime, i);
+                    output.Trace[i / 10] = await CountAsync(LogLevelConst.Trace, repository, hourTime, i);
+                    output.Warn[i / 10] = await CountAsync(LogLevelConst.Warn, repository, hourTime, i);
                 }
             }
             return output;
         }
 
-        private async Task<int> CountAsync<T>(LogLevel level, IRepository<T> repository, DateTime hourTime, int i) where T : class, ILogModel
+        private async Task<int> CountAsync<T>(string level, IRepository<T> repository, DateTime hourTime, int i) where T : class, ILogModel
         {
             return await repository.CountAsync(x => x.LongDate >= hourTime.AddMinutes(i) && x.LongDate <= hourTime.AddMinutes(i + 9).AddSeconds(59) && x.Level == level);
         }

@@ -104,7 +104,7 @@ WriteLiteral("</span></td>\r\n");
             
             #line 25 "..\..\Views\Dashboard\TraceLogList.cshtml"
                   
-                        if (item.Level== LogLevel.ERROR)
+                        if (item.Level== LogLevelConst.Error)
                         {
 
             
@@ -145,7 +145,7 @@ WriteLiteral("                            <td class=\"col-1\"><button class=\"bt
 
             
             #line 37 "..\..\Views\Dashboard\TraceLogList.cshtml"
-                                                                        Write(item.Level.ToString());
+                                                                        Write(item.Level.ToUpper());
 
             
             #line default
@@ -165,7 +165,7 @@ WriteLiteral("\").modal();\'>");
 
             
             #line 37 "..\..\Views\Dashboard\TraceLogList.cshtml"
-                                                                                                                                             Write(item.Level.ToString());
+                                                                                                                                             Write(item.Level.ToUpper());
 
             
             #line default
@@ -187,7 +187,7 @@ WriteLiteral("                            <td class=\"col-1\"><button class=\"bt
 
             
             #line 41 "..\..\Views\Dashboard\TraceLogList.cshtml"
-                                                                        Write(item.Level.ToString());
+                                                                        Write(item.Level.ToUpper());
 
             
             #line default
@@ -197,7 +197,7 @@ WriteLiteral("\">");
 
             
             #line 41 "..\..\Views\Dashboard\TraceLogList.cshtml"
-                                                                                                Write(item.Level.ToString());
+                                                                                                Write(item.Level.ToUpper());
 
             
             #line default

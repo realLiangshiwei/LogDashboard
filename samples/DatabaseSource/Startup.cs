@@ -62,6 +62,8 @@ namespace DatabaseSource
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
+            app.UseRouting();
+
             app.UseLogDashboard();
 
             app.UseEndpoints(routes =>

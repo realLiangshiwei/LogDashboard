@@ -14,7 +14,7 @@ namespace LogDashboard.Models
 
         public bool ToDay { get; set; }
 
-        public LogLevel? Level { get; set; }
+        public string Level { get; set; }
 
         public bool Hour { get; set; }
 

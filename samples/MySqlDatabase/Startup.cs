@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using MySql.Data.MySqlClient;
 
 namespace MySqlDatabase
@@ -41,6 +42,12 @@ namespace MySqlDatabase
 
             app.Run(async (context) =>
             {
+                var log = app.ApplicationServices.GetService<ILogger<Startup>>();
+                log.LogInformation("info message");
+                log.LogDebug("debug message");
+                log.LogError("error message");
+                log.LogTrace("trace message");
+                log.LogWarning("warn message");
                 await context.Response.WriteAsync("Hello World!");
             });
 
