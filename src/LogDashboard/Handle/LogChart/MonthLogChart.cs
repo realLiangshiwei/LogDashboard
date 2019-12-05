@@ -30,18 +30,18 @@ namespace LogDashboard.Handle.LogChart
                 {
                     var dayTime = date.AddDays(i);
                     output.All[i] = await repository.CountAsync(x => x.LongDate >= dayTime && x.LongDate <= dayTime.AddHours(23).AddMinutes(59).AddSeconds(59));
-                    output.Error[i] = await CountAsync(LogLevel.ERROR, repository, dayTime);
-                    output.Info[i] = await CountAsync(LogLevel.INFO, repository, dayTime);
-                    output.Debug[i] = await CountAsync(LogLevel.DEBUG, repository, dayTime);
-                    output.Fatal[i] = await CountAsync(LogLevel.FATAL, repository, dayTime);
-                    output.Trace[i] = await CountAsync(LogLevel.TRACE, repository, dayTime);
-                    output.Warn[i] = await CountAsync(LogLevel.WARN, repository, dayTime);
+                    output.Error[i] = await CountAsync(LogLevelConst.Error, repository, dayTime);
+                    output.Info[i] = await CountAsync(LogLevelConst.Info, repository, dayTime);
+                    output.Debug[i] = await CountAsync(LogLevelConst.Debug, repository, dayTime);
+                    output.Fatal[i] = await CountAsync(LogLevelConst.Fatal, repository, dayTime);
+                    output.Trace[i] = await CountAsync(LogLevelConst.Trace, repository, dayTime);
+                    output.Warn[i] = await CountAsync(LogLevelConst.Warn, repository, dayTime);
                 }
             }
             return output;
         }
 
-        private async Task<int> CountAsync<T>(LogLevel level, IRepository<T> repository, DateTime dayTime) where T : class, ILogModel
+        private async Task<int> CountAsync<T>(string level, IRepository<T> repository, DateTime dayTime) where T : class, ILogModel
         {
             return await repository.CountAsync(x => x.LongDate >= dayTime && x.LongDate <= dayTime.AddHours(23).AddMinutes(59).AddSeconds(59) && x.Level == level);
         }

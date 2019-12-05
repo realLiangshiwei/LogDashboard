@@ -36,7 +36,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "aspnetcore2.2", "test\aspne
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UseAuthorization", "samples\UseAuthorization\UseAuthorization.csproj", "{18ECBB64-4939-4C0B-B00D-D9382AB4F6DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySqlDatabase", "samples\MySqlDatabase\MySqlDatabase.csproj", "{EB0A1237-E9B8-4138-A8CE-DBD6C41771FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySqlDatabase", "samples\MySqlDatabase\MySqlDatabase.csproj", "{EB0A1237-E9B8-4138-A8CE-DBD6C41771FC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

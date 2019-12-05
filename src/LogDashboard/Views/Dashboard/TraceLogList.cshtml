@@ -23,7 +23,7 @@
                 <td class="col-1"><a href="javascript:void(0);" onclick="logInfo('@item.Id.ToString()')">@item.Id.ToString()</a></td>
                 <td class="col-3"><span>@item.Logger</span></td>
                 @{
-                        if (item.Level== LogLevel.ERROR)
+                        if (item.Level== LogLevelConst.Error)
                         {
                             <div class="modal fade" id="@item.Id.ToString()">
                                 <div class="modal-dialog modal-lg" role="document">
@@ -34,11 +34,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <td class="col-1"><button class="btn btn-outline-@item.Level.ToString()" onclick='$("#@item.Id.ToString()").modal();'>@item.Level.ToString()</button></td>
+                            <td class="col-1"><button class="btn btn-outline-@item.Level.ToUpper()" onclick='$("#@item.Id.ToString()").modal();'>@item.Level.ToUpper()</button></td>
                         }
                         else
                         {
-                            <td class="col-1"><button class="btn btn-outline-@item.Level.ToString()">@item.Level.ToString()</button></td>
+                            <td class="col-1"><button class="btn btn-outline-@item.Level.ToUpper()">@item.Level.ToUpper()</button></td>
                         }
                 }
                 <td class="col-4">

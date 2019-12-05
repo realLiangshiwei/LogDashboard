@@ -81,7 +81,6 @@ namespace LogDashboard.Repository.Dapper
                 appendSql.Append(")");
             }
 
-            var qc = await _conn.GetListAsync<T>(predicate?.ToPredicateGroup());
             return await _conn.GetPageAsync<T>(predicate?.ToPredicateGroup(), sorts, page == 0 ? page : page - 1, size, appendSql.ToString().TrimEnd(','));
 
         }

@@ -153,10 +153,10 @@ namespace LogDashboard.Repository.File
                             LongDate = DateTime.Parse(line.TryGetValue(0)),
                             Logger = line.TryGetValue(2),
                             Message = line.TryGetValue(3),
-                            Exception = line.TryGetValue(4)
+                            Exception = line.TryGetValue(4),
+                            Level = line.TryGetValue(1)?.ToUpper().FormatLevel()
                         };
-                        Enum.TryParse(line.TryGetValue(1)?.ToUpper()?.FormatLevel(), out LogLevel level);
-                        item.Level = level;
+
                         var lineEnd = Math.Min(_options.CustomPropertyInfos.Count, line.Length - 5);
                         if (line.Length - 5 != _options.CustomPropertyInfos.Count && logFile == logFiles.Last() && logLine == logLines.Last())
                         {
@@ -197,7 +197,7 @@ namespace LogDashboard.Repository.File
                 Id = id,
                 Logger = LogDashboardConsts.Root,
                 LongDate = DateTime.Now,
-                Level = LogLevel.WARN,
+                Level = LogLevelConst.Warn,
                 Message = message
             };
         }
