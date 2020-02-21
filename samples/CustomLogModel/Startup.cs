@@ -18,7 +18,10 @@ namespace CustomLogModel
         {
             LogManager.Configuration.Variables["application"] = "CustomLogModel";
             LogManager.Configuration.Variables["requestMethod"] = "Get";
-            services.AddLogDashboard(opt => { opt.CustomLogModel<ApplicationLogModel>(); });
+            services.AddLogDashboard(opt =>
+            {
+                opt.CustomLogModel<ApplicationLogModel>();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -35,7 +38,7 @@ namespace CustomLogModel
             {
                 var log = app.ApplicationServices.GetService<ILogger<Startup>>();
                 log.LogInformation("info");
-                log.LogDebug("debug");
+                log.LogDebug("debug <br> qaqa");
                 log.LogTrace("trace");
                 log.LogWarning("warn");
                 await context.Response.WriteAsync("Hello World!");

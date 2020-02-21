@@ -63,7 +63,7 @@ WriteLiteral(@"
                 <th class=""col-2"">时间</th>
                 <th class=""col-1"">详情</th>
             </tr>
-        </thead>
+        </thead>    
         <tbody class=""w-100"">
 ");
 
@@ -122,7 +122,7 @@ WriteLiteral("\">");
 
             
             #line 28 "..\..\Views\Dashboard\LogList.cshtml"
-                                                                                        Write(item.Level.ToUpper());
+                                                                                       Write(item.Level.ToUpper());
 
             
             #line default

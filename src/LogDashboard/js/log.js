@@ -234,7 +234,7 @@ function logInfo(id, modalId, bodyId) {
     $.ajax({
         method: "post",
         url: mapPath + "/Dashboard/LogInfo",
-        data: $("#" + id).text()
+        data: $("#" + id).html()
     }).done(function (html) {
         $("#" + bodyId).html(html);
         $("#" + modalId).modal();

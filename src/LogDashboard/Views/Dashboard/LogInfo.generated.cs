@@ -16,13 +16,19 @@ namespace LogDashboard.Views.Dashboard
     using System.Linq;
     using System.Text;
     
-    #line 3 "..\..\Views\Dashboard\LogInfo.cshtml"
+    #line 2 "..\..\Views\Dashboard\LogInfo.cshtml"
+    using LogDashboard.Extensions;
+    
+    #line default
+    #line hidden
+    
+    #line 4 "..\..\Views\Dashboard\LogInfo.cshtml"
     using LogDashboard.Models;
     
     #line default
     #line hidden
     
-    #line 2 "..\..\Views\Dashboard\LogInfo.cshtml"
+    #line 3 "..\..\Views\Dashboard\LogInfo.cshtml"
     using LogDashboard.StackTrace;
     
     #line default
@@ -43,8 +49,9 @@ WriteLiteral("\r\n");
 
 
 
+
             
-            #line 5 "..\..\Views\Dashboard\LogInfo.cshtml"
+            #line 6 "..\..\Views\Dashboard\LogInfo.cshtml"
   
   
     var log = (ILogModel)ViewData["Model"];
@@ -67,7 +74,7 @@ WriteLiteral(@"<div class=""container-fluid"">
 
 
             
-            #line 19 "..\..\Views\Dashboard\LogInfo.cshtml"
+            #line 20 "..\..\Views\Dashboard\LogInfo.cshtml"
               
                 if (typeof(IRequestTraceLogModel).IsAssignableFrom(Context.Options.LogModelType))
                 {
@@ -81,7 +88,7 @@ WriteLiteral("                    <li class=\"nav-item\">\r\n\r\n               
 
 
             
-            #line 24 "..\..\Views\Dashboard\LogInfo.cshtml"
+            #line 25 "..\..\Views\Dashboard\LogInfo.cshtml"
                                                                                                                                              Write(log.Id.ToString());
 
             
@@ -91,7 +98,7 @@ WriteLiteral("\')\" aria-selected=\"false\">请求追踪</a>\r\n                
 
 
             
-            #line 26 "..\..\Views\Dashboard\LogInfo.cshtml"
+            #line 27 "..\..\Views\Dashboard\LogInfo.cshtml"
                 }
 
             
@@ -111,7 +118,7 @@ WriteLiteral(@"        </ul>
 
 
             
-            #line 37 "..\..\Views\Dashboard\LogInfo.cshtml"
+            #line 38 "..\..\Views\Dashboard\LogInfo.cshtml"
                                                    Write(log.Id.ToString());
 
             
@@ -123,7 +130,7 @@ WriteLiteral("</td>\r\n                            </tr>\r\n                    
 
 
             
-            #line 41 "..\..\Views\Dashboard\LogInfo.cshtml"
+            #line 42 "..\..\Views\Dashboard\LogInfo.cshtml"
                                                    Write(log.LongDate.ToString("yyyy-MM-dd HH:mm:ss"));
 
             
@@ -135,7 +142,7 @@ WriteLiteral("</td>\r\n                            </tr>\r\n                    
 
 
             
-            #line 45 "..\..\Views\Dashboard\LogInfo.cshtml"
+            #line 46 "..\..\Views\Dashboard\LogInfo.cshtml"
                                                                                   Write(log.Level.ToUpper());
 
             
@@ -145,7 +152,7 @@ WriteLiteral("\">");
 
 
             
-            #line 45 "..\..\Views\Dashboard\LogInfo.cshtml"
+            #line 46 "..\..\Views\Dashboard\LogInfo.cshtml"
                                                                                                         Write(log.Level.ToUpper());
 
             
@@ -157,7 +164,7 @@ WriteLiteral("</button></td>\r\n                            </tr>\r\n           
 
 
             
-            #line 49 "..\..\Views\Dashboard\LogInfo.cshtml"
+            #line 50 "..\..\Views\Dashboard\LogInfo.cshtml"
                                                    Write(log.Logger);
 
             
@@ -169,7 +176,7 @@ WriteLiteral("</td>\r\n                            </tr>\r\n                    
 
 
             
-            #line 53 "..\..\Views\Dashboard\LogInfo.cshtml"
+            #line 54 "..\..\Views\Dashboard\LogInfo.cshtml"
                                                    Write(log.Message);
 
             
@@ -189,7 +196,7 @@ WriteLiteral(@"</td>
 
 
             
-            #line 63 "..\..\Views\Dashboard\LogInfo.cshtml"
+            #line 64 "..\..\Views\Dashboard\LogInfo.cshtml"
                             Write(Raw(StackTraceFormatter.FormatHtml(log.Exception)));
 
             
@@ -209,7 +216,7 @@ WriteLiteral(@"</pre>
 
 
             
-            #line 73 "..\..\Views\Dashboard\LogInfo.cshtml"
+            #line 74 "..\..\Views\Dashboard\LogInfo.cshtml"
                               
                                 foreach (var propertyInfo in Context.Options.CustomPropertyInfos)
                                 {
@@ -222,7 +229,7 @@ WriteLiteral("                                    <tr>\r\n                      
 
 
             
-            #line 77 "..\..\Views\Dashboard\LogInfo.cshtml"
+            #line 78 "..\..\Views\Dashboard\LogInfo.cshtml"
                                                           Write(propertyInfo.Name);
 
             
@@ -232,7 +239,7 @@ WriteLiteral("</td>\r\n                                        <td class=\"text-
 
 
             
-            #line 78 "..\..\Views\Dashboard\LogInfo.cshtml"
+            #line 79 "..\..\Views\Dashboard\LogInfo.cshtml"
                                                            Write(propertyInfo.GetValue(log));
 
             
@@ -242,7 +249,7 @@ WriteLiteral("</td>\r\n                                    </tr>\r\n");
 
 
             
-            #line 80 "..\..\Views\Dashboard\LogInfo.cshtml"
+            #line 81 "..\..\Views\Dashboard\LogInfo.cshtml"
                                 }
                             
 

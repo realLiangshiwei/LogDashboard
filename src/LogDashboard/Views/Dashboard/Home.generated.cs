@@ -372,7 +372,7 @@ WriteLiteral("-info\">");
 
             
             #line 149 "..\..\Views\Dashboard\Home.cshtml"
-                                                                                Write(item.ToJsonString());
+                                                                                Write(Raw(item.ToJsonString()));
 
             
             #line default
