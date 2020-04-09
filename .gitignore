@@ -77,3 +77,5 @@ src/.vs/config/applicationhost.config
 /samples/CustomLogModel
 
 samples/abpvnext/src/BootStore.Web/wwwroot/libs/
+
+.idea/

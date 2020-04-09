@@ -231,10 +231,13 @@ function goPage(page) {
 
 
 function logInfo(id, modalId, bodyId) {
+
+    var log = logs.filter((x) => x.Id == id)[0];
+
     $.ajax({
         method: "post",
         url: mapPath + "/Dashboard/LogInfo",
-        data: $("#" + id).html()
+        data: JSON.stringify(log)
     }).done(function (html) {
         $("#" + bodyId).html(html);
         $("#" + modalId).modal();
