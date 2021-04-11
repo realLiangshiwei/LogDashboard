@@ -18,19 +18,11 @@ namespace LogDashboard.Repository.File
 
         private readonly ILogDashboardCacheManager<T> _cacheManager;
 
+        protected static readonly List<LogFile> LogFiles = new List<LogFile>();
 
-        private static int _lineNumber;
-
-        private static DateTime? _lastFileWriteTime;
-
-        private static string _lastFileName;
-
-        /// <summary>
-        /// 日志模板完整标识
-        /// </summary>
-        public bool LogModelCompletion = true;
-
-        public FileUnitOfWork(LogDashboardOptions options, ILogDashboardCacheManager<T> cacheManager)
+        public FileUnitOfWork(
+            LogDashboardOptions options,
+            ILogDashboardCacheManager<T> cacheManager)
         {
             _options = options;
             _cacheManager = cacheManager;
@@ -52,9 +44,6 @@ namespace LogDashboard.Repository.File
             }
             else
             {
-                _lineNumber = 0;
-                _lastFileWriteTime = null;
-                _lastFileName = null;
                 await ReadAllLogs();
             }
         }
@@ -66,85 +55,83 @@ namespace LogDashboard.Repository.File
 
         private async Task ReadIncrementalLogs()
         {
-            var logFiles = GetLogFiles();
-
-            logFiles.RemoveAll(x => x.LastWriteTime < _lastFileWriteTime);
-
-            if (_lastFileName != logFiles.FirstOrDefault().Path)
-            {
-                _lineNumber = 0;
-                logFiles.Remove(logFiles.FirstOrDefault());
-            }
-
+            BuildLogFiles();
             var id = _logs.Max(x => x.Id);
-            await ReadLogs(logFiles, ++id);
+            await ReadLogs(++id);
         }
 
-        private List<(string Path, DateTime LastWriteTime)> GetLogFiles()
+        private void BuildLogFiles()
         {
             var rootPath = _options.RootPath ?? AppContext.BaseDirectory;
 
             if (!Directory.Exists(rootPath))
             {
                 _logs.Add(CreateWarnItem(_logs.Last().Id + 1, $"{LogDashboardConsts.Root} Warn:日志文件目录不存在,请检查 LogDashboardOption.RootPath 配置!"));
-                return new List<(string Path, DateTime LastWriteTime)>();
             }
 
             var paths = Directory.GetFiles(rootPath, "*.log", SearchOption.AllDirectories);
 
-            return paths.Select(x => (Path: x, LastWriteTime: System.IO.File.GetLastWriteTime(x))).OrderBy(x => x.LastWriteTime).ToList();
+            var logFiles = paths.Select(x => new LogFile
+            {
+                Path = x,
+                LastModifyTime = System.IO.File.GetLastWriteTime(x),
+                LastReadLine = 0
+            }).ToList();
+
+            if (!LogFiles.Any())
+            {
+                LogFiles.AddRange(logFiles);
+            }
+            else
+            {
+                foreach (var logFile in logFiles)
+                {
+                    var temp = LogFiles.FirstOrDefault(x => x.Path == logFile.Path);
+                    if (temp == null)
+                    {
+                        LogFiles.AddRange(logFiles);
+                        continue;
+                    }
+
+                    if (temp.LastModifyTime != logFile.LastModifyTime)
+                    {
+                        temp.ShouldRead = true;
+                    }
+                }
+            }
         }
 
-        private async Task ReadLogs(List<(string Path, DateTime LastWriteTime)> logFiles, int id = 1)
+        private async Task ReadLogs(int id = 1)
         {
-            if (_lastFileWriteTime == logFiles.LastOrDefault().LastWriteTime)
-            {
-                return;
-            }
 
-            _lastFileWriteTime = logFiles.LastOrDefault().LastWriteTime;
-            _lastFileName = logFiles.LastOrDefault().Path;
-
-            foreach (var logFile in logFiles)
+            foreach (var logFile in LogFiles.Where(x=>x.ShouldRead))
             {
                 var stringBuilder = new StringBuilder();
-                var fileLine = 0;
+
                 using (var fileStream = new FileStream(logFile.Path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                 using (var streamReader = new StreamReader(fileStream, Encoding.Default))
                 {
                     //Skip line
-                    for (var i = 0; i < _lineNumber; i++)
+                    for (var i = 0; i < logFile.LastReadLine; i++)
                     {
                         await streamReader.ReadLineAsync();
                     }
 
-
                     while (!streamReader.EndOfStream)
                     {
                         stringBuilder.AppendLine(await streamReader.ReadLineAsync());
-                        fileLine++;
+                        logFile.LastReadLine++;
                     }
-                }
-
-                if (logFile == logFiles.Last())
-                {
-                    if (_lastFileName == logFile.Path)
-                    {
-                        _lineNumber += fileLine;
-                    }
-                    else
-                    {
-                        _lineNumber = fileLine;
-                    }
-
                 }
 
                 var text = stringBuilder.ToString();
-                var logLines = text.Trim().Replace("|| end", _options.FileEndDelimiter).Split(new[] { _options.FileEndDelimiter }, StringSplitOptions.None).Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
+                var logLines = text.Trim().Replace("|| end", _options.FileEndDelimiter)
+                    .Split(new[] {_options.FileEndDelimiter}, StringSplitOptions.None)
+                    .Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
 
                 foreach (var logLine in logLines)
                 {
-                    var line = logLine.Split(new[] { _options.FileFieldDelimiter }, StringSplitOptions.None);
+                    var line = logLine.Split(new[] {_options.FileFieldDelimiter}, StringSplitOptions.None);
                     if (line.Length > 1)
                     {
                         var item = new T
@@ -158,10 +145,9 @@ namespace LogDashboard.Repository.File
                         };
 
                         var lineEnd = Math.Min(_options.CustomPropertyInfos.Count, line.Length - 5);
-                        if (line.Length - 5 != _options.CustomPropertyInfos.Count && logFile == logFiles.Last() && logLine == logLines.Last())
+                        if (line.Length - 5 != _options.CustomPropertyInfos.Count && logLine == logLines.Last())
                         {
-                            //last files and last line
-                            LogModelCompletion = false;
+                            _logs.Add(CreateWarnItem(id, $"Warn: {Path.GetFileName(logFile.Path)} 文件内容与自定义日志模型不完全匹配,请检查代码!"));
                         }
 
                         for (var i = 0; i < lineEnd; i++)
@@ -172,13 +158,9 @@ namespace LogDashboard.Repository.File
                         _logs.Add(item);
                         id++;
                     }
-
                 }
-            }
 
-            if (!LogModelCompletion)
-            {
-                _logs.Add(CreateWarnItem(id, $"{LogDashboardConsts.Root} Warn:自定义日志模型与Config不完全匹配,请检查代码!"));
+                logFile.ShouldRead = false;
             }
 
             await _cacheManager.SetCache(LogDashboardConsts.LogDashboardLogsCache, _logs);
@@ -186,11 +168,11 @@ namespace LogDashboard.Repository.File
 
         private async Task ReadAllLogs()
         {
-            var logFiles = GetLogFiles();
-            await ReadLogs(logFiles);
+            BuildLogFiles();
+            await ReadLogs();
         }
 
-        public T CreateWarnItem(int id, string message)
+        private T CreateWarnItem(int id, string message)
         {
             return new T
             {
@@ -206,5 +188,16 @@ namespace LogDashboard.Repository.File
         {
             Close();
         }
+    }
+
+    public class LogFile
+    {
+        public string Path { get; set; }
+
+        public int LastReadLine { get; set; }
+
+        public DateTime LastModifyTime { get; set; }
+
+        public bool ShouldRead { get; set; } = true;
     }
 }

@@ -40,7 +40,7 @@ namespace LogDashboard
         public TimeSpan CacheExpires { get; set; }
 
         internal List<IAuthorizeData> AuthorizeData { get; set; } = new List<IAuthorizeData>();
-        
+
         internal List<ILogDashboardAuthorizationFilter> AuthorizationFiles { get; set; }
 
         internal List<PropertyInfo> CustomPropertyInfos { get; set; }

@@ -9,7 +9,7 @@
     <PackageIconUrl>https://raw.githubusercontent.com/liangshiw/LogDashboard/develop/logo.png</PackageIconUrl>
     <RepositoryUrl>https://github.com/liangshiw/LogDashboard</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <Version>1.4.5</Version>
+    <Version>1.4.6</Version>
     <Company>liangshiwei</Company>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <LangVersion>8.0</LangVersion>
@@ -60,12 +60,12 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="Dapper" Version="2.0.30" />
+    <PackageReference Include="Dapper" Version="2.0.78" />
     <PackageReference Include="DapperExtensions.Standard" Version="1.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authorization.Policy" Version="2.0.0" />
     <PackageReference Include="Microsoft.CSharp" Version="4.6.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.0.19" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.9" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Views\Dashboard\BasicLog.generated.cs">

@@ -24,11 +24,9 @@ namespace LogDashboard.Cache
 
         public Task SetCache(string key, List<T> logs)
         {
-            if (_timer == null)
-            {
-                _timer = new Timer(async (e) => await ClearCache(LogDashboardConsts.LogDashboardLogsCache), null, _options.CacheExpires,
-                    _options.CacheExpires);
-            }
+            _timer ??= new Timer(async (e) => await ClearCache(LogDashboardConsts.LogDashboardLogsCache), null,
+                _options.CacheExpires,
+                _options.CacheExpires);
             _caches.AddOrUpdate(key, logs, (k, v) => logs);
             return Task.CompletedTask;
 
