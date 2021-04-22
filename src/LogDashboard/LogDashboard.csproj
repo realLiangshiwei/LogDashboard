@@ -13,6 +13,7 @@
     <Company>liangshiwei</Company>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <LangVersion>8.0</LangVersion>
+    <PackageVersion>1.4.7</PackageVersion>
   </PropertyGroup>
 
   <ItemGroup>
