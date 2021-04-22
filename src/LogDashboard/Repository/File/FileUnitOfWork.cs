@@ -108,8 +108,10 @@ namespace LogDashboard.Repository.File
             {
                 var stringBuilder = new StringBuilder();
 
+				//安装包System.Text.Encoding.CodePages
+                Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
                 using (var fileStream = new FileStream(logFile.Path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-                using (var streamReader = new StreamReader(fileStream, Encoding.Default))
+                using (var streamReader = new StreamReader(fileStream, Encoding.GetEncoding(0)))
                 {
                     //Skip line
                     for (var i = 0; i < logFile.LastReadLine; i++)
