@@ -6,7 +6,7 @@
         {
             try
             {
-                return array[index].Trim().Replace(',', '.');
+                return array[index].Trim();
             }
             catch
             {

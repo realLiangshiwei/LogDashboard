@@ -154,7 +154,7 @@ $(function () {
             hwaccel: false, // Whether to use hardware acceleration
             className: 'spinner', // The CSS class to assign to the spinner
             zIndex: 2e9, // The z-index (defaults to 2000000000)
-            top: 'auto', // Top position relative to parent 
+            top: 'auto', // Top position relative to parent
             left: 'auto' // Left position relative to parent in px
         };
 
@@ -175,6 +175,7 @@ function loadList(page, pageSize) {
     $.ajax({
         method: "post",
         url: mapPath + "/Dashboard/Searchlog",
+        contentType: "application/json",
         data: JSON.stringify(params)
 
     }).done(function (data) {
@@ -203,6 +204,7 @@ function doSearch() {
     $.ajax({
         method: "post",
         url: mapPath + "/Dashboard/Searchlog",
+        contentType: "application/json",
         data: JSON.stringify(searchInput)
 
     }).done(function (data) {
@@ -216,6 +218,7 @@ function requestTrace(id) {
     $.ajax({
         method: "post",
         url: mapPath + "/Dashboard/RequestTrace",
+        contentType: "application/json",
         data: JSON.stringify({ id: id })
 
     }).done(function (data) {
@@ -237,6 +240,7 @@ function logInfo(id, modalId, bodyId) {
     $.ajax({
         method: "post",
         url: mapPath + "/Dashboard/LogInfo",
+        contentType: "application/json",
         data: JSON.stringify(log)
     }).done(function (html) {
         $("#" + bodyId).html(html);

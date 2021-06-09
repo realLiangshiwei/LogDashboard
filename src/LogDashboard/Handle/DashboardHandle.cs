@@ -100,7 +100,10 @@ namespace LogDashboard.Handle
 
             expression = expression.AndIf(!string.IsNullOrWhiteSpace(input.Level), () => { return x => x.Level == input.Level; });
 
-            expression = expression.AndIf(!string.IsNullOrWhiteSpace(input.Message), () => { return x => x.Message.Contains(input.Message); });
+            expression = expression.AndIf(!string.IsNullOrWhiteSpace(input.Message), () =>
+            {
+                return x => x.Message.Contains(input.Message) || x.Logger.Contains(input.Message);
+            });
 
             if (input.Unique)
             {

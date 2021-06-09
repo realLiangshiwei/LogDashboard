@@ -21,16 +21,15 @@ namespace LogDashboard.EmbeddedFiles
             {".ttf","application/octet-stream" },
         };
 
-        private static Assembly _assembly;
+        private static readonly Assembly Assembly;
 
         static LogDashboardEmbeddedFiles()
         {
-            _assembly = Assembly.GetExecutingAssembly();
+            Assembly = Assembly.GetExecutingAssembly();
         }
 
         public static async Task IncludeEmbeddedFile(HttpContext context, string path)
         {
-
             context.Response.OnStarting(() =>
             {
                 if (context.Response.StatusCode == (int)HttpStatusCode.OK)
@@ -41,14 +40,20 @@ namespace LogDashboard.EmbeddedFiles
                 return Task.CompletedTask;
             });
 
-            using (var inputStream = _assembly.GetManifestResourceStream($"{LogDashboardConsts.Root}.{path.Substring(1)}"))
+            try
             {
+                using var inputStream = Assembly.GetManifestResourceStream($"{LogDashboardConsts.Root}.{path.Substring(1)}");
                 if (inputStream == null)
                 {
-                    throw new ArgumentException($@"Resource with name {path.Substring(1)} not found in assembly {_assembly}.");
+                    throw new ArgumentException($@"Resource with name {path.Substring(1)} not found in assembly {Assembly}.");
                 }
                 await inputStream.CopyToAsync(context.Response.Body).ConfigureAwait(false);
             }
+            catch (Exception e)
+            {
+                await context.Response.WriteAsync($"{e.StackTrace}");
+            }
+
         }
     }
 }

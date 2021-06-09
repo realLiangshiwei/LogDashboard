@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
@@ -116,12 +117,11 @@ namespace LogDashboard
                     }
                     else
                     {
-                        // ReSharper disable once PossibleInvalidOperationException
-                        var bytes = new byte[(int)httpContext.Request.ContentLength];
-                        await httpContext.Request.Body.ReadAsync(bytes, 0, (int)httpContext.Request.ContentLength);
-                        string requestJson = Encoding.Default.GetString(bytes);
 
-                        args = JsonConvert.DeserializeObject(requestJson,
+                        using var reader = new StreamReader(httpContext.Request.Body);
+                            var requestJson = await reader.ReadToEndAsync();
+
+                            args = JsonConvert.DeserializeObject(requestJson,
                             method.GetParameters().First().ParameterType);
 
                     }
