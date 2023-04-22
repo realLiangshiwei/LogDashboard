@@ -48,6 +48,7 @@ namespace LogDashboard
                 }
             }
 
+            //Rediect
             if (!isValidAuthorize)
             {
                 var loginRouteUrl = LogDashboardRoutes.Routes.GetLoginRoute().Key;
@@ -64,7 +65,6 @@ namespace LogDashboard
 
             return isValidAuthorize;
         }
-
 
         public (string, string) GetCookieValue(HttpContext context)
         {

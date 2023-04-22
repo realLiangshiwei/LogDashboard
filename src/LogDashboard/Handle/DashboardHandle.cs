@@ -35,6 +35,8 @@ namespace LogDashboard.Handle
                 if (filter is LogdashboardAccountAuthorizeFilter accountFilter && accountFilter.Password == input?.Password && accountFilter.UserName == input?.Name)
                 {
                     accountFilter.SetCookieValue(Context.HttpContext);
+
+                    //Redirect
                     var homeUrl = LogDashboardRoutes.Routes.GetHomeRoute().Key;
                     Context.HttpContext.Response.Redirect($"{_options.PathMatch}{homeUrl}");
                     return string.Empty;
