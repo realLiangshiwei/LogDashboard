@@ -37,7 +37,7 @@ namespace LogDashboard
 
             if (context.HttpContext.Request != null && context.HttpContext.Request.Cookies != null)
             {
-                var (token, timestamp) = CookieOptions.GetCookieValue(context.HttpContext);
+                var (token, timestamp) = GetCookieValue(context.HttpContext);
 
                 if (double.TryParse(timestamp, out var time) &&
                     time <= DateTime.Now.ToUnixTimestamp() &&
@@ -63,6 +63,22 @@ namespace LogDashboard
             }
 
             return isValidAuthorize;
+        }
+
+
+        public (string, string) GetCookieValue(HttpContext context)
+        {
+            context.Request.Cookies.TryGetValue(CookieOptions.TokenKey, out var token);
+            context.Request.Cookies.TryGetValue(CookieOptions.TimestampKey, out var timestamp);
+            return (token, timestamp);
+        }
+
+        public void SetCookieValue(HttpContext context)
+        {
+            var timestamp = DateTime.Now.ToUnixTimestamp().ToString();
+            var token = $"{CookieOptions.Secure(this)}&&{timestamp}".ToMD5();
+            context.Response.Cookies.Append(CookieOptions.TokenKey, token, new CookieOptions() { Expires = DateTime.Now.Add(CookieOptions.Expire) });
+            context.Response.Cookies.Append(CookieOptions.TimestampKey, timestamp, new CookieOptions() { Expires = DateTime.Now.Add(CookieOptions.Expire) });
         }
     }
 }

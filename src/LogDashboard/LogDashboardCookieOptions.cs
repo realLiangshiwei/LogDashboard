@@ -29,22 +29,6 @@ namespace LogDashboard
             TimestampKey = "LogDashboard.Timestamp";
             Secure = (filter) => $"{filter.UserName}&&{filter.Password}";
         }
-
-        public (string, string) GetCookieValue(HttpContext context)
-        {
-            context.Request.Cookies.TryGetValue(TokenKey, out var token);
-            context.Request.Cookies.TryGetValue(TimestampKey, out var timestamp);
-            return (token, timestamp);
-        }
-
-
-        public void SetCookieValue(HttpContext context, LogdashboardAccountAuthorizeFilter filter)
-        {
-            var timestamp = DateTime.Now.ToUnixTimestamp().ToString();
-            var token = $"{Secure(filter)}&&{timestamp}".ToMD5();
-            context.Response.Cookies.Append(TokenKey, token, new CookieOptions() { Expires = DateTime.Now.Add(Expire) });
-            context.Response.Cookies.Append(TimestampKey, timestamp, new CookieOptions() { Expires = DateTime.Now.Add(Expire) });
-        }
     }
 }
 
