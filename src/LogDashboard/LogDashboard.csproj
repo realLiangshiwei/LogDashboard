@@ -29,6 +29,7 @@
     <EmbeddedResource Include="js\\**\*" />
     <EmbeddedResource Include="Views\\**\*" />
     <EmbeddedResource Include="font\\**\*" />
+	<EmbeddedResource Include="image\\**\*" />
   </ItemGroup>
 
   <ItemGroup>
@@ -49,6 +50,8 @@
     <None Remove="css\Simple-Line-Icons.ttf" />
     <None Remove="css\Simple-Line-Icons.woff" />
     <None Remove="css\Simple-Line-Icons.woff2" />
+    <None Remove="image\login-bg.jpg" />
+    <None Remove="Views\Dashboard\Login.cshtml" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.1'">
@@ -79,6 +82,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Home.cshtml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Dashboard\Login.generated.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Login.cshtml</DependentUpon>
     </Compile>
     <Compile Update="Views\Dashboard\LogInfo.generated.cs">
       <DesignTime>True</DesignTime>
@@ -111,6 +119,15 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Home.cshtml</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Dashboard\Login.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Login.generated.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Dashboard\Login.generated.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Login.cshtml</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Dashboard\LogInfo.generated.cs">
       <DesignTime>True</DesignTime>

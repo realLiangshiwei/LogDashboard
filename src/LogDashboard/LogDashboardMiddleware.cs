@@ -36,7 +36,7 @@ namespace LogDashboard
             var requestUrl = httpContext.Request.Path.Value;
 
             //EmbeddedFile
-            if (requestUrl.Contains("css") || requestUrl.Contains("js") || requestUrl.Contains("woff"))
+            if (requestUrl.Contains("css") || requestUrl.Contains("js") || requestUrl.Contains("woff") || requestUrl.Contains("jpg"))
             {
                 await LogDashboardEmbeddedFiles.IncludeEmbeddedFile(httpContext, requestUrl);
                 return;

@@ -11,5 +11,9 @@ namespace LogDashboard
         public const string HandleNameSpace = "LogDashboard.Handle.";
 
         public const string LogDashboardLogsCache = "LogDashboardLogsCache";
+
+        public const string CookieTokenKey = "LogDashboard.CookieKey";
+
+        public const string CookieTimestampKey = "LogDashboard.Timestamp";
     }
 }

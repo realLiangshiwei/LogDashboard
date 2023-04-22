@@ -20,6 +20,8 @@ namespace LogDashboard.Route
 
             Routes.AddRoute(new LogDashboardRoute("/Dashboard/LogInfo", typeof(LogInfo)));
 
+            Routes.AddRoute(new LogDashboardRoute("/Dashboard/Login", typeof(Login)));
+
             Routes.AddRoute(new LogDashboardRoute
             {
                 Key = "/Dashboard/GetException",

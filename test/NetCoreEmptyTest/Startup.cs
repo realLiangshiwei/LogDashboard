@@ -12,7 +12,8 @@ namespace NetCoreEmptyTest
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddLogDashboard(opt=>opt.AddAuthorizationFilter(new LogDashboardBasicAuthFilter("admin","admin")));
+            services.AddLogDashboard(opt => opt.AddAuthorizationFilter(new LogDashboardBasicAuthFilter("admin", "admin")));
+            //services.AddLogDashboard(opt => opt.AddAuthorizationFilter(new LogdashboardAccountAuthorizeFilter("admin", "123qwe", 1)));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -19,6 +19,7 @@ namespace LogDashboard.EmbeddedFiles
             {".woff2","font/woff2" },
             {".woff","font/woff" },
             {".ttf","application/octet-stream" },
+            {".jpg","image/jpeg" },
         };
 
         private static readonly Assembly Assembly;

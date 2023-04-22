@@ -66,5 +66,14 @@ namespace LogDashboard.Route
             return string.IsNullOrWhiteSpace(url) ? Routes.FirstOrDefault(x => x.Key.ToLower() == "/Dashboard/Home".ToLower()) : Routes.FirstOrDefault(x => x.Key.ToLower() == url.ToLower());
         }
 
+        public LogDashboardRoute GetHomeRoute()
+        {
+            return Routes.FirstOrDefault(x => x.Key.ToLower() == "/Dashboard/Home".ToLower());
+        }
+
+        public LogDashboardRoute GetLoginRoute()
+        {
+            return Routes.FirstOrDefault(x => x.Key.ToLower() == "/Dashboard/Login".ToLower());
+        }
     }
 }

@@ -1,0 +1,59 @@
+﻿@* Generator: Template TypeVisibility: Internal GeneratePrettyNames: true *@
+@using LogDashboard.Extensions
+@using LogDashboard.StackTrace
+@using LogDashboard.Models
+@inherits LogDashboard.Views.RazorPage
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>登录页</title>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <link href="@Context.Options.PathMatch/css.login.css" rel="stylesheet">
+    <link href="@Context.Options.PathMatch/css.bootstrap.min.css" rel="stylesheet">
+    <link href="@Context.Options.PathMatch/css.font-awesome.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="limiter">
+        <div class="container-login" style="background-image: url('@Context.Options.PathMatch/image.login-bg.jpg');">
+
+            <div class="wrap-login p-l-55 p-r-55 p-t-65 p-b-54">
+                <form id="login-form" class="login-form validate-form">
+                    <span class="login-form-title p-b-49">登录</span>
+
+                    <div class="wrap-input validate-input m-b-23" data-validate="请输入用户名">
+                        <span class="label-input">用户名</span>
+                        <input class="input" type="text" name="name" placeholder="请输入用户名" autocomplete="off">
+                        <span class="focus-input" data-symbol="&#xf206;"></span>
+                    </div>
+
+                    <div class="wrap-input validate-input" data-validate="请输入密码">
+                        <span class="label-input">密码</span>
+                        <input class="input" type="password" name="password" placeholder="请输入密码">
+                        <span class="focus-input" data-symbol="&#xf190;"></span>
+                    </div>
+
+                    <div class="text-right p-t-8 p-b-31">
+                        <a href="javascript:"></a>
+                    </div>
+
+                    <div class="container-login-form-btn">
+                        <div class="wrap-login-form-btn">
+                            <div class="login-form-bgbtn"></div>
+                            <button class="login-form-btn" onclick="submitForm()">登 录</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="@Context.Options.PathMatch/js.jquery.min.js"></script>
+    <script src="@Context.Options.PathMatch/js.login.js"></script>
+</body>
+</html>

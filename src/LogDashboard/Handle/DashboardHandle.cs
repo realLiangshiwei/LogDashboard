@@ -8,19 +8,44 @@ using LogDashboard.Extensions;
 using LogDashboard.Handle.LogChart;
 using LogDashboard.Models;
 using LogDashboard.Repository;
+using LogDashboard.Route;
 using LogDashboard.Views.Dashboard;
+using Microsoft.AspNetCore.Http;
 
 namespace LogDashboard.Handle
 {
     public class DashboardHandle<T> : LogDashboardHandleBase where T : class, ILogModel
     {
         private readonly IRepository<T> _logRepository;
+        private readonly LogDashboardOptions _options;
 
         public DashboardHandle(
             IServiceProvider serviceProvider,
-            IRepository<T> logRepository) : base(serviceProvider)
+            IRepository<T> logRepository,
+            LogDashboardOptions options) : base(serviceProvider)
         {
             _logRepository = logRepository;
+            _options = options;
+        }
+
+        public async Task<string> Login(LoginInput input)
+        {
+            foreach (var filter in _options.AuthorizationFiles)
+            {
+                if (filter is LogdashboardAccountAuthorizeFilter accountFilter && accountFilter.Password == input?.Password && accountFilter.UserName == input?.Name)
+                {
+                    var timestamp = DateTime.Now.ToUnixTimestamp().ToString();
+                    var token = $"{accountFilter.UserName}&&{accountFilter.Password}&&{timestamp}".ToMD5();
+                    Context.HttpContext.Response.Cookies.Append(LogDashboardConsts.CookieTokenKey, token, new CookieOptions() { Expires = DateTime.Now.AddHours(accountFilter.LoginExpireHour) });
+                    Context.HttpContext.Response.Cookies.Append(LogDashboardConsts.CookieTimestampKey, timestamp, new CookieOptions() { Expires = DateTime.Now.AddHours(accountFilter.LoginExpireHour) });
+                    var homeUrl = LogDashboardRoutes.Routes.GetHomeRoute().Key;
+                    Context.HttpContext.Response.Redirect($"{_options.PathMatch}{homeUrl}");
+                    return string.Empty;
+                }
+            }
+
+            return await View();
+
         }
 
         public async Task<string> Home()
