@@ -18,13 +18,13 @@ namespace LogDashboard
         /// <summary>
         /// 登陆过期时间，默认24小时
         /// </summary>
-        public int LoginExpireHour { get; set; }
+        public TimeSpan LoginExpire { get; set; }
 
-        public LogdashboardAccountAuthorizeFilter(string userName, string password, int loginExpireHour = 24)
+        public LogdashboardAccountAuthorizeFilter(string userName, string password, TimeSpan? loginExpire)
         {
             UserName = userName;
             Password = password;
-            LoginExpireHour = loginExpireHour;
+            LoginExpire = loginExpire ?? TimeSpan.FromHours(24);
         }
 
         public bool Authorization(LogDashboardContext context)
@@ -37,7 +37,7 @@ namespace LogDashboard
                 context.HttpContext.Request.Cookies.TryGetValue(LogDashboardConsts.CookieTimestampKey, out var timestamp);
                 if (double.TryParse(timestamp, out var time) &&
                     time <= DateTime.Now.ToUnixTimestamp() &&
-                    time > DateTime.Now.AddDays(-LoginExpireHour).ToUnixTimestamp())
+                    time > DateTime.Now.Add(-LoginExpire).ToUnixTimestamp())
                 {
                     var tokenValue = $"{UserName}&&{Password}&&{timestamp}".ToMD5();
                     isValidAuthorize = tokenValue == token;
