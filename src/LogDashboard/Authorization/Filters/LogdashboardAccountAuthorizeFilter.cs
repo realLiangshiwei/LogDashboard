@@ -15,16 +15,20 @@ namespace LogDashboard
 
         public string Password { get; set; }
 
-        /// <summary>
-        /// 登陆过期时间，默认24小时
-        /// </summary>
-        public TimeSpan LoginExpire { get; set; }
+        public LogDashboardCookieOptions CookieOptions { get; set; }
 
-        public LogdashboardAccountAuthorizeFilter(string userName, string password, TimeSpan? loginExpire)
+        public LogdashboardAccountAuthorizeFilter(string userName, string password)
         {
             UserName = userName;
             Password = password;
-            LoginExpire = loginExpire ?? TimeSpan.FromHours(24);
+            CookieOptions = new LogDashboardCookieOptions();
+        }
+
+        public LogdashboardAccountAuthorizeFilter(string userName, string password, LogDashboardCookieOptions cookieOptions)
+        {
+            UserName = userName;
+            Password = password;
+            CookieOptions = cookieOptions;
         }
 
         public bool Authorization(LogDashboardContext context)
@@ -33,13 +37,13 @@ namespace LogDashboard
 
             if (context.HttpContext.Request != null && context.HttpContext.Request.Cookies != null)
             {
-                context.HttpContext.Request.Cookies.TryGetValue(LogDashboardConsts.CookieTokenKey, out var token);
-                context.HttpContext.Request.Cookies.TryGetValue(LogDashboardConsts.CookieTimestampKey, out var timestamp);
+                var (token, timestamp) = CookieOptions.GetCookieValue(context.HttpContext);
+
                 if (double.TryParse(timestamp, out var time) &&
                     time <= DateTime.Now.ToUnixTimestamp() &&
-                    time > DateTime.Now.Add(-LoginExpire).ToUnixTimestamp())
+                    time > DateTime.Now.Add(-CookieOptions.Expire).ToUnixTimestamp())
                 {
-                    var tokenValue = $"{UserName}&&{Password}&&{timestamp}".ToMD5();
+                    var tokenValue = $"{CookieOptions.Secure(this)}&&{timestamp}".ToMD5();
                     isValidAuthorize = tokenValue == token;
                 }
             }

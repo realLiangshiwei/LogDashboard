@@ -34,10 +34,7 @@ namespace LogDashboard.Handle
             {
                 if (filter is LogdashboardAccountAuthorizeFilter accountFilter && accountFilter.Password == input?.Password && accountFilter.UserName == input?.Name)
                 {
-                    var timestamp = DateTime.Now.ToUnixTimestamp().ToString();
-                    var token = $"{accountFilter.UserName}&&{accountFilter.Password}&&{timestamp}".ToMD5();
-                    Context.HttpContext.Response.Cookies.Append(LogDashboardConsts.CookieTokenKey, token, new CookieOptions() { Expires = DateTime.Now.Add(accountFilter.LoginExpire) });
-                    Context.HttpContext.Response.Cookies.Append(LogDashboardConsts.CookieTimestampKey, timestamp, new CookieOptions() { Expires = DateTime.Now.Add(accountFilter.LoginExpire) });
+                    accountFilter.CookieOptions.SetCookieValue(Context.HttpContext, accountFilter);
                     var homeUrl = LogDashboardRoutes.Routes.GetHomeRoute().Key;
                     Context.HttpContext.Response.Redirect($"{_options.PathMatch}{homeUrl}");
                     return string.Empty;
