@@ -24,6 +24,8 @@ namespace LogDashboard.Models
 
         public string Message { get; set; }
 
+        public string ApplicationLogModel { get; set; }
+
         public SearchLogInput()
         {
             Page = 1;

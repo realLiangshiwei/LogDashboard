@@ -3,7 +3,7 @@
 @using LogDashboard.Views
 @inherits LogDashboard.Views.RazorPage
 @{
-    Layout = new _layout {Context = Context, Section = { ["Scripts"] = $"<script src='{Context.Options.PathMatch}/js.basicLog.js'></script>" }, ViewData = ViewData };
+    Layout = new _layout { Context = Context, Section = { ["Scripts"] = $"<script src='{Context.Options.PathMatch}/js.basicLog.js'></script>" }, ViewData = ViewData };
 }
 <div class="card">
     <div class="card-header border border-top-0 border-right-0 border-left-0">
@@ -81,6 +81,27 @@
                     </div>
                 </div>
             </div>
+            @{
+                if (Context.Options.CustomPropertyInfos.Count > 0)
+                {
+                        <div class="row" id="applicationLogModel" style="display:none">
+                            @{
+                            foreach (var propertyInfo in Context.Options.CustomPropertyInfos)
+                            {
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="@propertyInfo.Name" class="form-control-label">@propertyInfo.Name</label>
+                                                <input id="@propertyInfo.Name" class="form-control" placeholder="@propertyInfo.Name">
+                                            </div>
+                                        </div>
+                            }
+                            }
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 d-flex justify-content-end"><a id="showMoreSearch" href="javascript:;">展开/折叠>></a></div>
+                        </div>
+                }
+            }
             <button class="btn btn-outline-primary" id="searchBtn">查询</button>
         </form>
 

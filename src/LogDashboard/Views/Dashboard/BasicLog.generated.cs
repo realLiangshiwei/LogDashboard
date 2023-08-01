@@ -39,7 +39,7 @@ WriteLiteral("\r\n\r\n");
             
             #line 5 "..\..\Views\Dashboard\BasicLog.cshtml"
   
-    Layout = new _layout {Context = Context, Section = { ["Scripts"] = $"<script src='{Context.Options.PathMatch}/js.basicLog.js'></script>" }, ViewData = ViewData };
+    Layout = new _layout { Context = Context, Section = { ["Scripts"] = $"<script src='{Context.Options.PathMatch}/js.basicLog.js'></script>" }, ViewData = ViewData };
 
 
             
@@ -93,12 +93,108 @@ WriteLiteral("<div class=\"card\">\r\n    <div class=\"card-header border border
 "control-label\">结束时间</label>\r\n                        <input type=\"text\" class=\"f" +
 "orm-control datetimepicker-input\" id=\"EndTime\" data-toggle=\"datetimepicker\" data" +
 "-target=\"#EndTime\" />\r\n                    </div>\r\n                </div>\r\n     " +
-"       </div>\r\n            <button class=\"btn btn-outline-primary\" id=\"searchBtn" +
-"\">查询</button>\r\n        </form>\r\n\r\n    </div>\r\n    <div id=\"LogList\">\r\n        ");
+"       </div>\r\n");
 
 
             
-            #line 89 "..\..\Views\Dashboard\BasicLog.cshtml"
+            #line 84 "..\..\Views\Dashboard\BasicLog.cshtml"
+              
+                if (Context.Options.CustomPropertyInfos.Count > 0)
+                {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                        <div class=\"row\" id=\"applicationLogModel\" style=\"display:" +
+"none\">\r\n");
+
+
+            
+            #line 88 "..\..\Views\Dashboard\BasicLog.cshtml"
+                              
+                            foreach (var propertyInfo in Context.Options.CustomPropertyInfos)
+                            {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                        <div class=\"col-md-2\">\r\n                 " +
+"                           <div class=\"form-group\">\r\n                           " +
+"                     <label for=\"");
+
+
+            
+            #line 93 "..\..\Views\Dashboard\BasicLog.cshtml"
+                                                       Write(propertyInfo.Name);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\" class=\"form-control-label\">");
+
+
+            
+            #line 93 "..\..\Views\Dashboard\BasicLog.cshtml"
+                                                                                                      Write(propertyInfo.Name);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</label>\r\n                                                <input id=\"");
+
+
+            
+            #line 94 "..\..\Views\Dashboard\BasicLog.cshtml"
+                                                      Write(propertyInfo.Name);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\" class=\"form-control\" placeholder=\"");
+
+
+            
+            #line 94 "..\..\Views\Dashboard\BasicLog.cshtml"
+                                                                                                            Write(propertyInfo.Name);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\">\r\n                                            </div>\r\n                         " +
+"               </div>\r\n");
+
+
+            
+            #line 97 "..\..\Views\Dashboard\BasicLog.cshtml"
+                            }
+                            
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                        </div>\r\n");
+
+
+
+WriteLiteral("                        <div class=\"row\">\r\n                            <div class" +
+"=\"col-md-12 d-flex justify-content-end\"><a id=\"showMoreSearch\" href=\"javascript:" +
+";\">展开/折叠>></a></div>\r\n                        </div>\r\n");
+
+
+            
+            #line 103 "..\..\Views\Dashboard\BasicLog.cshtml"
+                }
+            
+
+            
+            #line default
+            #line hidden
+WriteLiteral("            <button class=\"btn btn-outline-primary\" id=\"searchBtn\">查询</button>\r\n " +
+"       </form>\r\n\r\n    </div>\r\n    <div id=\"LogList\">\r\n        ");
+
+
+            
+            #line 110 "..\..\Views\Dashboard\BasicLog.cshtml"
    Write(Raw(ViewData["logs"]));
 
             
@@ -108,7 +204,7 @@ WriteLiteral("\r\n    </div>\r\n    <div id=\"page\">\r\n        ");
 
 
             
-            #line 92 "..\..\Views\Dashboard\BasicLog.cshtml"
+            #line 113 "..\..\Views\Dashboard\BasicLog.cshtml"
    Write(Raw(ViewData["page"]));
 
             

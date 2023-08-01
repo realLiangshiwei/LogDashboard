@@ -9,6 +9,7 @@ using LogDashboard.Handle.LogChart;
 using LogDashboard.Models;
 using LogDashboard.Repository;
 using LogDashboard.Views.Dashboard;
+using Newtonsoft.Json;
 
 namespace LogDashboard.Handle
 {
@@ -104,6 +105,25 @@ namespace LogDashboard.Handle
             {
                 return x => x.Message.Contains(input.Message) || x.Logger.Contains(input.Message);
             });
+            //自定义日志模型检索条件(反射实现)
+            if (!string.IsNullOrWhiteSpace(input.ApplicationLogModel))
+            {
+                var itemValue = JsonConvert.DeserializeObject<T>(input.ApplicationLogModel);
+                Type modelType = typeof(T);
+                var modelProperties = modelType.GetProperties().Where(p => !typeof(LogModel).GetProperties().Select(p => p.Name).Contains(p.Name)).ToArray();
+                foreach (var item in modelProperties)
+                {
+                    var inputVal = itemValue.GetType().GetProperty(item.Name).GetValue(itemValue, null);
+                    if (inputVal != null)
+                    {
+                        var inputValue = inputVal.ToString();
+                        expression = expression.AndIf(!string.IsNullOrWhiteSpace(inputValue), () =>
+                        {
+                            return x => x.GetType().GetProperty(item.Name).GetValue(x, null).ToString().Contains(inputValue);
+                        });
+                    }
+                }
+            }
 
             if (input.Unique)
             {

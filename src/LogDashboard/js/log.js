@@ -129,12 +129,16 @@ $(function () {
         $('body').toggleClass('sidebar-hidden');
     });
 
+
     /**
      * Mobile Sidebar Toggle
      */
     $('.sidebar-mobile-toggle').on('click', function () {
         $('body').toggleClass('sidebar-mobile-show');
     });
+    $("#showMoreSearch").on("click", function () {
+        $("#applicationLogModel").toggle(300);
+    })
 });
 
 
@@ -194,7 +198,12 @@ function search() {
     searchInput.Level = $("#Level").val();
     searchInput.StartTime = $("#StartTime").val();
     searchInput.EndTime = $("#EndTime").val();
-
+    var applicationLogModels = $("#applicationLogModel").find("input");
+    searchInput.ApplicationLogModel = {};
+    for (var i = 0; i < applicationLogModels.length; i++) {
+        searchInput.ApplicationLogModel[applicationLogModels[i].id] = applicationLogModels[i].value
+    }
+    searchInput.ApplicationLogModel = JSON.stringify(searchInput.ApplicationLogModel)
     doSearch();
     return false;
 }
