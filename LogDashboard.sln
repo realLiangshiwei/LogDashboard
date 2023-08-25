@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28803.452
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34003.232
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogDashboard", "src\LogDashboard\LogDashboard.csproj", "{A005DD97-96F5-402D-935C-1232E6B41F5F}"
 EndProject
@@ -37,6 +37,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UseAuthorization", "samples\UseAuthorization\UseAuthorization.csproj", "{18ECBB64-4939-4C0B-B00D-D9382AB4F6DC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySqlDatabase", "samples\MySqlDatabase\MySqlDatabase.csproj", "{EB0A1237-E9B8-4138-A8CE-DBD6C41771FC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SerilogTest", "..\SerilogTest\SerilogTest\SerilogTest.csproj", "{142FBB20-1F8A-4A4C-BA15-D6940235FFA3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -96,6 +98,10 @@ Global
 		{EB0A1237-E9B8-4138-A8CE-DBD6C41771FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB0A1237-E9B8-4138-A8CE-DBD6C41771FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB0A1237-E9B8-4138-A8CE-DBD6C41771FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{142FBB20-1F8A-4A4C-BA15-D6940235FFA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{142FBB20-1F8A-4A4C-BA15-D6940235FFA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{142FBB20-1F8A-4A4C-BA15-D6940235FFA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{142FBB20-1F8A-4A4C-BA15-D6940235FFA3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

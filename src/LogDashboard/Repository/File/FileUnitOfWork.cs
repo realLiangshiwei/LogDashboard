@@ -138,7 +138,7 @@ namespace LogDashboard.Repository.File
                         {
                             Id = id,
                             LongDate = DateTime.Parse(line.TryGetValue(0)),
-                            Level = line.TryGetValue(1)?.ToUpper().FormatLevel(),
+                            Level = line.TryGetValue(1),
                             Logger = line.TryGetValue(2),
                             Message = line.TryGetValue(3),
                             Exception = line.TryGetValue(4)

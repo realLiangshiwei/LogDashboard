@@ -111,8 +111,7 @@ namespace LogDashboard.StackTrace
 
         public static IEnumerable<T> Format<T>(string text, IStackTraceFormatter<T> formatter)
         {
-            Debug.Assert(text != null);
-
+            text = text ?? "";
             var frames = StackTraceParser.Parse
             (
                 text,

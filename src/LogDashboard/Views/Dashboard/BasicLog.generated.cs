@@ -79,21 +79,21 @@ WriteLiteral("<div class=\"card\">\r\n    <div class=\"card-header border border
 "\">\r\n                            <option value=\"\">All</option>\r\n                 " +
 "           <option value=\"TRACE\">Trace</option>\r\n                            <op" +
 "tion value=\"DEBUG\">Debug</option>\r\n                            <option value=\"IN" +
-"FO\">Info</option>\r\n                            <option value=\"WARN\">Warn</option" +
-">\r\n                            <option value=\"ERROR\">Error</option>\r\n           " +
-"                 <option value=\"FATAL\">Fatal</option>\r\n                        <" +
-"/select>\r\n                    </div>\r\n                </div>\r\n            </div>" +
-"\r\n            <div class=\"row\">\r\n                <div class=\"col-md-6\">\r\n       " +
-"             <div class=\"form-group\">\r\n                        <label for=\"Start" +
-"Time\" class=\"form-control-label\">开始时间</label>\r\n                        <input ty" +
-"pe=\"text\" class=\"form-control datetimepicker-input\" id=\"StartTime\" data-toggle=\"" +
-"datetimepicker\" data-target=\"#StartTime\" />\r\n                    </div>\r\n       " +
-"         </div>\r\n                <div class=\"col-md-6\">\r\n                    <di" +
-"v class=\"form-group\">\r\n                        <label for=\"EndTime\" class=\"form-" +
-"control-label\">结束时间</label>\r\n                        <input type=\"text\" class=\"f" +
-"orm-control datetimepicker-input\" id=\"EndTime\" data-toggle=\"datetimepicker\" data" +
-"-target=\"#EndTime\" />\r\n                    </div>\r\n                </div>\r\n     " +
-"       </div>\r\n");
+"FORMATION\">Info</option>\r\n                            <option value=\"WARNING\">Wa" +
+"rn</option>\r\n                            <option value=\"ERROR\">Error</option>\r\n " +
+"                           <option value=\"FATAL\">Fatal</option>\r\n               " +
+"         </select>\r\n                    </div>\r\n                </div>\r\n        " +
+"    </div>\r\n            <div class=\"row\">\r\n                <div class=\"col-md-6\"" +
+">\r\n                    <div class=\"form-group\">\r\n                        <label " +
+"for=\"StartTime\" class=\"form-control-label\">开始时间</label>\r\n                       " +
+" <input type=\"text\" class=\"form-control datetimepicker-input\" id=\"StartTime\" dat" +
+"a-toggle=\"datetimepicker\" data-target=\"#StartTime\" />\r\n                    </div" +
+">\r\n                </div>\r\n                <div class=\"col-md-6\">\r\n             " +
+"       <div class=\"form-group\">\r\n                        <label for=\"EndTime\" cl" +
+"ass=\"form-control-label\">结束时间</label>\r\n                        <input type=\"text" +
+"\" class=\"form-control datetimepicker-input\" id=\"EndTime\" data-toggle=\"datetimepi" +
+"cker\" data-target=\"#EndTime\" />\r\n                    </div>\r\n                </d" +
+"iv>\r\n            </div>\r\n");
 
 
             
