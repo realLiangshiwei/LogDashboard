@@ -3,6 +3,7 @@
 @inherits LogDashboard.Views.RazorPage
 
 @using System.Collections.Generic
+@using LogDashboard.Extensions;
 @using LogDashboard.Models
 
 <div class="table-responsive">
@@ -34,11 +35,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <td class="col-1"><button class="btn btn-outline-@item.Level.ToUpper()" onclick='$("#@item.Id.ToString()").modal();'>@item.Level.ToUpper()</button></td>
+                            <td class="col-1"><button class="btn btn-outline-@item.Level.ToUpper().FormatLevel()" onclick='$("#@item.Id.ToString()").modal();'>@item.Level.ToUpper().FormatLevel()</button></td>
                         }
                         else
                         {
-                            <td class="col-1"><button class="btn btn-outline-@item.Level.ToUpper()">@item.Level.ToUpper()</button></td>
+                            <td class="col-1"><button class="btn btn-outline-@item.Level.ToUpper().FormatLevel()">@item.Level.ToUpper().FormatLevel()</button></td>
                         }
                 }
                 <td class="col-4">

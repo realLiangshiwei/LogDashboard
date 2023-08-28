@@ -22,6 +22,12 @@ namespace LogDashboard.Views.Dashboard
     using System.Text;
     
     #line 6 "..\..\Views\Dashboard\TraceLogList.cshtml"
+    using LogDashboard.Extensions;
+    
+    #line default
+    #line hidden
+    
+    #line 7 "..\..\Views\Dashboard\TraceLogList.cshtml"
     using LogDashboard.Models;
     
     #line default
@@ -43,6 +49,7 @@ WriteLiteral("\r\n");
 
 
 
+
 WriteLiteral(@"
 <div class=""table-responsive"">
     <table class=""table row mx-0 table-hover table-expandable"">
@@ -60,7 +67,7 @@ WriteLiteral(@"
 
 
             
-            #line 20 "..\..\Views\Dashboard\TraceLogList.cshtml"
+            #line 21 "..\..\Views\Dashboard\TraceLogList.cshtml"
              foreach (var item in (IEnumerable<ILogModel>)ViewData["Model"])
             {
 
@@ -72,7 +79,7 @@ WriteLiteral("            <tr class=\"row mx-0\">\r\n                <td class=\
 
 
             
-            #line 23 "..\..\Views\Dashboard\TraceLogList.cshtml"
+            #line 24 "..\..\Views\Dashboard\TraceLogList.cshtml"
                                                                              Write(item.Id.ToString());
 
             
@@ -82,7 +89,7 @@ WriteLiteral("\')\">");
 
 
             
-            #line 23 "..\..\Views\Dashboard\TraceLogList.cshtml"
+            #line 24 "..\..\Views\Dashboard\TraceLogList.cshtml"
                                                                                                     Write(item.Id.ToString());
 
             
@@ -92,7 +99,7 @@ WriteLiteral("</a></td>\r\n                <td class=\"col-3\"><span>");
 
 
             
-            #line 24 "..\..\Views\Dashboard\TraceLogList.cshtml"
+            #line 25 "..\..\Views\Dashboard\TraceLogList.cshtml"
                                    Write(item.Logger);
 
             
@@ -102,7 +109,7 @@ WriteLiteral("</span></td>\r\n");
 
 
             
-            #line 25 "..\..\Views\Dashboard\TraceLogList.cshtml"
+            #line 26 "..\..\Views\Dashboard\TraceLogList.cshtml"
                   
                         if (item.Level== LogLevelConst.Error)
                         {
@@ -114,7 +121,7 @@ WriteLiteral("                            <div class=\"modal fade\" id=\"");
 
 
             
-            #line 28 "..\..\Views\Dashboard\TraceLogList.cshtml"
+            #line 29 "..\..\Views\Dashboard\TraceLogList.cshtml"
                                                    Write(item.Id.ToString());
 
             
@@ -128,7 +135,7 @@ WriteLiteral(@""">
 
 
             
-            #line 32 "..\..\Views\Dashboard\TraceLogList.cshtml"
+            #line 33 "..\..\Views\Dashboard\TraceLogList.cshtml"
                                             Write(item.Exception);
 
             
@@ -144,8 +151,8 @@ WriteLiteral("                            <td class=\"col-1\"><button class=\"bt
 
 
             
-            #line 37 "..\..\Views\Dashboard\TraceLogList.cshtml"
-                                                                        Write(item.Level.ToUpper());
+            #line 38 "..\..\Views\Dashboard\TraceLogList.cshtml"
+                                                                        Write(item.Level.ToUpper().FormatLevel());
 
             
             #line default
@@ -154,8 +161,8 @@ WriteLiteral("\" onclick=\'$(\"#");
 
 
             
-            #line 37 "..\..\Views\Dashboard\TraceLogList.cshtml"
-                                                                                                             Write(item.Id.ToString());
+            #line 38 "..\..\Views\Dashboard\TraceLogList.cshtml"
+                                                                                                                          Write(item.Id.ToString());
 
             
             #line default
@@ -164,8 +171,8 @@ WriteLiteral("\").modal();\'>");
 
 
             
-            #line 37 "..\..\Views\Dashboard\TraceLogList.cshtml"
-                                                                                                                                             Write(item.Level.ToUpper());
+            #line 38 "..\..\Views\Dashboard\TraceLogList.cshtml"
+                                                                                                                                                          Write(item.Level.ToUpper().FormatLevel());
 
             
             #line default
@@ -174,7 +181,7 @@ WriteLiteral("</button></td>\r\n");
 
 
             
-            #line 38 "..\..\Views\Dashboard\TraceLogList.cshtml"
+            #line 39 "..\..\Views\Dashboard\TraceLogList.cshtml"
                         }
                         else
                         {
@@ -186,8 +193,8 @@ WriteLiteral("                            <td class=\"col-1\"><button class=\"bt
 
 
             
-            #line 41 "..\..\Views\Dashboard\TraceLogList.cshtml"
-                                                                        Write(item.Level.ToUpper());
+            #line 42 "..\..\Views\Dashboard\TraceLogList.cshtml"
+                                                                        Write(item.Level.ToUpper().FormatLevel());
 
             
             #line default
@@ -196,8 +203,8 @@ WriteLiteral("\">");
 
 
             
-            #line 41 "..\..\Views\Dashboard\TraceLogList.cshtml"
-                                                                                                Write(item.Level.ToUpper());
+            #line 42 "..\..\Views\Dashboard\TraceLogList.cshtml"
+                                                                                                             Write(item.Level.ToUpper().FormatLevel());
 
             
             #line default
@@ -206,7 +213,7 @@ WriteLiteral("</button></td>\r\n");
 
 
             
-            #line 42 "..\..\Views\Dashboard\TraceLogList.cshtml"
+            #line 43 "..\..\Views\Dashboard\TraceLogList.cshtml"
                         }
                 
 
@@ -217,7 +224,7 @@ WriteLiteral("                <td class=\"col-4\">\r\n");
 
 
             
-            #line 45 "..\..\Views\Dashboard\TraceLogList.cshtml"
+            #line 46 "..\..\Views\Dashboard\TraceLogList.cshtml"
                       
                             var message = item.Message;
                             if (message.Length > 90)
@@ -233,7 +240,7 @@ WriteLiteral("                    ");
 
 
             
-            #line 52 "..\..\Views\Dashboard\TraceLogList.cshtml"
+            #line 53 "..\..\Views\Dashboard\TraceLogList.cshtml"
                Write(message);
 
             
@@ -243,7 +250,7 @@ WriteLiteral("\r\n                </td>\r\n                <td class=\"col-2\">"
 
 
             
-            #line 54 "..\..\Views\Dashboard\TraceLogList.cshtml"
+            #line 55 "..\..\Views\Dashboard\TraceLogList.cshtml"
                              Write(item.LongDate.ToString("yyyy-MM-dd HH:mm:ss"));
 
             
@@ -264,7 +271,7 @@ WriteLiteral(@"            <tr class=""row mx-0"">
 
 
             
-            #line 63 "..\..\Views\Dashboard\TraceLogList.cshtml"
+            #line 64 "..\..\Views\Dashboard\TraceLogList.cshtml"
                                                        Write(item.Id.ToString());
 
             
@@ -276,7 +283,7 @@ WriteLiteral("</td>\r\n                                </tr>\r\n                
 
 
             
-            #line 67 "..\..\Views\Dashboard\TraceLogList.cshtml"
+            #line 68 "..\..\Views\Dashboard\TraceLogList.cshtml"
                                                        Write(item.LongDate.ToString("yyyy-MM-dd HH:mm:ss"));
 
             
@@ -288,7 +295,7 @@ WriteLiteral("</td>\r\n                                </tr>\r\n                
 
 
             
-            #line 71 "..\..\Views\Dashboard\TraceLogList.cshtml"
+            #line 72 "..\..\Views\Dashboard\TraceLogList.cshtml"
                                                                                       Write(item.Level);
 
             
@@ -298,7 +305,7 @@ WriteLiteral("\">");
 
 
             
-            #line 71 "..\..\Views\Dashboard\TraceLogList.cshtml"
+            #line 72 "..\..\Views\Dashboard\TraceLogList.cshtml"
                                                                                                    Write(item.Level);
 
             
@@ -310,7 +317,7 @@ WriteLiteral("</button></td>\r\n                                </tr>\r\n       
 
 
             
-            #line 75 "..\..\Views\Dashboard\TraceLogList.cshtml"
+            #line 76 "..\..\Views\Dashboard\TraceLogList.cshtml"
                                                        Write(item.Logger);
 
             
@@ -322,7 +329,7 @@ WriteLiteral("</td>\r\n                                </tr>\r\n                
 
 
             
-            #line 79 "..\..\Views\Dashboard\TraceLogList.cshtml"
+            #line 80 "..\..\Views\Dashboard\TraceLogList.cshtml"
                                                        Write(item.Message);
 
             
@@ -342,7 +349,7 @@ WriteLiteral(@"</td>
 
 
             
-            #line 89 "..\..\Views\Dashboard\TraceLogList.cshtml"
+            #line 90 "..\..\Views\Dashboard\TraceLogList.cshtml"
                                 Write(item.Exception);
 
             
@@ -353,7 +360,7 @@ WriteLiteral("</pre>\r\n                            </div>\r\n                  
 
 
             
-            #line 95 "..\..\Views\Dashboard\TraceLogList.cshtml"
+            #line 96 "..\..\Views\Dashboard\TraceLogList.cshtml"
             }
 
             
