@@ -143,7 +143,7 @@ WriteLiteral("</td>\r\n                            </tr>\r\n                    
 
             
             #line 46 "..\..\Views\Dashboard\LogInfo.cshtml"
-                                                                                  Write(log.Level.ToUpper());
+                                                                                  Write(log.Level.ToUpper().FormatLevel());
 
             
             #line default
@@ -153,7 +153,7 @@ WriteLiteral("\">");
 
             
             #line 46 "..\..\Views\Dashboard\LogInfo.cshtml"
-                                                                                                        Write(log.Level.ToUpper());
+                                                                                                                      Write(log.Level.ToUpper().FormatLevel());
 
             
             #line default

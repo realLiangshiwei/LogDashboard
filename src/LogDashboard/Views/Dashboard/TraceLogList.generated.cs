@@ -291,12 +291,12 @@ WriteLiteral("</td>\r\n                                </tr>\r\n                
             #line hidden
 WriteLiteral("</td>\r\n                                </tr>\r\n                                <tr" +
 ">\r\n                                    <td>级别</td>\r\n                            " +
-"        <td class=\"text-nowrap\"><button class=\"btn btn-outline-");
+"            <td class=\"text-nowrap\"><button class=\"btn btn-outline-");
 
 
             
             #line 72 "..\..\Views\Dashboard\TraceLogList.cshtml"
-                                                                                      Write(item.Level);
+                                                                                          Write(item.Level.ToUpper().FormatLevel());
 
             
             #line default
@@ -306,7 +306,7 @@ WriteLiteral("\">");
 
             
             #line 72 "..\..\Views\Dashboard\TraceLogList.cshtml"
-                                                                                                   Write(item.Level);
+                                                                                                                               Write(item.Level.ToUpper().FormatLevel());
 
             
             #line default
