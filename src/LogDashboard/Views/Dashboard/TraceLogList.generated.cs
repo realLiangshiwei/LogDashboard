@@ -111,80 +111,21 @@ WriteLiteral("</span></td>\r\n");
             
             #line 26 "..\..\Views\Dashboard\TraceLogList.cshtml"
                   
-                        if (item.Level== LogLevelConst.Error)
-                        {
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                            <div class=\"modal fade\" id=\"");
-
-
-            
-            #line 29 "..\..\Views\Dashboard\TraceLogList.cshtml"
-                                                   Write(item.Id.ToString());
-
-            
-            #line default
-            #line hidden
-WriteLiteral(@""">
-                                <div class=""modal-dialog modal-lg"" role=""document"">
-                                    <div class=""modal-content"">
-                                        <div class=""modal-header bg-danger border-0""><h5 class=""modal-title text-white"">Exception</h5><button type=""button"" class=""close"" data-dismiss=""modal"" aria-label=""Close""><span aria-hidden=""true"">×</span></button></div><div class=""modal-body"">
-                                            <pre>");
-
-
-            
-            #line 33 "..\..\Views\Dashboard\TraceLogList.cshtml"
-                                            Write(item.Exception);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</pre>\r\n                                        </div>\r\n                         " +
-"           </div>\r\n                                </div>\r\n                     " +
-"       </div>\r\n");
-
-
-
-WriteLiteral("                            <td class=\"col-1\"><button class=\"btn btn-outline-");
-
-
-            
-            #line 38 "..\..\Views\Dashboard\TraceLogList.cshtml"
-                                                                        Write(item.Level.ToUpper().FormatLevel());
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\" onclick=\'clickErrorBtn(event,\"#");
-
-
-            
-            #line 38 "..\..\Views\Dashboard\TraceLogList.cshtml"
-                                                                                                                                            Write(item.Id.ToString());
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\");\'>");
-
-
-            
-            #line 38 "..\..\Views\Dashboard\TraceLogList.cshtml"
-                                                                                                                                                                    Write(item.Level.ToUpper().FormatLevel());
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</button></td>\r\n");
-
-
-            
-            #line 39 "..\..\Views\Dashboard\TraceLogList.cshtml"
-                        }
-                        else
-                        {
+                        // if (item.Level== LogLevelConst.Error)
+                        // {
+                        //     <div class="modal fade" id="@item.Id.ToString()">
+                        //         <div class="modal-dialog modal-lg" role="document">
+                        //             <div class="modal-content">
+                        //                 <div class="modal-header bg-danger border-0"><h5 class="modal-title text-white">Exception</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div><div class="modal-body">
+                        //                     <pre>@item.Exception</pre>
+                        //                 </div>
+                        //             </div>
+                        //         </div>
+                        //     </div>
+                        //     <td class="col-1"><button class="btn btn-outline-@item.Level.ToUpper().FormatLevel()" onclick='clickErrorBtn(event,"#@item.Id.ToString()");'>@item.Level.ToUpper().FormatLevel()</button></td>
+                        // }
+                        // else
+                        // {
 
             
             #line default
@@ -214,7 +155,7 @@ WriteLiteral("</button></td>\r\n");
 
             
             #line 43 "..\..\Views\Dashboard\TraceLogList.cshtml"
-                        }
+                        // }
                     
 
             
