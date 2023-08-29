@@ -277,25 +277,30 @@ function tableExpandable() {
         var table = $(this);
         table.children('thead').children('tr').append('<th class="col-1"></th>');
         table.children('tbody').children('tr').filter(':odd').hide();
-        table.children('tbody').children('tr').filter(':even');
-        //    .click(function () {
-        //    var element = $(this);
-        //    element.next('tr').toggle('slow');
-        //    element.find(".table-expandable-arrow").toggleClass("up");
-        //});
-        table.children('tbody').children('tr').filter(':even').each(function () {
-            var element = $(this); 
-
-            var el = $('<td class="col-1">展开</td>')
-
-            el.click(function (e) {
-                var element = $(this).parent();
-                
-                element.next('tr').toggle('slow');
-                element.find(".table-expandable-arrow").toggleClass("up");
-            });
-
-            element.append(el);
+        table.children('tbody').children('tr').filter(':even')
+            .click(function () {
+            var element = $(this);
+            element.next('tr').toggle('slow');
+            element.find(".table-expandable-arrow").toggleClass("up");
         });
+        //table.children('tbody').children('tr').filter(':even').each(function () {
+        //    var element = $(this); 
+
+        //    var el = $('<td class="col-1"><a href="javascript:">展开</a></td>')
+
+        //    el.click(function (e) {
+        //        var element = $(this).parent();
+                
+        //        element.next('tr').toggle('slow');
+        //        element.find(".table-expandable-arrow").toggleClass("up");
+        //    });
+
+        //    element.append(el);
+        //});
     });
+}
+function clickErrorBtn(e, v) {
+    console.log(e)
+    e.stopPropagation();
+    $(v).modal();
 }

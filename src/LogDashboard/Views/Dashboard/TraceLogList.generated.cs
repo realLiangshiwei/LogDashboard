@@ -58,7 +58,7 @@ WriteLiteral(@"
                 <th class=""col-1"">Id</th>
                 <th class=""col-3"">Logger</th>
                 <th class=""col-1"">级别</th>
-                <th class=""col-4"">消息</th>
+                <th class=""col-5"">消息</th>
                 <th class=""col-2"">时间</th>
             </tr>
         </thead>
@@ -157,22 +157,22 @@ WriteLiteral("                            <td class=\"col-1\"><button class=\"bt
             
             #line default
             #line hidden
-WriteLiteral("\" onclick=\'$(\"#");
+WriteLiteral("\" onclick=\'clickErrorBtn(event,\"#");
 
 
             
             #line 38 "..\..\Views\Dashboard\TraceLogList.cshtml"
-                                                                                                                          Write(item.Id.ToString());
+                                                                                                                                            Write(item.Id.ToString());
 
             
             #line default
             #line hidden
-WriteLiteral("\").modal();\'>");
+WriteLiteral("\");\'>");
 
 
             
             #line 38 "..\..\Views\Dashboard\TraceLogList.cshtml"
-                                                                                                                                                          Write(item.Level.ToUpper().FormatLevel());
+                                                                                                                                                                    Write(item.Level.ToUpper().FormatLevel());
 
             
             #line default
@@ -215,21 +215,21 @@ WriteLiteral("</button></td>\r\n");
             
             #line 43 "..\..\Views\Dashboard\TraceLogList.cshtml"
                         }
-                
+                    
 
             
             #line default
             #line hidden
-WriteLiteral("                <td class=\"col-4\">\r\n");
+WriteLiteral("                    <td class=\"col-5\">\r\n");
 
 
             
             #line 46 "..\..\Views\Dashboard\TraceLogList.cshtml"
-                      
+                          
                             var message = item.Message;
-                            if (message.Length > 90)
+                            if (message.Length > 150)
                             {
-                                message = message.Substring(0, 90) + "........";
+                                message = message.Substring(0, 150) + "........";
                             }
                     
 

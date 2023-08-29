@@ -10365,3 +10365,10 @@ table.table-expandable > tbody > tr div.table-expandable-arrow.up {
 .st-line {
     color: #8B008B;
 }
+
+#logInfoModal > .modal-dialog, #logInfoModal > .modal-dialog > .modal-content {
+    min-height: 90vh;
+}
+#traceLogList > .table-responsive > .modal > .modal-dialog > .modal-content > .modal-body {
+    min-height: 400px;
+}
