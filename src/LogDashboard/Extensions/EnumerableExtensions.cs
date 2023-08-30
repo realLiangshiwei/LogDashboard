@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace LogDashboard.Extensions
@@ -75,6 +76,63 @@ namespace LogDashboard.Extensions
                     previous = e.Current;
                 }
             }
+        }
+        /// <summary>
+        /// 动态组建Linq条件，例如 s=>s.id==1
+        /// </summary>
+        /// <typeparam name="T">泛型对象</typeparam>
+        /// <typeparam name="Tkey">泛型表达式值</typeparam>
+        /// <param name="propertyName">传入的属性名称</param>
+        /// <param name="Value">传入的属性值</param>
+        /// <returns>返回lambda表达式</returns>
+        public static Expression<Func<T, Tkey>> WhereEqualData<T, Tkey>(string propertyName, object Value)
+        {
+            Type cType = typeof(T);
+            ParameterExpression paramEx = Expression.Parameter(cType, "s");
+            Expression left = Expression.Property(paramEx, cType, propertyName);
+            Expression right = Expression.Constant(Value);
+            Expression fi = Expression.Equal(left, right);
+            Expression<Func<T, Tkey>> lambda = Expression.Lambda<Func<T, Tkey>>(fi, paramEx);
+            return lambda;
+        }
+        /// <summary>
+        /// 动态组建Linq条件，例如 s=>s.id!=1 s=>s.id>1
+        /// </summary>
+        /// <typeparam name="T">泛型对象</typeparam>
+        /// <typeparam name="Tkey">泛型表达式值</typeparam>
+        /// <param name="propertyName">传入的属性名称</param>
+        /// <param name="Value">传入的属性值</param>
+        /// <param name="func">连接符方法</param>
+        /// <returns>返回lambda表达式</returns>
+        public static Expression<Func<T, Tkey>> WhereData<T, Tkey>(string propertyName, object Value, Func<Expression, Expression, Expression> func)
+        {
+            Type cType = typeof(T);
+            ParameterExpression paramEx = Expression.Parameter(cType, "s");
+            Expression left = Expression.Property(paramEx, cType, propertyName);
+            Expression right = Expression.Constant(Value);
+            Expression fi = func(left, right);
+            Expression<Func<T, Tkey>> lambda = Expression.Lambda<Func<T, Tkey>>(fi, paramEx);
+            return lambda;
+        }
+        /// <summary>
+        /// 动态组建Linq条件，例如 s=>s.name.Contains("abc")
+        /// </summary>
+        /// <typeparam name="T">泛型对象</typeparam>
+        /// <typeparam name="Tkey">泛型表达式值</typeparam>
+        /// <param name="propertyName">传入的属性名称</param>
+        /// <param name="Value">传入的属性值</param>
+        /// <param name="methord">方法名称 例如：Contains</param>
+        /// <returns>返回lambda表达式</returns>
+        public static Expression<Func<T, Tkey>> WhereData<T, Tkey>(string propertyName, object Value, string methord)
+        {
+            Type cType = typeof(T);
+            ParameterExpression paramEx = Expression.Parameter(cType, "s");
+            Expression left = Expression.Property(paramEx, cType, propertyName);
+            Expression right = Expression.Constant(Value);
+            var method = typeof(string).GetMethod(methord, new[] { typeof(string) });
+            Expression fi = Expression.Call(left, method, right);
+            Expression<Func<T, Tkey>> lambda = Expression.Lambda<Func<T, Tkey>>(fi, paramEx);
+            return lambda;
         }
     }
 }

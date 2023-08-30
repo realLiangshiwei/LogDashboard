@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using DapperExtensions;
 using LogDashboard.Extensions;
@@ -119,7 +120,7 @@ namespace LogDashboard.Handle
                         var inputValue = inputVal.ToString();
                         expression = expression.AndIf(!string.IsNullOrWhiteSpace(inputValue), () =>
                         {
-                            return x => x.GetType().GetProperty(item.Name).GetValue(x, null).ToString().Contains(inputValue);
+                            return EnumerableExtensions.WhereData<T, bool>(item.Name, inputValue, "Contains");
                         });
                     }
                 }
