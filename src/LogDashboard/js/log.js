@@ -275,7 +275,7 @@ function getQueryString(name) {
 function tableExpandable() {
     $('.table-expandable').each(function () {
         var table = $(this);
-        table.children('thead').children('tr').append('<th class="col-1"></th>');
+        //table.children('thead').children('tr').append('<th class="col-1"></th>');
         table.children('tbody').children('tr').filter(':odd').hide();
         table.children('tbody').children('tr').filter(':even')
             .click(function () {

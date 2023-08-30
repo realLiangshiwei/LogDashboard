@@ -99,12 +99,12 @@ WriteLiteral("                <tr class=\"row mx-0\">\r\n                    <td
             
             #line default
             #line hidden
-WriteLiteral("\')\">");
+WriteLiteral("\',\'logInfoModal\',\'logInfoBody\')\">");
 
 
             
             #line 31 "..\..\Views\Dashboard\LogList.cshtml"
-                                                                                                        Write(item.Id.ToString());
+                                                                                                                                     Write(item.Id.ToString());
 
             
             #line default
