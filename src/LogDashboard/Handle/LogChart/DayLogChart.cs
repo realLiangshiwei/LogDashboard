@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using LogDashboard.Models;
 using LogDashboard.Repository;
@@ -15,6 +19,9 @@ namespace LogDashboard.Handle.LogChart
             var output = new GetLogChartsOutput(24);
 
             var date = now.Date;
+
+            var list = await repository.GetLevelCount(ChartDataType.Day, now.Date, now);
+
             for (var i = 0; i < 24; i++)
             {
                 if (i > hour)
@@ -29,22 +36,17 @@ namespace LogDashboard.Handle.LogChart
                 }
                 else
                 {
-                    var startTime = date.AddHours(i);
-                    output.All[i] = await repository.CountAsync(x => x.LongDate >= startTime && x.LongDate <= startTime.AddMinutes(59).AddSeconds(59));
-                    output.Error[i] = await CountAsync(LogLevelConst.Error, repository, startTime, i);
-                    output.Info[i] = await CountAsync(LogLevelConst.Info, repository, startTime, i);
-                    output.Debug[i] = await CountAsync(LogLevelConst.Debug, repository, startTime, i);
-                    output.Fatal[i] = await CountAsync(LogLevelConst.Fatal, repository, startTime, i);
-                    output.Trace[i] = await CountAsync(LogLevelConst.Trace, repository, startTime, i);
-                    output.Warn[i] = await CountAsync(LogLevelConst.Warn, repository, startTime, i);
+                    var thisList = list.Where(p => DateTime.Parse(p.LongDate).Hour == i);
+                    output.All[i] = thisList.Sum(p => p.Count);
+                    output.Error[i] = thisList.Where(p => p.Level.ToUpper() == LogLevelConst.Error).Sum(p => p.Count);
+                    output.Info[i] = thisList.Where(p => p.Level.ToUpper() == LogLevelConst.Info).Sum(p => p.Count);
+                    output.Debug[i] = thisList.Where(p => p.Level.ToUpper() == LogLevelConst.Debug).Sum(p => p.Count);
+                    output.Fatal[i] = thisList.Where(p => p.Level.ToUpper() == LogLevelConst.Fatal).Sum(p => p.Count);
+                    output.Trace[i] = thisList.Where(p => p.Level.ToUpper() == LogLevelConst.Trace).Sum(p => p.Count);
+                    output.Warn[i] = thisList.Where(p => p.Level.ToUpper() == LogLevelConst.Warn).Sum(p => p.Count);
                 }
             }
             return output;
-        }
-
-        private async Task<int> CountAsync<T>(string level, IRepository<T> repository, DateTime startTime, int i) where T : class, ILogModel
-        {
-            return await repository.CountAsync(x => x.LongDate >= startTime && x.LongDate <= startTime.AddMinutes(59).AddSeconds(59) && x.Level == level);
         }
     }
 }

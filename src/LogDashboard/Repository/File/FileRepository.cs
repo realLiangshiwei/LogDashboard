@@ -6,6 +6,7 @@ using DapperExtensions;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using System.Reflection.Emit;
 
 namespace LogDashboard.Repository.File
 {
@@ -72,6 +73,39 @@ namespace LogDashboard.Repository.File
             return await Task.FromResult(query.Skip((page - 1) * size).Take(size).ToList());
         }
 
-
+        public async Task<IEnumerable<NewChartDataOutput>> GetLevelCount(ChartDataType chartDataType, DateTime beginTime, DateTime? endTime = null)
+        {
+            endTime = endTime ?? DateTime.Now;
+            var dateLength = 0;
+            var dateLast = "";
+            switch (chartDataType)
+            {
+                case ChartDataType.Hour:
+                    dateLength = 15;
+                    dateLast = "0:00";
+                    break;
+                case ChartDataType.Day:
+                    dateLength = 13;
+                    dateLast = ":00:00";
+                    break;
+                case ChartDataType.Week:
+                    dateLength = 10;
+                    dateLast = " 00:00:00";
+                    break;
+                case ChartDataType.Month:
+                    dateLength = 10;
+                    dateLast = " 00:00:00";
+                    break;
+            }
+            var result = _logs.Where(p => p.LongDate >= beginTime && p.LongDate <= endTime)
+                .GroupBy(p => new { Level = p.Level, LongDate = p.LongDate.ToString("u").Substring(0, dateLength) })
+                .Select(p => new NewChartDataOutput()
+                {
+                    LongDate = p.Key.LongDate + dateLast,
+                    Level = p.Key.Level,
+                    Count = p.Count()
+                }).ToList();
+            return await Task.FromResult(result);
+        }
     }
 }

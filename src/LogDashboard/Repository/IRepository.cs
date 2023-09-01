@@ -21,7 +21,6 @@ namespace LogDashboard.Repository
 
         Task<IEnumerable<T>> GetPageListAsync(int page, int size, Expression<Func<T, bool>> predicate = null,
             Sort[] sorts = null, List<int> uniqueIds = null);
-
+        Task<IEnumerable<NewChartDataOutput>> GetLevelCount(ChartDataType chartDataType, DateTime beginTime, DateTime? endTime = null);
     }
-
 }

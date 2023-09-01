@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using LogDashboard.Models;
 using LogDashboard.Repository;
@@ -14,6 +15,9 @@ namespace LogDashboard.Handle.LogChart
             var day = now.Day;
             var output = new GetLogChartsOutput(days);
             var date = new DateTime(now.Year, now.Month, 1);
+
+            var list = await repository.GetLevelCount(ChartDataType.Month, date, now);
+
             for (var i = 0; i < days; i++)
             {
                 if (i > day)
@@ -29,13 +33,16 @@ namespace LogDashboard.Handle.LogChart
                 else
                 {
                     var dayTime = date.AddDays(i);
-                    output.All[i] = await repository.CountAsync(x => x.LongDate >= dayTime && x.LongDate <= dayTime.AddHours(23).AddMinutes(59).AddSeconds(59));
-                    output.Error[i] = await CountAsync(LogLevelConst.Error, repository, dayTime);
-                    output.Info[i] = await CountAsync(LogLevelConst.Info, repository, dayTime);
-                    output.Debug[i] = await CountAsync(LogLevelConst.Debug, repository, dayTime);
-                    output.Fatal[i] = await CountAsync(LogLevelConst.Fatal, repository, dayTime);
-                    output.Trace[i] = await CountAsync(LogLevelConst.Trace, repository, dayTime);
-                    output.Warn[i] = await CountAsync(LogLevelConst.Warn, repository, dayTime);
+
+                    var thisList = list.Where(p => DateTime.Parse(p.LongDate) == dayTime);
+
+                    output.All[i] = thisList.Sum(p => p.Count);
+                    output.Error[i] = thisList.Where(p => p.Level.ToUpper() == LogLevelConst.Error).Sum(p => p.Count);
+                    output.Info[i] = thisList.Where(p => p.Level.ToUpper() == LogLevelConst.Info).Sum(p => p.Count);
+                    output.Debug[i] = thisList.Where(p => p.Level.ToUpper() == LogLevelConst.Debug).Sum(p => p.Count);
+                    output.Fatal[i] = thisList.Where(p => p.Level.ToUpper() == LogLevelConst.Fatal).Sum(p => p.Count);
+                    output.Trace[i] = thisList.Where(p => p.Level.ToUpper() == LogLevelConst.Trace).Sum(p => p.Count);
+                    output.Warn[i] = thisList.Where(p => p.Level.ToUpper() == LogLevelConst.Warn).Sum(p => p.Count);
                 }
             }
             return output;

@@ -73,7 +73,7 @@ namespace LogDashboard.Repository.Dapper
             Sort[] sorts = null, List<int> uniqueIds = null)
         {
             var appendSql = new StringBuilder();
-            if (uniqueIds != null)
+            if (uniqueIds != null && uniqueIds.Count > 0)
             {
                 appendSql.Append("ID IN (");
                 appendSql.Append(string.Join(",", uniqueIds));
@@ -85,5 +85,36 @@ namespace LogDashboard.Repository.Dapper
 
         }
 
+        public async Task<IEnumerable<NewChartDataOutput>> GetLevelCount(ChartDataType chartDataType, DateTime beginTime, DateTime? endTime = null)
+        {
+            endTime = endTime ?? DateTime.Now;
+            var dateLength = 0;
+            var dateLast = "";
+            switch (chartDataType)
+            {
+                case ChartDataType.Hour:
+                    dateLength = 15;
+                    dateLast = "0:00";
+                    break;
+                case ChartDataType.Day:
+                    dateLength = 13;
+                    dateLast = ":00:00";
+                    break;
+                case ChartDataType.Week:
+                    dateLength = 10;
+                    dateLast = " 00:00:00";
+                    break;
+                case ChartDataType.Month:
+                    dateLength = 10;
+                    dateLast = " 00:00:00";
+                    break;
+            }
+            var sql = $"SELECT count(1) Count,Level,CONVERT(varchar({dateLength}),LongDate,120)+'{dateLast}' LongDate" +
+                $" FROM {_options.LogTableName}" +
+                $" where LongDate >= '{beginTime}' and LongDate <= '{endTime}'" +
+                $" group by Level,CONVERT(varchar({dateLength}),LongDate,120)";
+            var result = await _conn.QueryAsync<NewChartDataOutput>(sql);
+            return result;
+        }
     }
 }
