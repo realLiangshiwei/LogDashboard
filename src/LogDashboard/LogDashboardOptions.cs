@@ -44,6 +44,7 @@ namespace LogDashboard
         internal List<ILogDashboardAuthorizationFilter> AuthorizationFiles { get; set; }
 
         internal List<PropertyInfo> CustomPropertyInfos { get; set; }
+        internal string LogSchemaName { get; set; }
 
         internal string LogTableName { get; set; }
 
@@ -99,8 +100,9 @@ namespace LogDashboard
             CacheExpires = TimeSpan.FromMinutes(5);
         }
 
-        public void UseDataBase(Func<DbConnection> dbConnectionFactory, string tableName = "log", ISqlDialect sqlDialect = null)
+        public void UseDataBase(Func<DbConnection> dbConnectionFactory, string schemaName = "dbo", string tableName = "log", ISqlDialect sqlDialect = null)
         {
+            LogSchemaName = schemaName;
             LogTableName = tableName;
             DatabaseSource = true;
             FileSource = false;

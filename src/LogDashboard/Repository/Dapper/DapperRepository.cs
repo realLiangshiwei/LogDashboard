@@ -33,7 +33,7 @@ namespace LogDashboard.Repository.Dapper
         {
             var traceIdentifier = ((IRequestTraceLogModel)model).TraceIdentifier;
             return await _conn.QueryAsync<T>(
-                $"SELECT * FROM {_options.LogTableName} WHERE TraceIdentifier=@TraceIdentifier", new { traceIdentifier });
+                $"SELECT * FROM {_options.LogSchemaName}.{_options.LogTableName} WHERE TraceIdentifier=@TraceIdentifier", new { traceIdentifier });
 
         }
 
@@ -42,13 +42,13 @@ namespace LogDashboard.Repository.Dapper
             if (predicate != null)
             {
                 var logs = (await _conn.GetListAsync<T>(predicate.ToPredicateGroup(), whereSql:
-                     $"ID IN (SELECT MAX(id) FROM {_options.LogTableName} GROUP BY Message,Exception HAVING COUNT(*)=1)")).Select(x => x.Id).ToList();
+                     $"ID IN (SELECT MAX(id) FROM {_options.LogSchemaName}.{_options.LogTableName} GROUP BY Message,Exception HAVING COUNT(*)=1)")).Select(x => x.Id).ToList();
 
                 return (logs.Count, logs);
             }
 
             var result = await _conn.QueryAsync<int>(
-                $"SELECT MAX(ID) AS TOTAL FROM {_options.LogTableName} GROUP BY Message,Exception HAVING COUNT(*)=1");
+                $"SELECT MAX(ID) AS TOTAL FROM {_options.LogSchemaName}.{_options.LogTableName} GROUP BY Message,Exception HAVING COUNT(*)=1");
             return (result.Count(), result.ToList());
 
         }
@@ -110,7 +110,7 @@ namespace LogDashboard.Repository.Dapper
                     break;
             }
             var sql = $"SELECT count(1) Count,Level,CONVERT(varchar({dateLength}),LongDate,120)+'{dateLast}' LongDate" +
-                $" FROM {_options.LogTableName}" +
+                $" FROM {_options.LogSchemaName}.{_options.LogTableName}" +
                 $" where LongDate >= '{beginTime}' and LongDate <= '{endTime}'" +
                 $" group by Level,CONVERT(varchar({dateLength}),LongDate,120)";
             var result = await _conn.QueryAsync<NewChartDataOutput>(sql);
