@@ -14,7 +14,7 @@ namespace UseSerilog
                 .MinimumLevel.Debug()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
                 .Enrich.FromLogContext()
-                .WriteTo.File($"{AppContext.BaseDirectory}Log/.log", rollingInterval:RollingInterval.Day,outputTemplate: "{Timestamp:HH:mm} || {Level} || {SourceContext:l} || {Message} || {Exception} ||end {NewLine}")
+                .WriteTo.File($"{AppContext.BaseDirectory}Log/.log", rollingInterval:RollingInterval.Day,outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss} || {Level} || {SourceContext:l} || {Message} || {Exception} || {MachineName} || {EnvironmentUserName} || {ProcessId} || {ThreadId} || {ClientIp} || {UserAgent} || {Enterpriseid} || {RequestPath} || {RequestMethod} || {Referer} || {UserAccountId} || {UserInfoId} || {UserAccountName} || {UserInfoName}  || {UserAccessToken} || end {NewLine}")
                 .CreateLogger();
 
             CreateWebHostBuilder(args).Build().Run();

@@ -129,12 +129,16 @@ $(function () {
         $('body').toggleClass('sidebar-hidden');
     });
 
+
     /**
      * Mobile Sidebar Toggle
      */
     $('.sidebar-mobile-toggle').on('click', function () {
         $('body').toggleClass('sidebar-mobile-show');
     });
+    $("#showMoreSearch").on("click", function () {
+        $("#applicationLogModel").toggle(300);
+    })
 });
 
 
@@ -187,14 +191,19 @@ function loadList(page, pageSize) {
 function search() {
     searchInput.Page = 1;
     searchInput.All = $("#all").is(":checked");
-    searchInput.Unique = $("#unique").is(":checked");
+    //searchInput.Unique = $("#unique").is(":checked");
     searchInput.ToDay = $("#today").is(":checked");
     searchInput.Hour = $("#hour").is(":checked");
     searchInput.Message = $("#Message").val();
     searchInput.Level = $("#Level").val();
     searchInput.StartTime = $("#StartTime").val();
     searchInput.EndTime = $("#EndTime").val();
-
+    var applicationLogModels = $("#applicationLogModel").find("input");
+    searchInput.ApplicationLogModel = {};
+    for (var i = 0; i < applicationLogModels.length; i++) {
+        searchInput.ApplicationLogModel[applicationLogModels[i].id] = applicationLogModels[i].value
+    }
+    searchInput.ApplicationLogModel = JSON.stringify(searchInput.ApplicationLogModel)
     doSearch();
     return false;
 }
@@ -266,16 +275,32 @@ function getQueryString(name) {
 function tableExpandable() {
     $('.table-expandable').each(function () {
         var table = $(this);
-        table.children('thead').children('tr').append('<th class="col-1"></th>');
+        //table.children('thead').children('tr').append('<th class="col-1"></th>');
         table.children('tbody').children('tr').filter(':odd').hide();
-        table.children('tbody').children('tr').filter(':even').click(function () {
+        table.children('tbody').children('tr').filter(':even')
+            .click(function () {
             var element = $(this);
             element.next('tr').toggle('slow');
             element.find(".table-expandable-arrow").toggleClass("up");
         });
-        table.children('tbody').children('tr').filter(':even').each(function () {
-            var element = $(this);
-            element.append('<td class="col-1">展开</td>');
-        });
+        //table.children('tbody').children('tr').filter(':even').each(function () {
+        //    var element = $(this); 
+
+        //    var el = $('<td class="col-1"><a href="javascript:">展开</a></td>')
+
+        //    el.click(function (e) {
+        //        var element = $(this).parent();
+                
+        //        element.next('tr').toggle('slow');
+        //        element.find(".table-expandable-arrow").toggleClass("up");
+        //    });
+
+        //    element.append(el);
+        //});
     });
+}
+function clickErrorBtn(e, v) {
+    console.log(e)
+    e.stopPropagation();
+    $(v).modal();
 }

@@ -6,7 +6,7 @@ namespace LogDashboard.Models
     {
         public bool All { get; set; }
 
-        public bool Unique { get; set; }
+        //public bool Unique { get; set; }
 
         public DateTime? StartTime { get; set; }
 
@@ -23,6 +23,8 @@ namespace LogDashboard.Models
         public int PageSize { get; set; }
 
         public string Message { get; set; }
+
+        public string ApplicationLogModel { get; set; }
 
         public SearchLogInput()
         {

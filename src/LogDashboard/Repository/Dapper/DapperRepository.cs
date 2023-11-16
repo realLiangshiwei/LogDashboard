@@ -33,25 +33,25 @@ namespace LogDashboard.Repository.Dapper
         {
             var traceIdentifier = ((IRequestTraceLogModel)model).TraceIdentifier;
             return await _conn.QueryAsync<T>(
-                $"SELECT * FROM {_options.LogTableName} WHERE TraceIdentifier=@TraceIdentifier", new { traceIdentifier });
+                $"SELECT * FROM {_options.LogSchemaName}.{_options.LogTableName} WHERE TraceIdentifier=@TraceIdentifier", new { traceIdentifier });
 
         }
+        //有性能问题，查询慢，不要了
+        //public async Task<(int Count, List<int> ids)> UniqueCountAsync(Expression<Func<T, bool>> predicate = null)
+        //{
+        //    if (predicate != null)
+        //    {
+        //        var logs = (await _conn.GetListAsync<T>(predicate.ToPredicateGroup(), whereSql:
+        //             $"ID IN (SELECT MAX(id) FROM {_options.LogSchemaName}.{_options.LogTableName} GROUP BY Message,Exception HAVING COUNT(*)=1)")).Select(x => x.Id).ToList();
 
-        public async Task<(int Count, List<int> ids)> UniqueCountAsync(Expression<Func<T, bool>> predicate = null)
-        {
-            if (predicate != null)
-            {
-                var logs = (await _conn.GetListAsync<T>(predicate.ToPredicateGroup(), whereSql:
-                     $"ID IN (SELECT MAX(id) FROM {_options.LogTableName} GROUP BY Message,Exception HAVING COUNT(*)=1)")).Select(x => x.Id).ToList();
+        //        return (logs.Count, logs);
+        //    }
 
-                return (logs.Count, logs);
-            }
+        //    var result = await _conn.QueryAsync<int>(
+        //        $"SELECT MAX(ID) AS TOTAL FROM {_options.LogSchemaName}.{_options.LogTableName} GROUP BY Message,Exception HAVING COUNT(*)=1");
+        //    return (result.Count(), result.ToList());
 
-            var result = await _conn.QueryAsync<int>(
-                $"SELECT MAX(ID) AS TOTAL FROM {_options.LogTableName} GROUP BY Message,Exception HAVING COUNT(*)=1");
-            return (result.Count(), result.ToList());
-
-        }
+        //}
 
         public async Task<IEnumerable<T>> GetListAsync(Expression<Func<T, bool>> predicate = null)
         {
@@ -73,7 +73,7 @@ namespace LogDashboard.Repository.Dapper
             Sort[] sorts = null, List<int> uniqueIds = null)
         {
             var appendSql = new StringBuilder();
-            if (uniqueIds != null)
+            if (uniqueIds != null && uniqueIds.Count > 0)
             {
                 appendSql.Append("ID IN (");
                 appendSql.Append(string.Join(",", uniqueIds));
@@ -85,5 +85,36 @@ namespace LogDashboard.Repository.Dapper
 
         }
 
+        public async Task<IEnumerable<NewChartDataOutput>> GetLevelCount(ChartDataType chartDataType, DateTime beginTime, DateTime? endTime = null)
+        {
+            endTime = endTime ?? DateTime.Now;
+            var dateLength = 0;
+            var dateLast = "";
+            switch (chartDataType)
+            {
+                case ChartDataType.Hour:
+                    dateLength = 15;
+                    dateLast = "0:00";
+                    break;
+                case ChartDataType.Day:
+                    dateLength = 13;
+                    dateLast = ":00:00";
+                    break;
+                case ChartDataType.Week:
+                    dateLength = 10;
+                    dateLast = " 00:00:00";
+                    break;
+                case ChartDataType.Month:
+                    dateLength = 10;
+                    dateLast = " 00:00:00";
+                    break;
+            }
+            var sql = $"SELECT count(1) Count,Level,CONVERT(varchar({dateLength}),LongDate,120)+'{dateLast}' LongDate" +
+                $" FROM {_options.LogSchemaName}.{_options.LogTableName}" +
+                $" where LongDate >= '{beginTime}' and LongDate <= '{endTime}'" +
+                $" group by Level,CONVERT(varchar({dateLength}),LongDate,120)";
+            var result = await _conn.QueryAsync<NewChartDataOutput>(sql);
+            return result;
+        }
     }
 }

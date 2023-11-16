@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using LogDashboard.Models;
 using LogDashboard.Repository;
@@ -13,6 +14,11 @@ namespace LogDashboard.Handle.LogChart
             var dayOfWeek = (int)now.DayOfWeek;
             dayOfWeek = dayOfWeek == 0 ? 6 : dayOfWeek == 6 ? 0 : dayOfWeek;
             var output = new GetLogChartsOutput(7);
+
+            var cweek = dayOfWeek == 0 ? 7 : dayOfWeek;
+
+            var list = await repository.GetLevelCount(ChartDataType.Week, now.Date.AddDays(-cweek + 1), now);
+
             for (var i = 0; i < 7; i++)
             {
                 if (i > dayOfWeek)
@@ -27,25 +33,19 @@ namespace LogDashboard.Handle.LogChart
                 }
                 else
                 {
+                    var thisList = list.Where(p => DateTime.Parse(p.LongDate) == (now.Date.AddDays(-cweek + i + 1)));
 
-                    var day = now.AddDays(0 - (dayOfWeek - i));
-                    var weeHours = now.AddDays(i - dayOfWeek).Date.AddHours(23).AddMinutes(59).AddSeconds(59);
-                    output.All[i] = await repository.CountAsync(x => x.LongDate >= day.Date && x.LongDate <= weeHours);
-                    output.Error[i] = await CountAsync(LogLevelConst.Error, repository, day, weeHours);
-                    output.Info[i] = await CountAsync(LogLevelConst.Info, repository, day, weeHours);
-                    output.Debug[i] = await CountAsync(LogLevelConst.Debug, repository, day, weeHours);
-                    output.Fatal[i] = await CountAsync(LogLevelConst.Fatal, repository, day, weeHours);
-                    output.Trace[i] = await CountAsync(LogLevelConst.Trace, repository, day, weeHours);
-                    output.Warn[i] = await CountAsync(LogLevelConst.Warn, repository, day, weeHours);
+                    output.All[i] = thisList.Sum(p => p.Count);
+                    output.Error[i] = thisList.Where(p => p.Level.ToUpper() == LogLevelConst.Error).Sum(p => p.Count);
+                    output.Info[i] = thisList.Where(p => p.Level.ToUpper() == LogLevelConst.Info).Sum(p => p.Count);
+                    output.Debug[i] = thisList.Where(p => p.Level.ToUpper() == LogLevelConst.Debug).Sum(p => p.Count);
+                    output.Fatal[i] = thisList.Where(p => p.Level.ToUpper() == LogLevelConst.Fatal).Sum(p => p.Count);
+                    output.Trace[i] = thisList.Where(p => p.Level.ToUpper() == LogLevelConst.Trace).Sum(p => p.Count);
+                    output.Warn[i] = thisList.Where(p => p.Level.ToUpper() == LogLevelConst.Warn).Sum(p => p.Count);
                 }
             }
 
             return output;
-        }
-
-        private async Task<int> CountAsync<T>(string level, IRepository<T> repository, DateTime day, DateTime weeHours) where T : class, ILogModel
-        {
-            return await repository.CountAsync(x => x.LongDate >= day.Date && x.LongDate <= weeHours && x.Level == level);
         }
     }
 }

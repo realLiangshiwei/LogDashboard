@@ -9,6 +9,7 @@ namespace LogDashboard.Repository.Dapper
 
         public LogModelMapper()
         {
+            Schema(LogDashboardContext.StaticOptions.LogSchemaName);
             Table(LogDashboardContext.StaticOptions.LogTableName);
             AutoMap();
         }

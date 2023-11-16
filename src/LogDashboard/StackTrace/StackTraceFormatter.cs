@@ -104,15 +104,15 @@ namespace LogDashboard.StackTrace
 
         public static string FormatHtml(string text, IStackTraceFormatter<string> formatter = null)
         {
-            var ca = Format(text, formatter ?? DefaultStackTraceHtmlFragments);
-            var wqc = string.Concat(ca);
-            return string.Concat(Format(text, formatter ?? DefaultStackTraceHtmlFragments));
+            var exFormat = Format(text, formatter ?? DefaultStackTraceHtmlFragments);
+            var exString = string.Concat(exFormat);
+            if (string.IsNullOrWhiteSpace(exString)) exString = text;
+            return exString;
         }
 
         public static IEnumerable<T> Format<T>(string text, IStackTraceFormatter<T> formatter)
         {
-            Debug.Assert(text != null);
-
+            text = text ?? "";
             var frames = StackTraceParser.Parse
             (
                 text,
@@ -168,17 +168,18 @@ namespace LogDashboard.StackTrace
                     where token != null
                     select token
             );
-
-            return
-                from token in Enumerable.Repeat(new { Index = 0, End = 0, Markup = default(T) }, 1)
+            var rel = from token in Enumerable.Repeat(new { Index = 0, End = 0, Markup = default(T) }, 1)
                     .Concat(from tokens in frames from token in tokens select token)
                     .Pairwise((prev, curr) => new { Previous = prev, Current = curr })
-                from m in new[]
-                {
+                      from m in new[]
+                      {
                     formatter.Text(text.Substring(token.Previous.End, token.Current.Index - token.Previous.End)),
                     token.Current.Markup,
                 }
-                select m;
+                      select m;
+            return rel;
+
+
         }
     }
 }

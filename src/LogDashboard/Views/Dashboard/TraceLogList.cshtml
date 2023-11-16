@@ -3,6 +3,7 @@
 @inherits LogDashboard.Views.RazorPage
 
 @using System.Collections.Generic
+@using LogDashboard.Extensions;
 @using LogDashboard.Models
 
 <div class="table-responsive">
@@ -12,7 +13,7 @@
                 <th class="col-1">Id</th>
                 <th class="col-3">Logger</th>
                 <th class="col-1">级别</th>
-                <th class="col-4">消息</th>
+                <th class="col-5">消息</th>
                 <th class="col-2">时间</th>
             </tr>
         </thead>
@@ -23,30 +24,30 @@
                 <td class="col-1"><a href="javascript:void(0);" onclick="logInfo('@item.Id.ToString()')">@item.Id.ToString()</a></td>
                 <td class="col-3"><span>@item.Logger</span></td>
                 @{
-                        if (item.Level== LogLevelConst.Error)
-                        {
-                            <div class="modal fade" id="@item.Id.ToString()">
-                                <div class="modal-dialog modal-lg" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header bg-danger border-0"><h5 class="modal-title text-white">Exception</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div><div class="modal-body">
-                                            <pre>@item.Exception</pre>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <td class="col-1"><button class="btn btn-outline-@item.Level.ToUpper()" onclick='$("#@item.Id.ToString()").modal();'>@item.Level.ToUpper()</button></td>
-                        }
-                        else
-                        {
-                            <td class="col-1"><button class="btn btn-outline-@item.Level.ToUpper()">@item.Level.ToUpper()</button></td>
-                        }
-                }
-                <td class="col-4">
-                    @{
+                        // if (item.Level== LogLevelConst.Error)
+                        // {
+                        //     <div class="modal fade" id="@item.Id.ToString()">
+                        //         <div class="modal-dialog modal-lg" role="document">
+                        //             <div class="modal-content">
+                        //                 <div class="modal-header bg-danger border-0"><h5 class="modal-title text-white">Exception</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div><div class="modal-body">
+                        //                     <pre>@item.Exception</pre>
+                        //                 </div>
+                        //             </div>
+                        //         </div>
+                        //     </div>
+                        //     <td class="col-1"><button class="btn btn-outline-@item.Level.ToUpper().FormatLevel()" onclick='clickErrorBtn(event,"#@item.Id.ToString()");'>@item.Level.ToUpper().FormatLevel()</button></td>
+                        // }
+                        // else
+                        // {
+                            <td class="col-1"><button class="btn btn-outline-@item.Level.ToUpper().FormatLevel()">@item.Level.ToUpper().FormatLevel()</button></td>
+                        // }
+                    }
+                    <td class="col-5">
+                        @{
                             var message = item.Message;
-                            if (message.Length > 90)
+                            if (message.Length > 150)
                             {
-                                message = message.Substring(0, 90) + "........";
+                                message = message.Substring(0, 150) + "........";
                             }
                     }
                     @message
@@ -68,7 +69,7 @@
                                 </tr>
                                 <tr>
                                     <td>级别</td>
-                                    <td class="text-nowrap"><button class="btn btn-outline-@item.Level">@item.Level</button></td>
+                                        <td class="text-nowrap"><button class="btn btn-outline-@item.Level.ToUpper().FormatLevel()">@item.Level.ToUpper().FormatLevel()</button></td>
                                 </tr>
                                 <tr>
                                     <td>Logger</td>

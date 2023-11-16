@@ -3,7 +3,7 @@
 @using LogDashboard.Views
 @inherits LogDashboard.Views.RazorPage
 @{
-    Layout = new _layout {Context = Context, Section = { ["Scripts"] = $"<script src='{Context.Options.PathMatch}/js.basicLog.js'></script>" }, ViewData = ViewData };
+    Layout = new _layout { Context = Context, Section = { ["Scripts"] = $"<script src='{Context.Options.PathMatch}/js.basicLog.js'></script>" }, ViewData = ViewData };
 }
 <div class="card">
     <div class="card-header border border-top-0 border-right-0 border-left-0">
@@ -17,14 +17,6 @@
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" id="all">
                             <label class="custom-control-label" for="all">所有</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="unique">
-                            <label class="custom-control-label" for="unique">不重复</label>
                         </div>
                     </div>
                 </div>
@@ -59,8 +51,8 @@
                             <option value="">All</option>
                             <option value="TRACE">Trace</option>
                             <option value="DEBUG">Debug</option>
-                            <option value="INFO">Info</option>
-                            <option value="WARN">Warn</option>
+                            <option value="INFORMATION">Info</option>
+                            <option value="WARNING">Warn</option>
                             <option value="ERROR">Error</option>
                             <option value="FATAL">Fatal</option>
                         </select>
@@ -81,6 +73,27 @@
                     </div>
                 </div>
             </div>
+            @{
+                if (Context.Options.CustomPropertyInfos.Count > 0)
+                {
+                        <div class="row" id="applicationLogModel" style="display:none">
+                            @{
+                            foreach (var propertyInfo in Context.Options.CustomPropertyInfos)
+                            {
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="@propertyInfo.Name" class="form-control-label">@propertyInfo.Name</label>
+                                                <input id="@propertyInfo.Name" class="form-control" placeholder="@propertyInfo.Name">
+                                            </div>
+                                        </div>
+                            }
+                            }
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 d-flex justify-content-end"><a id="showMoreSearch" href="javascript:;">展开/折叠>></a></div>
+                        </div>
+                }
+            }
             <button class="btn btn-outline-primary" id="searchBtn">查询</button>
         </form>
 

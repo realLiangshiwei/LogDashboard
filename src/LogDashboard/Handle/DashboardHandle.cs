@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using DapperExtensions;
 using LogDashboard.Extensions;
@@ -9,6 +10,7 @@ using LogDashboard.Handle.LogChart;
 using LogDashboard.Models;
 using LogDashboard.Repository;
 using LogDashboard.Views.Dashboard;
+using Newtonsoft.Json;
 
 namespace LogDashboard.Handle
 {
@@ -29,7 +31,7 @@ namespace LogDashboard.Handle
             ViewData["basicLogNav"] = "";
             var result = await _logRepository.GetPageListAsync(1, 10, sorts: new[] { new Sort { Ascending = false, PropertyName = "Id" } });
 
-            ViewData["unique"] = (await _logRepository.UniqueCountAsync()).Count;
+            //ViewData["unique"] = (await _logRepository.UniqueCountAsync()).Count;
 
             var now = DateTime.Now;
             var weeHours = now.Date.AddHours(23).AddMinutes(59).AddSeconds(59);
@@ -104,13 +106,32 @@ namespace LogDashboard.Handle
             {
                 return x => x.Message.Contains(input.Message) || x.Logger.Contains(input.Message);
             });
-
-            if (input.Unique)
+            //自定义日志模型检索条件(反射实现)
+            if (!string.IsNullOrWhiteSpace(input.ApplicationLogModel))
             {
-                var uniqueLogs = await _logRepository.UniqueCountAsync(expression);
-
-                return new PagedResultModel<T>(uniqueLogs.Count, await _logRepository.GetPageListAsync(input.Page, input.PageSize, expression, new[] { new Sort { Ascending = false, PropertyName = "Id" } }, uniqueLogs.ids));
+                var itemValue = JsonConvert.DeserializeObject<T>(input.ApplicationLogModel);
+                Type modelType = typeof(T);
+                var modelProperties = modelType.GetProperties().Where(p => !typeof(LogModel).GetProperties().Select(p => p.Name).Contains(p.Name)).ToArray();
+                foreach (var item in modelProperties)
+                {
+                    var inputVal = itemValue.GetType().GetProperty(item.Name).GetValue(itemValue, null);
+                    if (inputVal != null)
+                    {
+                        var inputValue = inputVal.ToString();
+                        expression = expression.AndIf(!string.IsNullOrWhiteSpace(inputValue), () =>
+                        {
+                            return EnumerableExtensions.WhereData<T, bool>(item.Name, inputValue, "Contains");
+                        });
+                    }
+                }
             }
+
+            //if (input.Unique)
+            //{
+            //    var uniqueLogs = await _logRepository.UniqueCountAsync(expression);
+
+            //    return new PagedResultModel<T>(uniqueLogs.Count, await _logRepository.GetPageListAsync(input.Page, input.PageSize, expression, new[] { new Sort { Ascending = false, PropertyName = "Id" } }, uniqueLogs.ids));
+            //}
 
             var logs = await _logRepository.GetPageListAsync(input.Page, input.PageSize, expression, new[] { new Sort { Ascending = false, PropertyName = "Id" } });
 
