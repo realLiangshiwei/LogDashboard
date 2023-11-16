@@ -26,12 +26,12 @@ namespace LogDashboard.Repository.File
                         ((IRequestTraceLogModel)x).TraceIdentifier == traceIdentifier);
         }
 
-        public Task<(int Count, List<int> ids)> UniqueCountAsync(Expression<Func<T, bool>> predicate = null)
-        {
-            var ids = _logs.Where(CheckPredicate(predicate).Compile()).GroupBy(x => new { x.Message, x.Exception })
-                 .Where(x => x.Count() == 1).SelectMany(x => x.ToList()).Select(x => x.Id).ToList();
-            return Task.FromResult((ids.Count, ids));
-        }
+        //public Task<(int Count, List<int> ids)> UniqueCountAsync(Expression<Func<T, bool>> predicate = null)
+        //{
+        //    var ids = _logs.Where(CheckPredicate(predicate).Compile()).GroupBy(x => new { x.Message, x.Exception })
+        //         .Where(x => x.Count() == 1).SelectMany(x => x.ToList()).Select(x => x.Id).ToList();
+        //    return Task.FromResult((ids.Count, ids));
+        //}
 
         public async Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate = null)
         {

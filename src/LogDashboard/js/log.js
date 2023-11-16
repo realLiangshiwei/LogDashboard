@@ -191,7 +191,7 @@ function loadList(page, pageSize) {
 function search() {
     searchInput.Page = 1;
     searchInput.All = $("#all").is(":checked");
-    searchInput.Unique = $("#unique").is(":checked");
+    //searchInput.Unique = $("#unique").is(":checked");
     searchInput.ToDay = $("#today").is(":checked");
     searchInput.Hour = $("#hour").is(":checked");
     searchInput.Message = $("#Message").val();

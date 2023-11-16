@@ -11,7 +11,7 @@ namespace LogDashboard.Repository
     {
         Task<IEnumerable<T>> RequestTraceAsync(T model);
 
-        Task<(int Count, List<int> ids)> UniqueCountAsync(Expression<Func<T, bool>> predicate = null);
+        //Task<(int Count, List<int> ids)> UniqueCountAsync(Expression<Func<T, bool>> predicate = null);
 
         Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate = null);
 

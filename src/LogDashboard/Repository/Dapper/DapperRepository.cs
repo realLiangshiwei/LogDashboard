@@ -36,22 +36,22 @@ namespace LogDashboard.Repository.Dapper
                 $"SELECT * FROM {_options.LogSchemaName}.{_options.LogTableName} WHERE TraceIdentifier=@TraceIdentifier", new { traceIdentifier });
 
         }
+        //有性能问题，查询慢，不要了
+        //public async Task<(int Count, List<int> ids)> UniqueCountAsync(Expression<Func<T, bool>> predicate = null)
+        //{
+        //    if (predicate != null)
+        //    {
+        //        var logs = (await _conn.GetListAsync<T>(predicate.ToPredicateGroup(), whereSql:
+        //             $"ID IN (SELECT MAX(id) FROM {_options.LogSchemaName}.{_options.LogTableName} GROUP BY Message,Exception HAVING COUNT(*)=1)")).Select(x => x.Id).ToList();
 
-        public async Task<(int Count, List<int> ids)> UniqueCountAsync(Expression<Func<T, bool>> predicate = null)
-        {
-            if (predicate != null)
-            {
-                var logs = (await _conn.GetListAsync<T>(predicate.ToPredicateGroup(), whereSql:
-                     $"ID IN (SELECT MAX(id) FROM {_options.LogSchemaName}.{_options.LogTableName} GROUP BY Message,Exception HAVING COUNT(*)=1)")).Select(x => x.Id).ToList();
+        //        return (logs.Count, logs);
+        //    }
 
-                return (logs.Count, logs);
-            }
+        //    var result = await _conn.QueryAsync<int>(
+        //        $"SELECT MAX(ID) AS TOTAL FROM {_options.LogSchemaName}.{_options.LogTableName} GROUP BY Message,Exception HAVING COUNT(*)=1");
+        //    return (result.Count(), result.ToList());
 
-            var result = await _conn.QueryAsync<int>(
-                $"SELECT MAX(ID) AS TOTAL FROM {_options.LogSchemaName}.{_options.LogTableName} GROUP BY Message,Exception HAVING COUNT(*)=1");
-            return (result.Count(), result.ToList());
-
-        }
+        //}
 
         public async Task<IEnumerable<T>> GetListAsync(Expression<Func<T, bool>> predicate = null)
         {

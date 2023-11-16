@@ -31,7 +31,7 @@ namespace LogDashboard.Handle
             ViewData["basicLogNav"] = "";
             var result = await _logRepository.GetPageListAsync(1, 10, sorts: new[] { new Sort { Ascending = false, PropertyName = "Id" } });
 
-            ViewData["unique"] = (await _logRepository.UniqueCountAsync()).Count;
+            //ViewData["unique"] = (await _logRepository.UniqueCountAsync()).Count;
 
             var now = DateTime.Now;
             var weeHours = now.Date.AddHours(23).AddMinutes(59).AddSeconds(59);
@@ -126,12 +126,12 @@ namespace LogDashboard.Handle
                 }
             }
 
-            if (input.Unique)
-            {
-                var uniqueLogs = await _logRepository.UniqueCountAsync(expression);
+            //if (input.Unique)
+            //{
+            //    var uniqueLogs = await _logRepository.UniqueCountAsync(expression);
 
-                return new PagedResultModel<T>(uniqueLogs.Count, await _logRepository.GetPageListAsync(input.Page, input.PageSize, expression, new[] { new Sort { Ascending = false, PropertyName = "Id" } }, uniqueLogs.ids));
-            }
+            //    return new PagedResultModel<T>(uniqueLogs.Count, await _logRepository.GetPageListAsync(input.Page, input.PageSize, expression, new[] { new Sort { Ascending = false, PropertyName = "Id" } }, uniqueLogs.ids));
+            //}
 
             var logs = await _logRepository.GetPageListAsync(input.Page, input.PageSize, expression, new[] { new Sort { Ascending = false, PropertyName = "Id" } });
 

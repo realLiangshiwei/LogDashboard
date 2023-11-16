@@ -6,7 +6,7 @@ namespace LogDashboard.Models
     {
         public bool All { get; set; }
 
-        public bool Unique { get; set; }
+        //public bool Unique { get; set; }
 
         public DateTime? StartTime { get; set; }
 

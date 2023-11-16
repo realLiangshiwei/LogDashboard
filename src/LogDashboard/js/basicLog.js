@@ -9,7 +9,7 @@
     });
     setCheckbox("All", "all");
     setCheckbox("Today", "today");
-    setCheckbox("Unique", "unique");
+    //setCheckbox("Unique", "unique");
     setCheckbox("Hour", "hour");
 });
 

@@ -55,49 +55,44 @@ WriteLiteral("<div class=\"card\">\r\n    <div class=\"card-header border border
 "v>\r\n                    </div>\r\n                </div>\r\n                <div cla" +
 "ss=\"col-md-3\">\r\n                    <div class=\"form-group\">\r\n                  " +
 "      <div class=\"custom-control custom-checkbox\">\r\n                            " +
-"<input type=\"checkbox\" class=\"custom-control-input\" id=\"unique\">\r\n              " +
-"              <label class=\"custom-control-label\" for=\"unique\">不重复</label>\r\n    " +
-"                    </div>\r\n                    </div>\r\n                </div>\r\n" +
-"                <div class=\"col-md-3\">\r\n                    <div class=\"form-gro" +
-"up\">\r\n                        <div class=\"custom-control custom-checkbox\">\r\n    " +
-"                        <input type=\"checkbox\" class=\"custom-control-input\" id=\"" +
-"today\">\r\n                            <label class=\"custom-control-label\" for=\"to" +
-"day\">今天</label>\r\n                        </div>\r\n                    </div>\r\n   " +
-"             </div>\r\n                <div class=\"col-md-3\">\r\n                   " +
-" <div class=\"form-group\">\r\n                        <div class=\"custom-control cu" +
-"stom-checkbox\">\r\n                            <input type=\"checkbox\" class=\"custo" +
-"m-control-input\" id=\"hour\">\r\n                            <label class=\"custom-co" +
-"ntrol-label\" for=\"hour\">一小时</label>\r\n                        </div>\r\n           " +
-"         </div>\r\n                </div>\r\n            </div>\r\n            <div cl" +
-"ass=\"row\">\r\n                <div class=\"col-md-6\">\r\n                    <div cla" +
-"ss=\"form-group\">\r\n                        <label for=\"Message\" class=\"form-contr" +
-"ol-label\">Message</label>\r\n                        <input id=\"Message\" class=\"fo" +
-"rm-control\" placeholder=\"Message\">\r\n                    </div>\r\n                " +
-"</div>\r\n                <div class=\"col-md-6\">\r\n                    <div class=\"" +
-"form-group\">\r\n                        <label for=\"Level\" class=\"form-control-lab" +
-"el\">日志级别</label>\r\n                        <select id=\"Level\" class=\"form-control" +
-"\">\r\n                            <option value=\"\">All</option>\r\n                 " +
-"           <option value=\"TRACE\">Trace</option>\r\n                            <op" +
-"tion value=\"DEBUG\">Debug</option>\r\n                            <option value=\"IN" +
-"FORMATION\">Info</option>\r\n                            <option value=\"WARNING\">Wa" +
-"rn</option>\r\n                            <option value=\"ERROR\">Error</option>\r\n " +
-"                           <option value=\"FATAL\">Fatal</option>\r\n               " +
-"         </select>\r\n                    </div>\r\n                </div>\r\n        " +
-"    </div>\r\n            <div class=\"row\">\r\n                <div class=\"col-md-6\"" +
-">\r\n                    <div class=\"form-group\">\r\n                        <label " +
-"for=\"StartTime\" class=\"form-control-label\">开始时间</label>\r\n                       " +
-" <input type=\"text\" class=\"form-control datetimepicker-input\" id=\"StartTime\" dat" +
-"a-toggle=\"datetimepicker\" data-target=\"#StartTime\" />\r\n                    </div" +
-">\r\n                </div>\r\n                <div class=\"col-md-6\">\r\n             " +
-"       <div class=\"form-group\">\r\n                        <label for=\"EndTime\" cl" +
-"ass=\"form-control-label\">结束时间</label>\r\n                        <input type=\"text" +
-"\" class=\"form-control datetimepicker-input\" id=\"EndTime\" data-toggle=\"datetimepi" +
-"cker\" data-target=\"#EndTime\" />\r\n                    </div>\r\n                </d" +
-"iv>\r\n            </div>\r\n");
+"<input type=\"checkbox\" class=\"custom-control-input\" id=\"today\">\r\n               " +
+"             <label class=\"custom-control-label\" for=\"today\">今天</label>\r\n       " +
+"                 </div>\r\n                    </div>\r\n                </div>\r\n   " +
+"             <div class=\"col-md-3\">\r\n                    <div class=\"form-group\"" +
+">\r\n                        <div class=\"custom-control custom-checkbox\">\r\n       " +
+"                     <input type=\"checkbox\" class=\"custom-control-input\" id=\"hou" +
+"r\">\r\n                            <label class=\"custom-control-label\" for=\"hour\">" +
+"一小时</label>\r\n                        </div>\r\n                    </div>\r\n       " +
+"         </div>\r\n            </div>\r\n            <div class=\"row\">\r\n            " +
+"    <div class=\"col-md-6\">\r\n                    <div class=\"form-group\">\r\n      " +
+"                  <label for=\"Message\" class=\"form-control-label\">Message</label" +
+">\r\n                        <input id=\"Message\" class=\"form-control\" placeholder=" +
+"\"Message\">\r\n                    </div>\r\n                </div>\r\n                " +
+"<div class=\"col-md-6\">\r\n                    <div class=\"form-group\">\r\n          " +
+"              <label for=\"Level\" class=\"form-control-label\">日志级别</label>\r\n      " +
+"                  <select id=\"Level\" class=\"form-control\">\r\n                    " +
+"        <option value=\"\">All</option>\r\n                            <option value" +
+"=\"TRACE\">Trace</option>\r\n                            <option value=\"DEBUG\">Debug" +
+"</option>\r\n                            <option value=\"INFORMATION\">Info</option>" +
+"\r\n                            <option value=\"WARNING\">Warn</option>\r\n           " +
+"                 <option value=\"ERROR\">Error</option>\r\n                         " +
+"   <option value=\"FATAL\">Fatal</option>\r\n                        </select>\r\n    " +
+"                </div>\r\n                </div>\r\n            </div>\r\n            " +
+"<div class=\"row\">\r\n                <div class=\"col-md-6\">\r\n                    <" +
+"div class=\"form-group\">\r\n                        <label for=\"StartTime\" class=\"f" +
+"orm-control-label\">开始时间</label>\r\n                        <input type=\"text\" clas" +
+"s=\"form-control datetimepicker-input\" id=\"StartTime\" data-toggle=\"datetimepicker" +
+"\" data-target=\"#StartTime\" />\r\n                    </div>\r\n                </div" +
+">\r\n                <div class=\"col-md-6\">\r\n                    <div class=\"form-" +
+"group\">\r\n                        <label for=\"EndTime\" class=\"form-control-label\"" +
+">结束时间</label>\r\n                        <input type=\"text\" class=\"form-control da" +
+"tetimepicker-input\" id=\"EndTime\" data-toggle=\"datetimepicker\" data-target=\"#EndT" +
+"ime\" />\r\n                    </div>\r\n                </div>\r\n            </div>\r" +
+"\n");
 
 
             
-            #line 84 "..\..\Views\Dashboard\BasicLog.cshtml"
+            #line 76 "..\..\Views\Dashboard\BasicLog.cshtml"
               
                 if (Context.Options.CustomPropertyInfos.Count > 0)
                 {
@@ -110,7 +105,7 @@ WriteLiteral("                        <div class=\"row\" id=\"applicationLogMode
 
 
             
-            #line 88 "..\..\Views\Dashboard\BasicLog.cshtml"
+            #line 80 "..\..\Views\Dashboard\BasicLog.cshtml"
                               
                             foreach (var propertyInfo in Context.Options.CustomPropertyInfos)
                             {
@@ -124,7 +119,7 @@ WriteLiteral("                                        <div class=\"col-md-2\">\r
 
 
             
-            #line 93 "..\..\Views\Dashboard\BasicLog.cshtml"
+            #line 85 "..\..\Views\Dashboard\BasicLog.cshtml"
                                                        Write(propertyInfo.Name);
 
             
@@ -134,7 +129,7 @@ WriteLiteral("\" class=\"form-control-label\">");
 
 
             
-            #line 93 "..\..\Views\Dashboard\BasicLog.cshtml"
+            #line 85 "..\..\Views\Dashboard\BasicLog.cshtml"
                                                                                                       Write(propertyInfo.Name);
 
             
@@ -144,7 +139,7 @@ WriteLiteral("</label>\r\n                                                <input
 
 
             
-            #line 94 "..\..\Views\Dashboard\BasicLog.cshtml"
+            #line 86 "..\..\Views\Dashboard\BasicLog.cshtml"
                                                       Write(propertyInfo.Name);
 
             
@@ -154,7 +149,7 @@ WriteLiteral("\" class=\"form-control\" placeholder=\"");
 
 
             
-            #line 94 "..\..\Views\Dashboard\BasicLog.cshtml"
+            #line 86 "..\..\Views\Dashboard\BasicLog.cshtml"
                                                                                                             Write(propertyInfo.Name);
 
             
@@ -165,7 +160,7 @@ WriteLiteral("\">\r\n                                            </div>\r\n     
 
 
             
-            #line 97 "..\..\Views\Dashboard\BasicLog.cshtml"
+            #line 89 "..\..\Views\Dashboard\BasicLog.cshtml"
                             }
                             
 
@@ -182,7 +177,7 @@ WriteLiteral("                        <div class=\"row\">\r\n                   
 
 
             
-            #line 103 "..\..\Views\Dashboard\BasicLog.cshtml"
+            #line 95 "..\..\Views\Dashboard\BasicLog.cshtml"
                 }
             
 
@@ -194,7 +189,7 @@ WriteLiteral("            <button class=\"btn btn-outline-primary\" id=\"searchB
 
 
             
-            #line 110 "..\..\Views\Dashboard\BasicLog.cshtml"
+            #line 102 "..\..\Views\Dashboard\BasicLog.cshtml"
    Write(Raw(ViewData["logs"]));
 
             
@@ -204,7 +199,7 @@ WriteLiteral("\r\n    </div>\r\n    <div id=\"page\">\r\n        ");
 
 
             
-            #line 113 "..\..\Views\Dashboard\BasicLog.cshtml"
+            #line 105 "..\..\Views\Dashboard\BasicLog.cshtml"
    Write(Raw(ViewData["page"]));
 
             
