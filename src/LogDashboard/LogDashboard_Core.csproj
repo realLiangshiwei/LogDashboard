@@ -1,19 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.1;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net8.0</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Authors>liangshiwei</Authors>
-    <Description>日志面板、LogDashboard、AspNetCore</Description>
+    <Authors>Juhun</Authors>
+    <Description>日志面板、LogDashboard、AspNetCore  修复日志内容包含特殊字符的错误</Description>
     <PackageProjectUrl>https://github.com/liangshiw/LogDashboard</PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/liangshiw/LogDashboard/develop/logo.png</PackageIconUrl>
     <RepositoryUrl>https://github.com/liangshiw/LogDashboard</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <Version>1.4.6</Version>
-    <Company>liangshiwei</Company>
+    <Version>1.4.6.10</Version>
+    <Company>NONE</Company>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <LangVersion>8.0</LangVersion>
-    <PackageVersion>1.4.8</PackageVersion>
+    <PackageVersion>1.4.8.10</PackageVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
@@ -34,7 +34,6 @@
   <ItemGroup>
     <EmbeddedResource Remove="Views\Dashboard\BasicLog.cshtml" />
     <EmbeddedResource Remove="Views\Dashboard\Home.cshtml" />
-    <EmbeddedResource Remove="Views\Dashboard\LogInfo.cshtml" />
     <EmbeddedResource Remove="Views\Dashboard\LogList.cshtml" />
     <EmbeddedResource Remove="Views\Dashboard\TraceLogList.cshtml" />
     <EmbeddedResource Remove="Views\RazorPage.cs" />
@@ -71,7 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Views\Dashboard\BasicLog.generated.cs">
-      <DesignTime>True</DesignTime>
+      <DesignTime>True</DesignTime> 
       <AutoGen>True</AutoGen>
       <DependentUpon>BasicLog.cshtml</DependentUpon>
     </Compile>
@@ -79,11 +78,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Home.cshtml</DependentUpon>
-    </Compile>
-    <Compile Update="Views\Dashboard\LogInfo.generated.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>LogInfo.cshtml</DependentUpon>
     </Compile>
     <Compile Update="Views\Dashboard\LogList.generated.cs">
       <DesignTime>True</DesignTime>
@@ -102,6 +96,54 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Update="css\bootstrap.min.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="css\font-awesome.min.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="css\simple-line-icons.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="css\styles.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="css\tempusdominus-bootstrap-4.min.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="font\fontawesome-webfont.woff2">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="font\Simple-Line-Icons.woff2">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="js\basicLog.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="js\bootstrap.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="js\Chart.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="js\home.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="js\jquery.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="js\log.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="js\moment.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="js\spin.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="js\tempusdominus-bootstrap-4.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\Dashboard\BasicLog.generated.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -111,11 +153,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Home.cshtml</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\Dashboard\LogInfo.generated.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>LogInfo.cshtml</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Dashboard\LogList.generated.cs">
       <DesignTime>True</DesignTime>
@@ -145,10 +182,6 @@
     <None Update="Views\Dashboard\Home.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Home.generated.cs</LastGenOutput>
-    </None>
-    <None Update="Views\Dashboard\LogInfo.cshtml">
-      <Generator>RazorGenerator</Generator>
-      <LastGenOutput>LogInfo.generated.cs</LastGenOutput>
     </None>
     <None Update="Views\Dashboard\LogList.cshtml">
       <Generator>RazorGenerator</Generator>

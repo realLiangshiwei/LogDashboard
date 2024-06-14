@@ -15,29 +15,24 @@ using LogDashboard.Repository;
 using LogDashboard.Route;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace LogDashboard
-{
+namespace LogDashboard {
 
-    public class LogDashboardMiddleware
-    {
+    public class LogDashboardMiddleware {
         private readonly RequestDelegate _next;
 
-        public LogDashboardMiddleware(RequestDelegate next)
-        {
+        public LogDashboardMiddleware(RequestDelegate next) {
             _next = next;
         }
 
 
-        public async Task InvokeAsync(HttpContext httpContext)
-        {
+        public async Task InvokeAsync(HttpContext httpContext) {
             using var scope = httpContext.RequestServices.CreateScope();
             var opts = scope.ServiceProvider.GetService<LogDashboardOptions>();
 
             var requestUrl = httpContext.Request.Path.Value;
 
             //EmbeddedFile
-            if (requestUrl.Contains("css") || requestUrl.Contains("js") || requestUrl.Contains("woff"))
-            {
+            if (requestUrl.Contains("css") || requestUrl.Contains("js") || requestUrl.Contains("woff")) {
                 await LogDashboardEmbeddedFiles.IncludeEmbeddedFile(httpContext, requestUrl);
                 return;
             }
@@ -45,25 +40,21 @@ namespace LogDashboard
             // Find Router
             var router = LogDashboardRoutes.Routes.FindRoute(requestUrl);
 
-            if (router == null)
-            {
+            if (router == null) {
                 httpContext.Response.StatusCode = 404;
                 return;
             }
 
             // Authorization
-            if (!await AuthorizeHelper.AuthorizeAsync(httpContext, opts.AuthorizeData))
-            {
+            if (!await AuthorizeHelper.AuthorizeAsync(httpContext, opts.AuthorizeData)) {
                 return;
             }
 
             var logDashboardContext = new LogDashboardContext(httpContext, router,
                 opts);
 
-            if (!AuthorizationFilterHelper.Authorization(opts.AuthorizationFiles, logDashboardContext))
-            {
-                if (httpContext.Response.StatusCode == (int)HttpStatusCode.OK)
-                {
+            if (!AuthorizationFilterHelper.Authorization(opts.AuthorizationFiles, logDashboardContext)) {
+                if (httpContext.Response.StatusCode == (int)HttpStatusCode.OK) {
                     httpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                 }
                 return;
@@ -80,8 +71,7 @@ namespace LogDashboard
                 scope.ServiceProvider.GetRequiredService(handleType.MakeGenericType(opts.LogModelType)) as
                     ILogDashboardHandle;
 
-            if (handle == null)
-            {
+            if (handle == null) {
                 httpContext.Response.StatusCode = 404;
                 return;
             }
@@ -95,34 +85,25 @@ namespace LogDashboard
             // ReSharper disable once PossibleNullReferenceException
             var parametersLength = method.GetParameters().Length;
 
-            if (parametersLength == 0)
-            {
+            if (parametersLength == 0) {
                 html = await (Task<string>)method.Invoke(handle, null);
-            }
-            else
-            {
-                if (httpContext.Request.ContentLength == null && httpContext.Request.Query.Count <= 0)
-                {
+            } else {
+                if (httpContext.Request.ContentLength == null && httpContext.Request.Query.Count <= 0) {
                     html = await (Task<string>)method.Invoke(handle, new Object[] { null });
-                }
-                else
-                {
+                } else {
                     object args;
-                    if (httpContext.Request.Query.Count > 0)
-                    {
+                    if (httpContext.Request.Query.Count > 0) {
                         var dict = new Dictionary<string, string>();
                         httpContext.Request.Query.ToList().ForEach(x => dict.Add(x.Key, x.Value));
                         args = JsonConvert.DeserializeObject(JsonConvert.SerializeObject(dict),
-                            method.GetParameters().First().ParameterType);
-                    }
-                    else
-                    {
+                                            method.GetParameters().First().ParameterType);
+                    } else {
 
                         using var reader = new StreamReader(httpContext.Request.Body);
-                            var requestJson = await reader.ReadToEndAsync();
+                        var requestJson = await reader.ReadToEndAsync();
 
-                            args = JsonConvert.DeserializeObject(requestJson,
-                            method.GetParameters().First().ParameterType);
+                        args = JsonConvert.DeserializeObject(requestJson,
+                        method.GetParameters().First().ParameterType);
 
                     }
 

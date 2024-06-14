@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -120,9 +121,11 @@ namespace LogDashboard.Handle
             return new PagedResultModel<T>(totalCount, logs);
         }
 
-        public async Task<string> LogInfo(T info)
+        public async Task<string> LogInfo(Dictionary<string,int> hash)
         {
-            return await View(info);
+            var id = hash["id"];
+            var log = await _logRepository.FirstOrDefaultAsync(x => x.Id == id);
+            return await View(log);
         }
 
         public async Task<string> RequestTrace(LogModelInput input)

@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28803.452
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.34909.67
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogDashboard", "src\LogDashboard\LogDashboard.csproj", "{A005DD97-96F5-402D-935C-1232E6B41F5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogDashboard_Core", "src\LogDashboard\LogDashboard_Core.csproj", "{A005DD97-96F5-402D-935C-1232E6B41F5F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCoreEmptyTest", "test\NetCoreEmptyTest\NetCoreEmptyTest.csproj", "{8F92E7EE-9679-49A7-9AB1-65F5B7C905A4}"
 EndProject
@@ -37,6 +37,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UseAuthorization", "samples\UseAuthorization\UseAuthorization.csproj", "{18ECBB64-4939-4C0B-B00D-D9382AB4F6DC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySqlDatabase", "samples\MySqlDatabase\MySqlDatabase.csproj", "{EB0A1237-E9B8-4138-A8CE-DBD6C41771FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogDemo", "LogDemo\LogDemo.csproj", "{41F01873-E88D-4F89-A314-7B7CC4B940FC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -96,6 +98,10 @@ Global
 		{EB0A1237-E9B8-4138-A8CE-DBD6C41771FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB0A1237-E9B8-4138-A8CE-DBD6C41771FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB0A1237-E9B8-4138-A8CE-DBD6C41771FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41F01873-E88D-4F89-A314-7B7CC4B940FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41F01873-E88D-4F89-A314-7B7CC4B940FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41F01873-E88D-4F89-A314-7B7CC4B940FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41F01873-E88D-4F89-A314-7B7CC4B940FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

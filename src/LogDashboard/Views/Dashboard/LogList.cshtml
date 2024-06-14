@@ -8,8 +8,8 @@
 
 <script type="text/javascript">
 
-    var logs = @ViewData["Model"].ToJsonString();
-
+    var logs = '@ViewData["Model"]';
+    logs = JSON.parse(logs);
 </script>
 
 <div class="table-responsive">
@@ -25,7 +25,7 @@
             </tr>
         </thead>    
         <tbody class="w-100">
-            @foreach (var item in (IEnumerable<ILogModel>)ViewData["Model"])
+            @foreach (var item in (Newtonsoft.Json.JsonConvert.DeserializeObject<List<LogModel>>(ViewData["Model"] as string)))
             {
                 <tr class="row mx-0">
                     <td class="col-1"><a href="javascript:void(0);" onclick="logInfo('@item.Id.ToString()')">@item.Id.ToString()</a></td>

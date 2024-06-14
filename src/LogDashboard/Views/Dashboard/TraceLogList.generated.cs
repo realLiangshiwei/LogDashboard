@@ -61,7 +61,7 @@ WriteLiteral(@"
 
             
             #line 20 "..\..\Views\Dashboard\TraceLogList.cshtml"
-             foreach (var item in (IEnumerable<ILogModel>)ViewData["Model"])
+             foreach (var item in (Newtonsoft.Json.JsonConvert.DeserializeObject<List<LogModel>>(ViewData["Model"] as string)))
             {
 
             

@@ -8,11 +8,11 @@
 @using LogDashboard.Views
 @{
     Layout = new _layout { Context = Context, Section = { ["Scripts"] = $"<script> var output = JSON.parse('{Raw(ViewData["ChartData"])}');</script> <script src='{Context.Options.PathMatch}/js.home.js'></script>" }, ViewData = ViewData };
-    var logs = (IEnumerable<ILogModel>)ViewData["Model"];
+    var logs = Newtonsoft.Json.JsonConvert.DeserializeObject<List<LogModel>>(ViewData["Model"] as string));
 }
 <script type="text/javascript">
 
-    var logs = @ViewData["Model"].ToJsonString();
+    var logs = @ViewData["Model"];
 
 </script>
 

@@ -50,18 +50,16 @@ WriteLiteral("\r\n");
 
 
 
-WriteLiteral("\r\n<script type=\"text/javascript\">\r\n\r\n    var logs = ");
+WriteLiteral("\r\n<script type=\"text/javascript\">\r\n");
 
 
             
             #line 11 "..\..\Views\Dashboard\LogList.cshtml"
-          Write(ViewData["Model"].ToJsonString());
 
             
             #line default
             #line hidden
 WriteLiteral(@";
-
 </script>
 
 <div class=""table-responsive"">
@@ -82,7 +80,7 @@ WriteLiteral(@";
 
             
             #line 28 "..\..\Views\Dashboard\LogList.cshtml"
-             foreach (var item in (IEnumerable<ILogModel>)ViewData["Model"])
+             foreach (var item in (Newtonsoft.Json.JsonConvert.DeserializeObject<List<LogModel>>(ViewData["Model"] as string)))
             {
 
             

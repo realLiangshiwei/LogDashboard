@@ -6,7 +6,7 @@ namespace LogDashboard
 {
     public class LogDashboardConsts
     {
-        public const string Root = "LogDashboard";
+        public const string Root = "LogDashboard_Core";
 
         public const string HandleNameSpace = "LogDashboard.Handle.";
 

@@ -50,11 +50,11 @@ WriteLiteral("\r\n");
 
 
 
-            
-            #line 6 "..\..\Views\Dashboard\LogInfo.cshtml"
-  
-  
-    var log = (ILogModel)ViewData["Model"];
+
+#line 6 "..\..\Views\Dashboard\LogInfo.cshtml"
+
+
+            var log = Newtonsoft.Json.JsonConvert.DeserializeObject<LogModel>(ViewData["Model"] as string);
 
 
 

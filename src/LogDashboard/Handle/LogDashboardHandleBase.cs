@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using LogDashboard.Views;
 using Microsoft.Extensions.DependencyInjection;
+using LogDashboard.Extensions;
 
 namespace LogDashboard.Handle
 {
@@ -42,7 +43,7 @@ namespace LogDashboard.Handle
 
             if (model != null)
             {
-                ViewData["Model"] = model;
+                ViewData["Model"] = model.ToJsonString();
             }
 
             view.Context = Context;

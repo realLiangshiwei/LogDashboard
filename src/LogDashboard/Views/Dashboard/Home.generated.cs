@@ -62,7 +62,7 @@ WriteLiteral("\r\n");
             #line 9 "..\..\Views\Dashboard\Home.cshtml"
   
     Layout = new _layout { Context = Context, Section = { ["Scripts"] = $"<script> var output = JSON.parse('{Raw(ViewData["ChartData"])}');</script> <script src='{Context.Options.PathMatch}/js.home.js'></script>" }, ViewData = ViewData };
-    var logs = (IEnumerable<ILogModel>)ViewData["Model"];
+    var logs = Newtonsoft.Json.JsonConvert.DeserializeObject<List<LogModel>>(ViewData["Model"] as string);
 
 
             
@@ -73,7 +73,7 @@ WriteLiteral("<script type=\"text/javascript\">\r\n\r\n    var logs = ");
 
             
             #line 15 "..\..\Views\Dashboard\Home.cshtml"
-          Write(ViewData["Model"].ToJsonString());
+          Write(ViewData["Model"] as string);
 
             
             #line default
